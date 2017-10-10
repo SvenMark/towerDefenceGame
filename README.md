@@ -1,9 +1,6 @@
 # towerDefenceGame
 towerdefence duh
-# JOIN WAFFLE
-https://waffle.io/SvenMark/towerDefenceGame/join
-
-# STATUS
+# SCRUM
 https://waffle.io/SvenMark/towerDefenceGame
 
 # STAPPENPLAN
