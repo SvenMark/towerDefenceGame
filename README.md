@@ -11,7 +11,7 @@ $ git clone https://github.com/SvenMark/towerDefenceGame.git
 ```
 2.
 ```sh
-$ git branch "issuenr"-description
+$ git branch "issue-nr"-description
 ```
 3. commit/push
 4. open pullrequest @ github
