@@ -3,6 +3,8 @@ towerdefence duh
 # JOIN WAFFLE
 https://waffle.io/SvenMark/towerDefenceGame/join
 
+# STATUS
+https://waffle.io/SvenMark/towerDefenceGame
 
 # STAPPENPLAN
 1. 
