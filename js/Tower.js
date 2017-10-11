@@ -3,8 +3,7 @@ class Tower
     constructor(level)
     {
         this.level = level;
-    }
-    static buildTower(){
+
         //Perfect tower
         let towerGeomitry = new THREE.BoxGeometry(30,150,30);
         let towerMaterial = new THREE.MeshToonMaterial({
@@ -15,6 +14,7 @@ class Tower
         tower.position.set(-300,75,0);
         scene.add(tower);
     }
+
 }
 
 
