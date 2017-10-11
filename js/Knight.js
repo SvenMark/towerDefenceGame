@@ -1,4 +1,4 @@
-class Knight extends Person
+class Knight extends NPC
 {
     constructor()
     {

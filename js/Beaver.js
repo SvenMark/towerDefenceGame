@@ -1,4 +1,4 @@
-class Beaver extends Person
+class Beaver extends NPC
 {
     constructor()
     {
