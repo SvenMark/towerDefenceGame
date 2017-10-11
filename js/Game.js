@@ -4,8 +4,8 @@ class Game
     {
         this.tower = new Tower(level);
         this.wave = wave;
-        this.knights = Knight[];
-        this.beavers = Beaver[];
+        this.knights = [];
+        this.beavers = [];
     }
 
     createBeaver()
