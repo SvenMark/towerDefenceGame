@@ -19,8 +19,8 @@ function startGame(game)
 
 function setCamera()
 {
-    camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
-    camera.position.set(0, 25, 35);
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+    camera.position.set(0, 200, 800);
 }
 
 function setControls()
@@ -49,6 +49,8 @@ function setScene()
     let plane = new THREE.Mesh(planeGeometry, planeMaterial);
     plane.rotation.x = -Math.PI / 2;
     scene.add(plane);
+
+    Tower.buildTower();
 
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(window.innerWidth, window.innerHeight);
