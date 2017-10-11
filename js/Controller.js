@@ -49,7 +49,7 @@ function setScene()
     plane.rotation.x = -Math.PI / 2;
     scene.add(plane);
 
-    Tower.buildTower();
+    let tower = new Tower(1);
 
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(window.innerWidth, window.innerHeight);
