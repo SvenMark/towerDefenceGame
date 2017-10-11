@@ -26,6 +26,7 @@ function setCamera()
 function setControls()
 {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.maxPolarAngle = 0.49 * Math.PI; // Don't let the camera go below the ground
 }
 
 function setScene()
@@ -85,7 +86,7 @@ function fpsCounter()
 function render()
 {
     requestAnimationFrame(render);
-    //controls.update();
+    // controls.update();
     renderer.render(scene, camera);
 }
 
