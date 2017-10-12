@@ -3,7 +3,7 @@ towerdefence duh
 # SCRUM
 https://waffle.io/SvenMark/towerDefenceGame
 
-# RECOURSES
+# RESOURCES
 https://github.com/bgrins/javascript-astar
 
 # STAPPENPLAN
