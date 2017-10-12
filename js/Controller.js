@@ -1,4 +1,4 @@
-let renderer, camera, controls, scene, clock, clockDelta;
+let renderer, camera, controls, scene, clock, clockDelta, ground;
 
 function init()
 {
@@ -20,7 +20,7 @@ function startGame(game)
 function setCamera()
 {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.set(0, 200, 800);
+    camera.position.set(0, 8, 16);
 }
 
 function setControls()
@@ -40,15 +40,21 @@ function setScene()
     let ambientLight = new THREE.AmbientLight(0x404040); // soft white light
     scene.add(ambientLight);
 
-    //Temp platform
-    let planeGeometry = new THREE.PlaneGeometry(800, 450, 10, 10);
-    let planeMaterial = new THREE.MeshToonMaterial({
-        color: 0x006633,
-        side: THREE.DoubleSide
-    });
-    let plane = new THREE.Mesh(planeGeometry, planeMaterial);
-    plane.rotation.x = -Math.PI / 2;
-    scene.add(plane);
+    setTiles(20);
+
+    function setTiles(gridSize) {
+        ground = []; // Initialize array
+        let flag = false;
+        for (let i = 0; i < gridSize; i++) {
+            ground[i] = []; // Initialize inner array
+            flag = flag !== true;
+            for (let j = 0; j < gridSize; j++) {
+                ground[i][j] = new Tile(j, i, flag);
+                flag = flag !== true;
+            }
+        }
+    }
+
 
     let tower = new Tower(1);
 

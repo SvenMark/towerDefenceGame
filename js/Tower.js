@@ -5,14 +5,15 @@ class Tower
         this.level = level;
 
         //Perfect tower
-        let towerGeomitry = new THREE.BoxGeometry(30,150,30);
+        let towerGeomitry = new THREE.BoxGeometry(1,5,1);
         let towerMaterial = new THREE.MeshToonMaterial({
             color: 0xffffff,
             side: THREE.DoubleSide
         });
         let tower=new THREE.Mesh(towerGeomitry, towerMaterial);
-        tower.position.set(-300,75,0);
+        tower.position.set(0,2.5,0);
         scene.add(tower);
+        console.log(tower.position);
     }
 
 }
