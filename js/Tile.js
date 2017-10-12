@@ -11,7 +11,7 @@ class Tile {
             colorTile=0xFFFFFF;
         }
 
-        let planeGeometry = new THREE.PlaneGeometry(50, 50, 10, 10);
+        let planeGeometry = new THREE.PlaneGeometry(1, 1, 10, 10);
         let planeMaterial = new THREE.MeshToonMaterial({
             color: colorTile,
             side: THREE.DoubleSide
