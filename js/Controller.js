@@ -41,14 +41,28 @@ function setScene()
     scene.add(ambientLight);
 
     //Temp platform
-    let planeGeometry = new THREE.PlaneGeometry(800, 450, 10, 10);
-    let planeMaterial = new THREE.MeshToonMaterial({
-        color: 0x006633,
-        side: THREE.DoubleSide
-    });
-    let plane = new THREE.Mesh(planeGeometry, planeMaterial);
-    plane.rotation.x = -Math.PI / 2;
-    scene.add(plane);
+    //let planeGeometry = new THREE.PlaneGeometry(50, 50, 10, 10);
+    //let planeMaterial = new THREE.MeshToonMaterial({
+    //    color: 0x006633,
+    //    side: THREE.DoubleSide
+    //});
+    //let plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    //plane.rotation.x = -Math.PI / 2;
+    //scene.add(plane);
+
+    let tiles=[];
+    let x = 0;
+    for(let i=0;i<20;i++){
+        if (i<10){
+            tiles[i]=new Tile((i*50),0,i);
+            x++;
+        }
+        if (i===10){x=0}
+        if (i>9){
+            tiles[i]=new Tile(((i-10)*50),50,i+1);
+        }
+    }
+
 
     let tower = new Tower(1);
 
