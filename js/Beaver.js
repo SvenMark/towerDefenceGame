@@ -47,7 +47,7 @@ class Beaver extends NPC
         this.setNodes();
     };
 
-    setNodes = function() {
+    setNodes() {
     if (this.nextStep.x !== undefined) {
         this.currentStep.x = this.nextStep.x;
         this.currentStep.y = this.nextStep.y;
