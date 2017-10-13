@@ -45,30 +45,11 @@
         </div>
     </div>
     <div class="fullscreen" id="instructions">
-
+        <div id="instructioncontent">
+            <h1>Instructions</h1>
+            <button id="instrplay" type="button">Play</button>
+        </div>
     </div>
-    <script>
-        $(document).ready(function() {
-            $('#topbar').animate({
-                top: '0px'
-            }, 700);
-            $('#bottombar').delay(500).animate({
-                top: '90vh'
-            }, 1000);
-        });
-        $( "#buttonleft" ).click(function() {
-            $('#topbar').animate({
-                top: '-440px'
-            }, 700);
-            $('#bottombar').animate({
-                top: '100vh'
-            }, 700);
-            $('#midbar').slideUp(400);
-            $('.fullscreen').slideUp(1000);
-        });
-        $( "#buttonright" ).click(function() {
-            alert( "Instructions Called" );
-        });
-    </script>
+    <script type="text/javascript" src="js/Animations.js"></script>
     </body>
 </html>
