@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" href="css/style.css">
 
         <!--External JS libraries-->
+        <script type="text/javascript" src="library/js/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="library/js/three.js"></script>
         <script type="text/javascript" src="library/js/OrbitControls.js"></script>
         <script type="text/javascript" src="library/js/OBJLoader.js"></script>
@@ -26,5 +27,29 @@
         <script type="text/javascript" src="js/Controller.js"></script>
     </head>
     <body onload="preLoader()">
+    <div class="fullscreen" id="welcomescreen">
+        <div id="topbar">
+            <h3 id="pushdown">Welcome to:</h3>
+            <h1>Third Valley Tower Defense</h1>
+        </div>
+        <div id="midbar">
+            <div id="left50">
+                <button id="buttonleft" type="button">Play</button>
+            </div>
+            <div id="right50">
+                <button id="buttonright" type="button">Instructions</button>
+            </div>
+            <div id="bottombar">
+                <h3>By: Sven Mark Hofstra, Rendall Schijven and Kevin Snijder</h3>
+            </div>
+        </div>
+    </div>
+    <div class="fullscreen" id="instructions">
+        <div id="instructioncontent">
+            <h1>Instructions</h1>
+            <button id="instrplay" type="button">Play</button>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/Animations.js"></script>
     </body>
 </html>
