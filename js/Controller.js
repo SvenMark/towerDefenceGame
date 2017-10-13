@@ -1,4 +1,4 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground;
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, onError, onProgress, texture;
 let tiles, nodes;
 let beavers = [];
 
@@ -6,6 +6,20 @@ function init()
 {
     clock = new THREE.Clock();
     clockDelta = clock.getDelta();
+    manager = new THREE.LoadingManager();
+    texture = new THREE.Texture();
+    manager.onProgress = function( item, loaded, total ) {
+        console.log( item, loaded, total );
+    };
+    onProgress = function( xhr ) {
+        if ( xhr.lengthComputable ) {
+            var percentComplete = xhr.loaded / xhr.total * 100;
+            console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
+        }
+    };
+    onError = function( xhr ) {
+        console.error( xhr );
+    };
 
     fpsCounter();
     setCamera();
@@ -44,7 +58,40 @@ function setScene()
 
     tiles = setTiles(20);
 
-    function setTiles(gridSize) {
+    //Add the tree
+    let FBXloader = new THREE.FBXLoader( manager );
+    FBXloader.load( 'models/Tree.fbx', function( object ) {
+        let obj = object;
+        obj.position.set(5,0,5);
+        scene.add( obj );
+
+    }, onProgress, onError );
+
+    //Add the ghost texture
+    let IMGloader = new THREE.ImageLoader(manager);
+    IMGloader.load('models/ghost.png', function ( image ) {
+        texture.image = image;
+        texture.needsUpdate = true;
+    } );
+
+    //Add the ghost model
+    let OBJloader = new THREE.OBJLoader(manager);
+    OBJloader.load( 'models/ghost.obj', function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child instanceof THREE.Mesh ) {
+                child.material.map = texture;
+            }
+        } );
+
+        object.position.set(4,0,4);
+        object.scale.multiplyScalar(0.3);
+        scene.add( object );
+
+    }, onProgress, onError );
+
+    //Function to create grid for astar
+    function setTiles(gridSize)
+    {
         ground = []; // Initialize array
         let flag = false;
         for (let i = 0; i < gridSize; i++) {
@@ -57,7 +104,6 @@ function setScene()
         }
         return ground;
     }
-
 
     let tower = new Tower(1);
 
@@ -98,6 +144,7 @@ function render()
 {
     requestAnimationFrame(render);
     // controls.update();
+    renderer.setClearColor(0xBDCEB6);
     renderer.render(scene, camera);
 }
 
