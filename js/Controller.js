@@ -1,10 +1,11 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground, manager, onError, onProgress;
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, onError, onProgress, texture;
 
 function init()
 {
     clock = new THREE.Clock();
     clockDelta = clock.getDelta();
     manager = new THREE.LoadingManager();
+    texture = new THREE.Texture();
     manager.onProgress = function( item, loaded, total ) {
         console.log( item, loaded, total );
     };
@@ -53,12 +54,34 @@ function setScene()
     let ambientLight = new THREE.AmbientLight(0x404040); // soft white light
     scene.add(ambientLight);
 
-
-    let loader = new THREE.FBXLoader( manager );
-    loader.load( 'models/Tree.fbx', function( object ) {
+    //Add the tree
+    let FBXloader = new THREE.FBXLoader( manager );
+    FBXloader.load( 'models/Tree.fbx', function( object ) {
         let obj = object;
         obj.position.set(5,0,5);
         scene.add( obj );
+
+    }, onProgress, onError );
+
+    //Add the ghost texture
+    let IMGloader = new THREE.ImageLoader(manager);
+    IMGloader.load('models/ghost.png', function ( image ) {
+        texture.image = image;
+        texture.needsUpdate = true;
+    } );
+
+    //Add the ghost model
+    let OBJloader = new THREE.OBJLoader(manager);
+    OBJloader.load( 'models/ghost.obj', function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child instanceof THREE.Mesh ) {
+                child.material.map = texture;
+            }
+        } );
+
+        object.position.set(4,0,4);
+        object.scale.multiplyScalar(0.3);
+        scene.add( object );
 
     }, onProgress, onError );
 
