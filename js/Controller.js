@@ -1,4 +1,6 @@
 let renderer, camera, controls, scene, clock, clockDelta, ground;
+let tiles, nodes;
+let beavers = [];
 
 function init()
 {
@@ -14,7 +16,7 @@ function init()
 
 function startGame(game)
 {
-
+    beavers[0] = new Beaver('inserttexturehere', 'melee', 0.420);
 }
 
 function setCamera()
@@ -40,7 +42,7 @@ function setScene()
     let ambientLight = new THREE.AmbientLight(0x404040); // soft white light
     scene.add(ambientLight);
 
-    setTiles(20);
+    tiles = setTiles(20);
 
     function setTiles(gridSize) {
         ground = []; // Initialize array
@@ -53,6 +55,7 @@ function setScene()
                 flag = flag !== true;
             }
         }
+        return ground;
     }
 
 
