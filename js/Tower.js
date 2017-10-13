@@ -7,7 +7,7 @@ class Tower
         //Perfect tower
         let towerGeomitry = new THREE.BoxGeometry(1,5,1);
         let towerMaterial = new THREE.MeshToonMaterial({
-            color: 0xffffff,
+            color: 0xFF69B4,
             side: THREE.DoubleSide
         });
         let tower=new THREE.Mesh(towerGeomitry, towerMaterial);
