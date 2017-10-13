@@ -1,9 +1,22 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground;
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, onError, onProgress;
 
 function init()
 {
     clock = new THREE.Clock();
     clockDelta = clock.getDelta();
+    manager = new THREE.LoadingManager();
+    manager.onProgress = function( item, loaded, total ) {
+        console.log( item, loaded, total );
+    };
+    onProgress = function( xhr ) {
+        if ( xhr.lengthComputable ) {
+            var percentComplete = xhr.loaded / xhr.total * 100;
+            console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
+        }
+    };
+    onError = function( xhr ) {
+        console.error( xhr );
+    };
 
     fpsCounter();
     setCamera();
@@ -40,9 +53,30 @@ function setScene()
     let ambientLight = new THREE.AmbientLight(0x404040); // soft white light
     scene.add(ambientLight);
 
+
+    var loader = new THREE.FBXLoader( manager );
+    loader.load( 'models/Tree.fbx', function( object ) {
+        let obj1 = object;
+        console.log("meme");
+        scene.add( obj1 );
+    });
+
+/*    loader.load( 'models/Tree.fbx', function( geometry )
+    {
+        var material = new THREE.MeshBasicMaterial();
+        var mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(5,2.5,5);
+        scene.add( mesh );
+    });*/
+
+/*    var loader = new THREE.FBXLoader( manager );
+    loader.load( 'models/Tree.fbx', function( object ){scene.add( object );});*/
+
     setTiles(20);
 
-    function setTiles(gridSize) {
+    //Function to create grid for astar
+    function setTiles(gridSize)
+    {
         ground = []; // Initialize array
         let flag = false;
         for (let i = 0; i < gridSize; i++) {
@@ -55,8 +89,7 @@ function setScene()
         }
     }
 
-
-    let tower = new Tower(1);
+    //let tower = new Tower(1);
 
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(window.innerWidth, window.innerHeight);
