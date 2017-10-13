@@ -13,12 +13,12 @@ canvas {
     width:100vw;
     height:100vh;
     background-color:whitesmoke;
+    text-align: center;
 }
 #topbar{
     width:100vw;
     height:35vh;
     background-color:dodgerblue;
-    text-align:center;
     color:white;
     position:absolute;
     top:-440px;
@@ -36,7 +36,6 @@ canvas {
     background-color: dodgerblue;
     position:absolute;
     top:120vh;
-    text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 #bottombar h3{
@@ -78,6 +77,11 @@ h1{
     margin-left:8%;
     margin-top:12%;
 }
+#instrplay{
+    width: 30%;
+    height:20vh;
+    margin-top:12%;
+}
 button{
     border:none;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -86,4 +90,9 @@ button{
 }
 button:hover{
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+#instructions{
+    background-color: lightskyblue;
+    color:white;
+    padding-top:10%;
 }
