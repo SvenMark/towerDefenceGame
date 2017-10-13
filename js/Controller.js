@@ -54,23 +54,13 @@ function setScene()
     scene.add(ambientLight);
 
 
-    var loader = new THREE.FBXLoader( manager );
+    let loader = new THREE.FBXLoader( manager );
     loader.load( 'models/Tree.fbx', function( object ) {
-        let obj1 = object;
-        console.log("meme");
-        scene.add( obj1 );
-    });
+        let obj = object;
+        obj.position.set(5,0,5);
+        scene.add( obj );
 
-/*    loader.load( 'models/Tree.fbx', function( geometry )
-    {
-        var material = new THREE.MeshBasicMaterial();
-        var mesh = new THREE.Mesh(geometry, material);
-        mesh.position.set(5,2.5,5);
-        scene.add( mesh );
-    });*/
-
-/*    var loader = new THREE.FBXLoader( manager );
-    loader.load( 'models/Tree.fbx', function( object ){scene.add( object );});*/
+    }, onProgress, onError );
 
     setTiles(20);
 
@@ -89,7 +79,7 @@ function setScene()
         }
     }
 
-    //let tower = new Tower(1);
+    let tower = new Tower(1);
 
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -128,6 +118,7 @@ function render()
 {
     requestAnimationFrame(render);
     // controls.update();
+    renderer.setClearColor(0xBDCEB6);
     renderer.render(scene, camera);
 }
 
