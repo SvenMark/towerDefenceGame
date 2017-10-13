@@ -8,10 +8,13 @@
         <link rel="stylesheet" type="text/css" href="css/style.css">
 
         <!--External JS libraries-->
+        <script type="text/javascript" src="library/js/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="library/js/three.js"></script>
         <script type="text/javascript" src="library/js/OrbitControls.js"></script>
+        <script type="text/javascript" src="library/js/astar.js"></script>
 
         <!--Internal JavaScript-->
+        <script type="text/javascript" src="js/Tile.js"></script>
         <script type="text/javascript" src="js/NPC.js"></script>
         <script type="text/javascript" src="js/Beaver.js"></script>
         <script type="text/javascript" src="js/Knight.js"></script>
@@ -19,8 +22,50 @@
         <script type="text/javascript" src="js/Game.js"></script>
         <script type="text/javascript" src="js/GUI.js"></script>
         <script type="text/javascript" src="js/Controller.js"></script>
-        <script type="text/javascript" src="js/Tile.js"></script>
     </head>
     <body onload="init()">
+    <div class="fullscreen" id="welcomescreen">
+        <div id="topbar">
+            <h3 id="pushdown">Welcome to:</h3>
+            <h1>Third Valley Tower Defense</h1>
+        </div>
+        <div id="midbar">
+            <div id="left50">
+                <button id="buttonleft" type="button">Play</button>
+            </div>
+            <div id="right50">
+                <button id="buttonright" type="button">Instructions</button>
+            </div>
+            <div id="bottombar">
+                <h3>By: Sven Mark Hofstra, Rendall Schijven and Kevin Snijder</h3>
+            </div>
+        </div>
+    </div>
+    <div class="fullscreen" id="instructions">
+
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#topbar').animate({
+                top: '0px'
+            }, 700);
+            $('#bottombar').delay(500).animate({
+                top: '90vh'
+            }, 1000);
+        });
+        $( "#buttonleft" ).click(function() {
+            $('#topbar').animate({
+                top: '-440px'
+            }, 700);
+            $('#bottombar').animate({
+                top: '100vh'
+            }, 700);
+            $('#midbar').slideUp(400);
+            $('.fullscreen').slideUp(1000);
+        });
+        $( "#buttonright" ).click(function() {
+            alert( "Instructions Called" );
+        });
+    </script>
     </body>
 </html>
