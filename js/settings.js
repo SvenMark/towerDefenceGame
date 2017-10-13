@@ -1,1 +1,1 @@
-var tileSize = 1;
+let tileSize = 1;

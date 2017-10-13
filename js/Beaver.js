@@ -28,16 +28,17 @@ class Beaver extends NPC
     }
 
     create() {
-        let texture = new THREE.ImageUtils.loadTexture(this.texture)
+        let texture = new THREE.ImageUtils.loadTexture(this.texture);
         let material = new THREE.MeshLambertMaterial ({
             map: texture
         });
         let geometry = new THREE.SphereGeometry(this.size.x, this.size,y, this.size.z);
 
         // should reference obj
-        // let refObject = window.
+        let refObject = window.beaver;
+        this.object = new THREE.Mesh(refObject.geometry, material);
 
-        this.object = new THREE.Mesh(geometry, material);
+
         this.object.position.set(this.position.x, this.position.y, this.position.z);
         this.object.scale.x = this.scale;
         this.object.scale.y = this.scale;
@@ -50,17 +51,17 @@ class Beaver extends NPC
     setNodes() {
     if (this.nextStep.x !== undefined) {
         this.currentStep.x = this.nextStep.x;
-        this.currentStep.y = this.nextStep.y;
+        this.currentStep.z = this.nextStep.z;
     }
 
     // calculate next tile/step with a*
     Graph.nodes = nodes;
-    let start = nodes[this.currentStep.x][this.currentStep.y];
-    let end = nodes[this.end.x][this.end.y];
+    let start = nodes[this.currentStep.z][this.currentStep.z];
+    let end = nodes[this.end.z][this.end.z];
     let result = astar.search(Graph.nodes, start, end);
     if (result !== '') {
         this.nextStep.x = result[0].x;
-        this.nextStep.y = result[0].y;
+        this.nextStep.y = result[0].z;
     }
 }
 

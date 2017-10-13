@@ -1,6 +1,5 @@
 let renderer, camera, controls, scene, clock, clockDelta, ground, manager, onError, onProgress, texture;
 let tiles, nodes;
-let beavers = [];
 
 function init()
 {
@@ -25,12 +24,16 @@ function init()
     setCamera();
     setScene();
     setControls();
+    startGame();
     render();
 }
 
-function startGame(game)
+function startGame()
 {
-    beavers[0] = new Beaver('inserttexturehere', 'melee', 0.420);
+    let beavers = [];
+    beavers[0] = new Beaver('models/ghost.png', 'melee', 0.420);
+    beavers[0].create();
+    console.log(beavers[0]);
 }
 
 function setCamera()
@@ -58,40 +61,7 @@ function setScene()
 
     tiles = setTiles(20);
 
-    //Add the tree
-    let FBXloader = new THREE.FBXLoader( manager );
-    FBXloader.load( 'models/Tree.fbx', function( object ) {
-        let obj = object;
-        obj.position.set(5,0,5);
-        scene.add( obj );
-
-    }, onProgress, onError );
-
-    //Add the ghost texture
-    let IMGloader = new THREE.ImageLoader(manager);
-    IMGloader.load('models/ghost.png', function ( image ) {
-        texture.image = image;
-        texture.needsUpdate = true;
-    } );
-
-    //Add the ghost model
-    let OBJloader = new THREE.OBJLoader(manager);
-    OBJloader.load( 'models/ghost.obj', function ( object ) {
-        object.traverse( function ( child ) {
-            if ( child instanceof THREE.Mesh ) {
-                child.material.map = texture;
-            }
-        } );
-
-        object.position.set(4,0,4);
-        object.scale.multiplyScalar(0.3);
-        scene.add( object );
-
-    }, onProgress, onError );
-
-    //Function to create grid for astar
-    function setTiles(gridSize)
-    {
+    function setTiles(gridSize) {
         ground = []; // Initialize array
         let flag = false;
         for (let i = 0; i < gridSize; i++) {
