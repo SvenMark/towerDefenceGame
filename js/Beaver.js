@@ -6,7 +6,7 @@ class Beaver extends NPC {
         this.stats.hp = 15;
         this.stats.hp = 15;
         this.stats.hp_100 = 15;
-        this.stats.speed = 0.05;
+        this.stats.speed = 0.125;
         this.stats.currency = 1;
         this.size = {};
         this.size.x = tileSize;
@@ -22,8 +22,8 @@ class Beaver extends NPC {
         this.currentStep = {};
         this.nextStep = {};
         this.end = {};
-        this.end.x = 5;
-        this.end.z = 5;
+        this.end.x = 19;
+        this.end.z = 19;
 
     }
 
@@ -55,8 +55,8 @@ class Beaver extends NPC {
         }
 
         if (this.end.x === undefined) {
-            this.end.x = 5;
-            this.end.z = 5;
+            this.end.x = 19;
+            this.end.z = 19;
         }
 
         // calculate next tile/step with a*
