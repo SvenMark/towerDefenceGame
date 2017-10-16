@@ -1,19 +1,14 @@
 class Tower
 {
-    constructor(level)
+    constructor(level, object)
     {
         this.level = level;
+        this.object = object;
 
         //Perfect tower
-        let towerGeomitry = new THREE.BoxGeometry(1,5,1);
-        let towerMaterial = new THREE.MeshToonMaterial({
-            color: 0xFF69B4,
-            side: THREE.DoubleSide
-        });
-        let tower=new THREE.Mesh(towerGeomitry, towerMaterial);
-        tower.position.set(0,2.5,0);
-        scene.add(tower);
-        console.log(tower.position);
+        object.scale.multiplyScalar(0.2);
+        object.position.set(10,0,-4.5);
+        scene.add(object);
     }
 
 }
