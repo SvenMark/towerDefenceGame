@@ -11,11 +11,9 @@ function init()
     setControls();
     render();
 }
-
 function preLoader()
 {
     manager = new THREE.LoadingManager();
-
     textureGhost = new THREE.Texture();
     loader =  new THREE.ImageLoader(manager);
     loader.load('models/ghost.png', function (image){
