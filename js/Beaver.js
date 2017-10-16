@@ -14,8 +14,8 @@ class Beaver extends NPC {
         this.size.z = tileSize;
         this.position = {};
         this.position.x = 2;
-        this.position.y = 4.25;
-        this.position.z = 0;
+        this.position.y = 0;
+        this.position.z = 5;
         this.scale = scale;
 
         // Store movement for this monster
@@ -32,10 +32,10 @@ class Beaver extends NPC {
         let material = new THREE.MeshLambertMaterial({
             map: texture
         });
-        let geometry = new THREE.SphereGeometry(this.size.x, this.size, y, this.size.z);
+        let geometry = new THREE.SphereGeometry(this.size.x, this.size.y, this.size.z);
 
         // should reference obj
-        let refObject = window.beaver;
+        let refObject = window.ghost;
         this.object = new THREE.Mesh(refObject.geometry, material);
 
 
@@ -43,8 +43,8 @@ class Beaver extends NPC {
         this.object.scale.x = this.scale;
         this.object.scale.y = this.scale;
         this.object.scale.z = this.scale;
-        this.currentStep.x = 0;
-        this.currentStep.z = 0;
+        this.currentStep.x = this.object.position.x;
+        this.currentStep.z = this.object.position.z;
         this.setNodes();
     };
 
@@ -54,14 +54,19 @@ class Beaver extends NPC {
             this.currentStep.z = this.nextStep.z;
         }
 
+        if (this.end.x === undefined) {
+            this.end.x = 5;
+            this.end.z = 5;
+        }
+
         // calculate next tile/step with a*
-        Graph.nodes = nodes;
-        let start = nodes[this.currentStep.x][this.currentStep.z];
-        let end = nodes[this.end.x][this.end.z];
-        let result = astar.search(Graph.nodes, start, end);
+        let start = graph.grid[this.currentStep.x][this.currentStep.z];
+        let end = graph.grid[this.end.x][this.end.z];
+        let result = astar.search(graph, start, end);
+        console.log(result);
         if (result !== '') {
             this.nextStep.x = result[0].x;
-            this.nextStep.y = result[0].z;
+            this.nextStep.z = result[0].y; //astar weet niet beter
         }
 
 
