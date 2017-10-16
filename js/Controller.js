@@ -1,4 +1,4 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground, manager, onError, onProgress, texture;
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, tree;
 let tiles, nodes;
 let beavers = [];
 
@@ -13,6 +13,34 @@ function init()
     setControls();
     startGame();
     render();
+}
+
+function preLoader()
+{
+    manager = new THREE.LoadingManager();
+
+    textureGhost = new THREE.Texture();
+    loader =  new THREE.ImageLoader(manager);
+    loader.load('models/ghost.png', function (image){
+        textureGhost.image = image;
+        textureGhost.needsUpdate = true;
+    });
+
+    loader = new THREE.OBJLoader(manager);
+    loader.load( 'models/ghost.obj', function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child instanceof THREE.Mesh ) {
+                child.material.map = textureGhost;
+            }
+        } );
+        window.ghost = object.children[0];
+    });
+
+    loader = new THREE.FBXLoader(manager);
+    loader.load('models/Tree.fbx' , function (object) {
+        tree = object;
+        init();
+    });
 }
 
 function preLoader()
@@ -63,6 +91,18 @@ function setControls()
 function setScene()
 {
     scene = new THREE.Scene();
+
+    //Adds the tree
+    tree.position.set(5,0,5);
+    scene.add(tree);
+
+    //Adds the ghost
+    let refObject = window.ghost;
+    let material = new THREE.MeshLambertMaterial();
+    let ghost = new THREE.Mesh(refObject.geometry, material);
+    ghost.position.set(4,0,4);
+    ghost.scale.multiplyScalar(0.3);
+    scene.add(ghost);
 
     // light
     let pointLight = new THREE.PointLight(0xffffff);
