@@ -1,7 +1,5 @@
-class Beaver extends NPC
-{
-    constructor(texture, division, scale)
-    {
+class Beaver extends NPC {
+    constructor(texture, division, scale) {
         super(texture, division, scale);
         this.object = undefined;
         this.stats = {};
@@ -15,7 +13,7 @@ class Beaver extends NPC
         this.size.y = tileSize * 2;
         this.size.z = tileSize;
         this.position = {};
-        this.position.x = 10;
+        this.position.x = 2;
         this.position.y = 4.25;
         this.position.z = 0;
         this.scale = scale;
@@ -24,15 +22,17 @@ class Beaver extends NPC
         this.currentStep = {};
         this.nextStep = {};
         this.end = {};
+        this.end.x = 5;
+        this.end.z = 5;
 
     }
 
     create() {
         let texture = new THREE.ImageUtils.loadTexture(this.texture);
-        let material = new THREE.MeshLambertMaterial ({
+        let material = new THREE.MeshLambertMaterial({
             map: texture
         });
-        let geometry = new THREE.SphereGeometry(this.size.x, this.size,y, this.size.z);
+        let geometry = new THREE.SphereGeometry(this.size.x, this.size, y, this.size.z);
 
         // should reference obj
         let refObject = window.beaver;
@@ -49,22 +49,26 @@ class Beaver extends NPC
     };
 
     setNodes() {
-    if (this.nextStep.x !== undefined) {
-        this.currentStep.x = this.nextStep.x;
-        this.currentStep.z = this.nextStep.z;
+        if (this.nextStep.x !== undefined) {
+            this.currentStep.x = this.nextStep.x;
+            this.currentStep.z = this.nextStep.z;
+        }
+
+        // calculate next tile/step with a*
+        Graph.nodes = nodes;
+        let start = nodes[this.currentStep.x][this.currentStep.z];
+        let end = nodes[this.end.x][this.end.z];
+        let result = astar.search(Graph.nodes, start, end);
+        if (result !== '') {
+            this.nextStep.x = result[0].x;
+            this.nextStep.y = result[0].z;
+        }
+
+
     }
 
-    // calculate next tile/step with a*
-    Graph.nodes = nodes;
-    let start = nodes[this.currentStep.z][this.currentStep.z];
-    let end = nodes[this.end.z][this.end.z];
-    let result = astar.search(Graph.nodes, start, end);
-    if (result !== '') {
-        this.nextStep.x = result[0].x;
-        this.nextStep.y = result[0].z;
+    getObject() {
+        return this.object;
     }
-}
-
-
 }
 

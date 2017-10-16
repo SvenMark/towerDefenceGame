@@ -1,24 +1,11 @@
 let renderer, camera, controls, scene, clock, clockDelta, ground, manager, onError, onProgress, texture;
 let tiles, nodes;
+let beavers = [];
 
 function init()
 {
     clock = new THREE.Clock();
     clockDelta = clock.getDelta();
-    manager = new THREE.LoadingManager();
-    texture = new THREE.Texture();
-    manager.onProgress = function( item, loaded, total ) {
-        console.log( item, loaded, total );
-    };
-    onProgress = function( xhr ) {
-        if ( xhr.lengthComputable ) {
-            var percentComplete = xhr.loaded / xhr.total * 100;
-            console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
-        }
-    };
-    onError = function( xhr ) {
-        console.error( xhr );
-    };
 
     fpsCounter();
     setCamera();
@@ -28,12 +15,37 @@ function init()
     render();
 }
 
+function preLoader()
+{
+    manager = new THREE.LoadingManager();
+
+    textureGhost = new THREE.Texture();
+    loader =  new THREE.ImageLoader(manager);
+    loader.load('models/ghost.png', function (image){
+        textureGhost.image = image;
+        textureGhost.needsUpdate = true;
+    });
+
+    loader = new THREE.OBJLoader(manager);
+    loader.load( 'models/ghost.obj', function ( object ) {
+        object.traverse( function ( child ) {
+            if ( child instanceof THREE.Mesh ) {
+                child.material.map = textureGhost;
+            }
+        } );
+        window.ghost = object.children[0];
+    });
+
+    loader = new THREE.FBXLoader(manager);
+    loader.load('models/Tree.fbx' , function (object) {
+        tree = object;
+        init();
+    });
+}
+
 function startGame()
 {
-    let beavers = [];
-    beavers[0] = new Beaver('models/ghost.png', 'melee', 0.420);
-    beavers[0].create();
-    console.log(beavers[0]);
+    //gamestartlogic
 }
 
 function setCamera()
@@ -59,9 +71,11 @@ function setScene()
     let ambientLight = new THREE.AmbientLight(0x404040); // soft white light
     scene.add(ambientLight);
 
-    tiles = setTiles(20);
+    setTiles(20);
 
-    function setTiles(gridSize) {
+    //Function to create grid for astar
+    function setTiles(gridSize)
+    {
         ground = []; // Initialize array
         let flag = false;
         for (let i = 0; i < gridSize; i++) {
@@ -108,6 +122,14 @@ function fpsCounter()
     };
     script.src = '//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
     document.head.appendChild(script);
+}
+
+function spawnBeaver() {
+    beavers[0] = new Beaver('models/ghost.png', 'melee', 0.420);
+    beavers[0].create();
+    let beaverObject = beavers[0].getObject();
+
+    console.log(beavers[0]);
 }
 
 function render()
