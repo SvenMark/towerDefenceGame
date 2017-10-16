@@ -1,4 +1,4 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, tree;
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, tree, castle;
 let tiles = [];
 let beavers = [];
 let graph = new Graph([
@@ -37,15 +37,24 @@ function init() {
     spawnBeaver();
     render();
 }
-
 function preLoader() {
     manager = new THREE.LoadingManager();
-
     textureGhost = new THREE.Texture();
     loader = new THREE.ImageLoader(manager);
     loader.load('models/ghost.png', function (image) {
         textureGhost.image = image;
         textureGhost.needsUpdate = true;
+    });
+
+    loader = new THREE.MTLLoader();
+    loader.load( 'models/stmedardUobj.mtl', function( materials ) {
+        materials.preload();
+
+        loader = new THREE.OBJLoader();
+        loader.setMaterials( materials );
+        loader.load( 'models/stmedardUobj.obj', function ( object ) {
+            window.castle = object.children[0];
+        });
     });
 
     loader = new THREE.OBJLoader(manager);
@@ -83,8 +92,14 @@ function setScene() {
     scene = new THREE.Scene();
 
     //Adds the tree
-    tree.position.set(5, 0, 5);
-    scene.add(tree);
+    for(let i = 0; i < 20; i++)
+    {
+        let newtree =tree.clone();
+        newtree.position.set(i,0,19);
+    scene.add(newtree);
+    }
+
+    castle = new Tower(1, window.castle);
 
     //Adds the ghost
     // let refObject = window.ghost;
@@ -117,8 +132,6 @@ function setScene() {
         }
         return ground;
     }
-
-    let tower = new Tower(1);
 
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(window.innerWidth, window.innerHeight);

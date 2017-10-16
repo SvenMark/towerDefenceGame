@@ -12,8 +12,9 @@ class Tile {
         }
 
         let planeGeometry = new THREE.PlaneGeometry(1, 1, 10, 10);
-        let planeMaterial = new THREE.MeshToonMaterial({
-            color: colorTile,
+        let planeMaterial = new THREE.MeshBasicMaterial({
+            map: THREE.ImageUtils.loadTexture('images/soil.jpg'),
+            //color: colorTile,
             side: THREE.DoubleSide
         });
         let plane = new THREE.Mesh(planeGeometry, planeMaterial);
