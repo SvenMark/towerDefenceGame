@@ -6,7 +6,7 @@ class Beaver extends NPC {
         this.stats.hp = 15;
         this.stats.hp = 15;
         this.stats.hp_100 = 15;
-        this.stats.speed = 0.125;
+        this.stats.speed = 0.05;
         this.stats.currency = 1;
         this.size = {};
         this.size.x = tileSize;
@@ -64,7 +64,7 @@ class Beaver extends NPC {
         let end = graph.grid[this.end.x][this.end.z];
         let result = astar.search(graph, start, end);
         console.log(result);
-        if (result !== '') {
+        if (result != '') {
             this.nextStep.x = result[0].x;
             this.nextStep.z = result[0].y; //astar weet niet beter
         }

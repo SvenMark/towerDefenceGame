@@ -183,7 +183,7 @@ function deleteMonster(index, removeLife) {
 function render() {
     requestAnimationFrame(render);
     // controls.update();
-    for(let i = 0; i< beavers.length; i++) {
+    beavers.forEach(function(beaver, i) {
         let nextX = beavers[i].nextStep.x;
         let nextZ = beavers[i].nextStep.z;
         if (nextX > beavers[i].position.x) {
@@ -215,7 +215,7 @@ function render() {
             console.log('Delete monster');
             deleteMonster(i, true);
         }
-    }
+    });
     renderer.setClearColor(0xBDCEB6);
     renderer.render(scene, camera);
 }
