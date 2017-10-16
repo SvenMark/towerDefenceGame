@@ -1,4 +1,4 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, tree, castle;
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, tower, tree;
 let tiles = [];
 let beavers = [];
 let graph = new Graph([
@@ -53,7 +53,7 @@ function preLoader() {
         loader = new THREE.OBJLoader();
         loader.setMaterials( materials );
         loader.load( 'models/stmedardUobj.obj', function ( object ) {
-            window.castle = object.children[0];
+            window.tower = object.children[0];
         });
     });
 
@@ -99,7 +99,8 @@ function setScene() {
     scene.add(newtree);
     }
 
-    castle = new Tower(1, window.castle);
+    //Add the castle
+    tower = new Tower(1, window.tower);
 
     //Adds the ghost
     // let refObject = window.ghost;
