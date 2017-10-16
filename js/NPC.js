@@ -1,8 +1,9 @@
 class NPC
 {
-    constructor(model, division)
+    constructor(texture, division, scale)
     {
-        this.model = model;
+        this.texture = texture;
         this.division = division;
+        this.scale = scale;
     }
 }

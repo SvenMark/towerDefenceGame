@@ -7,16 +7,6 @@ class Game
         this.knights = [];
         this.beavers = [];
     }
-
-    createBeaver()
-    {
-
-    }
-
-    createKnight()
-    {
-
-    }
 }
 
 

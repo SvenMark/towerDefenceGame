@@ -1,5 +1,10 @@
 class Tower
 {
+
+    //Hoe update je health in de GUI:
+    //  document.getElementById("health").value = Nieuwe Health hoeveelheid;
+    //  document.getElementById("healthtxt").innerHTML = Nieuwe Health hoeveelheid + %;
+
     constructor(level, object)
     {
         this.object = object;
