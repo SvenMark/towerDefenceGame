@@ -1,4 +1,4 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, tree;
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, tree, projectile, ghost;
 let tiles = [];
 let beavers = [];
 let graph = [];
@@ -9,12 +9,13 @@ function init() {
 
     fpsCounter();
     setCamera();
-    setScene();
     setControls();
+    setScene();
     startGame();
     // spawnBeaver();
     render();
 }
+
 function preLoader() {
     manager = new THREE.LoadingManager();
     textureGhost = new THREE.Texture();
@@ -55,7 +56,6 @@ function preLoader() {
 function startGame() {
     console.log('Game started!');
     game = new Game(1,1);
-    game.startWave();
 }
 
 function setCamera() {
@@ -66,6 +66,16 @@ function setCamera() {
 function setControls() {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.maxPolarAngle = 0.49 * Math.PI; // Don't let the camera go below the ground
+
+    document.addEventListener('keypress', onKeyPress);
+
+    function onKeyPress()
+    {
+        if(event.keyCode == 32)
+        {
+            fire();
+        }
+    }
 }
 
 function setScene() {
@@ -79,14 +89,15 @@ function setScene() {
         scene.add(newtree);
     }
 
-    let projectile = new Projectile();
+    projectile = new Projectile();
+
     //Adds the ghost
-    // let refObject = window.ghost;
-    // let material = new THREE.MeshLambertMaterial();
-    // let ghost = new THREE.Mesh(refObject.geometry, material);
-    // ghost.position.set(4,0,4);
-    // ghost.scale.multiplyScalar(0.3);
-    // scene.add(ghost);
+    let refObject = window.ghost;
+    let material = new THREE.MeshLambertMaterial();
+    ghost = new THREE.Mesh(refObject.geometry, material);
+    ghost.position.set(4,0,4);
+    ghost.scale.multiplyScalar(0.3);
+    scene.add(ghost);
 
     // light
     let pointLight = new THREE.PointLight(0xffffff);
@@ -134,6 +145,11 @@ function setScene() {
     window.addEventListener('resize', onWindowResize(), false);
 }
 
+function fire()
+{
+    projectile.fire(ghost);
+}
+
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -160,6 +176,12 @@ function fpsCounter() {
 function render() {
     requestAnimationFrame(render);
     // controls.update();
+
+    if(game.livingBeaver === 0 && game.inWave === true)
+    {
+        game.endWave();
+    }
+
     beavers.forEach(function(beaver, i) {
         let nextX = beavers[i].nextStep.x;
         let nextZ = beavers[i].nextStep.z;
