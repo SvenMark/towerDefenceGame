@@ -2,6 +2,7 @@ class Tile {
     constructor(x,z,i) {
         this.x=x;
         this.z=z;
+        this.occupied = 1;
 
         let colorTile;
         if(i%2===0){
