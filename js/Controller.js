@@ -71,7 +71,7 @@ function setControls() {
 
     function onKeyPress()
     {
-        if(event.keyCode == 32)
+        if(event.keyCode === 32)
         {
             fire();
         }
