@@ -4,6 +4,7 @@ class Game
     {
         this.tower = new Tower(level, window.tower);
         this.wave = wave;
+        this.livingBeaver = 0;
         this.currency = 10;
         this.inWave = false;
         this.knights = [];
@@ -16,6 +17,7 @@ class Game
         for(let i = 5 * this.wave; i >= 0; i--)
         {
             setTimeout(function(){ Game.spawnBeaver(); }, 10000);
+            this.livingBeaver++;
         }
     }
 
@@ -51,6 +53,7 @@ class Game
             //kapoet add monezz
             console.log('Dood door turret')
         }
+        this.livingBeaver--;
         scene.remove(beavers[index]);
         delete beavers[index];
     }
