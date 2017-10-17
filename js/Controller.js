@@ -182,13 +182,16 @@ function spawnBeaver() {
 }
 
 function deleteMonster(index, removeLife) {
+
     if (removeLife) {
         //removelife duh
-        console.log('Leven -1')
+        console.log('Leven -1');
+        tower.damageTower();
     }
     else {
         //kapoet add monezz
-        console.log('Dood door turret')
+        console.log('Dood door turret');
+
     }
     scene.remove(beavers[index]);
     delete beavers[index];

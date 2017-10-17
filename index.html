@@ -3,12 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <title>Tower Defence</title>
+        <script type="text/javascript" src="library/js/jquery-3.2.1.min.js"></script>
 
         <!--Stylesheets-->
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/sidepanel.css">
 
         <!--External JS libraries-->
-        <script type="text/javascript" src="library/js/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="library/js/three.js"></script>
         <script type="text/javascript" src="library/js/OrbitControls.js"></script>
         <script type="text/javascript" src="library/js/OBJLoader.js"></script>
@@ -38,10 +40,10 @@
             </div>
             <div id="midbar">
                 <div id="left50">
-                    <button id="buttonleft" type="button">Play</button>
+                    <button class="menubutton" id="buttonleft" type="button">Play</button>
                 </div>
                 <div id="right50">
-                    <button id="buttonright" type="button">Instructions</button>
+                    <button class="menubutton" id="buttonright" type="button">Instructions</button>
                 </div>
                 <div id="bottombar">
                     <h3>By: Sven Mark Hofstra, Rendall Schijven and Kevin Snijder</h3>
@@ -57,11 +59,38 @@
     </div>-->
 
     <div id="gui">
-        <!-- Health bar -->
-        <p id="healthtxt">60%</p>
-        <progress id="health" value="60" max="100"></progress>
+        <!-- Health bar
+        <p id="healthtxt">100%</p>
+        <progress id="health" value="100" max="100"></progress>
+        <button id="nextwave" onclick="tower.damageTower();" type="button">Next wave</button>
+        <div id="sidebar">
+            <h4>Health</h4>
+            <p id="healthtxt">100%</p>
+            <progress id="health" value="100" max="100"></progress>
+        </div>-->
+        <div id="sidepanel">
+            <div class="tile-progress tile">
+                <div class="tile-header">
+                    <h3>Statistics</h3>
+                </div>
+                <div class="tile-progressbar">
+                    <span id="healthbar" data-fill="100" style="width: 100%;"></span>
+                </div>
+                <div class="tile-footer">
+                    <div class="halfLeft">
+                        <h6>Health:</h6>
+                        <h6>Money:</h6>
+                        <h6>Kills:</h6>
+                    </div>
+                    <div class="halfRight">
+                        <h6 id="healthtxt">100%</h6>
+                        <h6 id="money">€100,-</h6>
+                        <h6 id="kills">0</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
     <script type="text/javascript" src="js/Animations.js"></script>
     </body>
 </html>
