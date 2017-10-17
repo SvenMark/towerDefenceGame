@@ -1,29 +1,6 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, tower, tree;
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, tree;
 let tiles = [];
 let beavers = [];
-let graph = new Graph([
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-]);
-
 
 function init() {
     clock = new THREE.Clock();
@@ -76,6 +53,7 @@ function preLoader() {
 
 function startGame() {
     console.log('Game started!');
+    game = new Game(1,1);
 }
 
 function setCamera() {
@@ -94,13 +72,10 @@ function setScene() {
     //Adds the tree
     for(let i = 0; i < 20; i++)
     {
-        let newtree =tree.clone();
+        let newtree = tree.clone();
         newtree.position.set(i,0,19);
-    scene.add(newtree);
+        scene.add(newtree);
     }
-
-    //Add the castle
-    tower = new Tower(1, window.tower);
 
     //Adds the ghost
     // let refObject = window.ghost;
@@ -165,39 +140,11 @@ function fpsCounter() {
     document.head.appendChild(script);
 }
 
-function spawnBeaver() {
-    console.log('Spawning Beaver!');
-    let beaver = new Beaver('models/ghost.png', 'melee', 0.420);
-    beaver.create();
-    let beaverObject = beaver.getObject();
-    beaverObject.currentStep = beaver.currentStep;
-    beaverObject.nextStep = beaver.nextStep;
-    beaverObject.setNodes = beaver.setNodes;
-    beaverObject.stats = beaver.stats;
-    beaverObject.end = beaver.end;
-    console.log(beaverObject.currentStep);
-    console.log(beaverObject.nextStep);
-    beavers.push(beaverObject);
-    scene.add(beaverObject);
-}
-
-function deleteMonster(index, removeLife) {
-    if (removeLife) {
-        //removelife duh
-        console.log('Leven -1')
-    }
-    else {
-        //kapoet add monezz
-        console.log('Dood door turret')
-    }
-    scene.remove(beavers[index]);
-    delete beavers[index];
-}
-
 function render() {
     requestAnimationFrame(render);
     // controls.update();
     beavers.forEach(function(beaver, i) {
+        console.log("IIIIIIIIIIIIIIIIII", i);
         let nextX = beavers[i].nextStep.x;
         let nextZ = beavers[i].nextStep.z;
         if (nextX > beavers[i].position.x) {
@@ -227,7 +174,9 @@ function render() {
 
         if (beavers[i].currentStep.x === beavers[i].end.x && beavers[i].currentStep.z === beavers[i].end.z) {
             console.log('Delete monster');
-            deleteMonster(i, true);
+            //beavers[i].die();
+            //delete beavers[i];
+            game.deleteMonster(i, true);
         }
     });
     renderer.setClearColor(0xBDCEB6);

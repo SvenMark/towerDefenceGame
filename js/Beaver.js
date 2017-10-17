@@ -6,7 +6,7 @@ class Beaver extends NPC {
         this.stats.hp = 15;
         this.stats.hp = 15;
         this.stats.hp_100 = 15;
-        this.stats.speed = 0.125;
+        this.stats.speed = 0.100;
         this.stats.currency = 1;
         this.size = {};
         this.size.x = tileSize;
@@ -47,6 +47,11 @@ class Beaver extends NPC {
         this.currentStep.z = this.object.position.z;
         this.setNodes();
     };
+
+    remove()
+    {
+        scene.remove(this);
+    }
 
     setNodes() {
         if (this.nextStep.x !== undefined) {
