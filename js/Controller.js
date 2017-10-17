@@ -118,6 +118,7 @@ function setScene() {
     scene.add(ambientLight);
 
     tiles = setTiles(20);
+    graph = buildGraph(20);
 
     //Function to create grid for astar
     function setTiles(gridSize) {
@@ -132,6 +133,19 @@ function setScene() {
             }
         }
         return ground;
+    }
+
+    //Build Graph
+    function buildGraph(gridSize) {
+        graph = [];
+        for (let i = 0; i < gridSize; i++) {
+            graph[i] = [];
+            for (let j = 0; j < gridSize; j++) {
+                graph[i][j] = tiles[i][j].occupied;
+            }
+        }
+
+        return new Graph([graph])
     }
 
     renderer = new THREE.WebGLRenderer({antialias: true});
