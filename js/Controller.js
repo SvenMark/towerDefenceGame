@@ -5,7 +5,6 @@ let graph = [];
 
 function init() {
     clock = new THREE.Clock();
-    clockDelta = clock.getDelta();
 
     fpsCounter();
     setCamera();
@@ -56,7 +55,6 @@ function preLoader() {
 function startGame() {
     console.log('Game started!');
     game = new Game(1,1);
-    console.log(game.livingBeaver)
 }
 
 function setCamera() {
@@ -175,8 +173,8 @@ function fpsCounter() {
 
 function render() {
     requestAnimationFrame(render);
-    // controls.update();
-    console.log(game);
+    clockDelta = clock.getDelta() * 120;
+
     if(game.livingBeaver === 0 && game.inWave === true)
     {
         game.endWave();
@@ -186,19 +184,19 @@ function render() {
         let nextX = beavers[i].nextStep.x;
         let nextZ = beavers[i].nextStep.z;
         if (nextX > beavers[i].position.x) {
-            beavers[i].position.x += beavers[i].stats.speed;
+            beavers[i].position.x += (beavers[i].stats.speed * clockDelta);
             // healthBars[i].position.x += beavers[i].stats.speed;
         }
         else if (nextX < beavers[i].position.x) {
-            beavers[i].position.x -= beavers[i].stats.speed;
+            beavers[i].position.x -= (beavers[i].stats.speed * clockDelta);
             // healthBars[i].position.x -= beaver[i].stats.speed;
         }
         else if (nextZ > beavers[i].position.z) {
-            beavers[i].position.z += beavers[i].stats.speed;
+            beavers[i].position.z += (beavers[i].stats.speed * clockDelta);
             // healthBars[i].position.z += beavers[i].stats.speed;
         }
         else if (nextZ < beavers[i].position.z) {
-            beavers[i].position.z -= beavers[i].stats.speed;
+            beavers[i].position.z -= (beavers[i].stats.speed * clockDelta);
             // healthBars[i].position.z -= beavers[i].stats.speed;
         }
 

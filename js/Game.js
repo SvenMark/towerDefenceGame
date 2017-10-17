@@ -16,10 +16,14 @@ class Game
     {
         document.getElementById("nextwave").setAttribute('disabled', 'disabled');
         this.inWave = true;
+        let j = 1;
+
         for(let i = 5 * this.wave; i >= 0; i--)
         {
-            setTimeout(function(){ Game.spawnBeaver(); }, 10000);
+            //setInterval(function(){ Game.spawnBeaver(); }, 1000);
+            setTimeout(function(){ Game.spawnBeaver(); }, j * 500);
             this.livingBeaver++;
+            j++;
         }
     }
 
@@ -34,7 +38,7 @@ class Game
     static spawnBeaver()
     {
         console.log('Spawning Beaver!');
-        let beaver = new Beaver('models/ghost.png', 'melee', 0.420);
+        let beaver = new Beaver('models/ghost.png', 'melee', 0.35);
         beaver.create();
         let beaverObject = beaver.getObject();
         beaverObject.currentStep = beaver.currentStep;
@@ -42,8 +46,8 @@ class Game
         beaverObject.setNodes = beaver.setNodes;
         beaverObject.stats = beaver.stats;
         beaverObject.end = beaver.end;
-        console.log(beaverObject.currentStep);
-        console.log(beaverObject.nextStep);
+        //console.log(beaverObject.currentStep);
+        //console.log(beaverObject.nextStep);
         beavers.push(beaverObject);
         scene.add(beaverObject);
     }
