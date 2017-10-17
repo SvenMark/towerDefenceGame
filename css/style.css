@@ -106,6 +106,6 @@ h1{
 
 #nextwave{
     pointer-events: all!important;
-    float:right;
-    margin-right:15px;
+    margin-left: 10%;
+    width: 90%;
 }

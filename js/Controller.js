@@ -55,7 +55,6 @@ function preLoader() {
 function startGame() {
     console.log('Game started!');
     game = new Game(1,1);
-    game.startWave();
 }
 
 function setCamera() {
@@ -155,38 +154,6 @@ function fpsCounter() {
     };
     script.src = '//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
     document.head.appendChild(script);
-}
-
-function spawnBeaver() {
-    console.log('Spawning Beaver!');
-    let beaver = new Beaver('models/ghost.png', 'melee', 0.420);
-    beaver.create();
-    let beaverObject = beaver.getObject();
-    beaverObject.currentStep = beaver.currentStep;
-    beaverObject.nextStep = beaver.nextStep;
-    beaverObject.setNodes = beaver.setNodes;
-    beaverObject.stats = beaver.stats;
-    beaverObject.end = beaver.end;
-    console.log(beaverObject.currentStep);
-    console.log(beaverObject.nextStep);
-    beavers.push(beaverObject);
-    scene.add(beaverObject);
-}
-
-function deleteMonster(index, removeLife) {
-
-    if (removeLife) {
-        //removelife duh
-        console.log('Leven -1');
-        tower.damageTower();
-    }
-    else {
-        //kapoet add monezz
-        console.log('Dood door turret');
-
-    }
-    scene.remove(beavers[index]);
-    delete beavers[index];
 }
 
 function render() {

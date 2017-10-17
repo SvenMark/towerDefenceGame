@@ -5,6 +5,7 @@ class Game
         this.tower = new Tower(level, window.tower);
         this.wave = wave;
         this.currency = 10;
+        this.kills=0;
         this.inWave = false;
         this.knights = [];
         this.beavers = [];
@@ -12,6 +13,7 @@ class Game
 
     startWave()
     {
+        document.getElementById("nextwave").setAttribute('disabled', 'disabled');
         this.inWave = true;
         for(let i = 5 * this.wave; i >= 0; i--)
         {
@@ -21,7 +23,9 @@ class Game
 
     endWave()
     {
+        document.getElementById("nextwave").removeAttribute("disabled");
         this.wave++;
+        document.getElementById("nextwave").innerHTML="Start wave "+this.wave.toString();
         this.inWave = false;
     }
 
@@ -45,11 +49,16 @@ class Game
     deleteMonster(index, removeLife) {
         if (removeLife) {
             //removelife duh
-            console.log('Leven -1')
+            console.log('Leven -1');
+            this.tower.damageTower();
         }
         else {
             //kapoet add monezz
-            console.log('Dood door turret')
+            console.log('Dood door turret');
+            this.kills++;
+            document.getElementById("kills").innerHTML=this.kills.toString();
+            this.currency+=beavers[index].stats.currency;
+            document.getElementById("currency").innerHTML="€"+this.currency+",-";
         }
         scene.remove(beavers[index]);
         delete beavers[index];
