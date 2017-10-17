@@ -17,6 +17,4 @@ class Projectile
         this.direction.y = target.position.y;
         this.direction.z = target.position.z;
     }
-
-
 }
