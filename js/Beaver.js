@@ -48,6 +48,11 @@ class Beaver extends NPC {
         this.setNodes();
     };
 
+    remove()
+    {
+        scene.remove(this);
+    }
+
     setNodes() {
         if (this.nextStep.x !== undefined) {
             this.currentStep.x = this.nextStep.x;
