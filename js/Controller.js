@@ -1,6 +1,7 @@
 let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, tree;
 let tiles = [];
 let beavers = [];
+let graph = [];
 
 function init() {
     clock = new THREE.Clock();
@@ -11,7 +12,7 @@ function init() {
     setScene();
     setControls();
     startGame();
-    spawnBeaver();
+    // spawnBeaver();
     render();
 }
 function preLoader() {
@@ -54,6 +55,7 @@ function preLoader() {
 function startGame() {
     console.log('Game started!');
     game = new Game(1,1);
+    game.startWave();
 }
 
 function setCamera() {
@@ -120,7 +122,7 @@ function setScene() {
             }
         }
 
-        return new Graph([graph])
+        return new Graph(graph);
     }
 
     renderer = new THREE.WebGLRenderer({antialias: true});
@@ -158,7 +160,6 @@ function render() {
     requestAnimationFrame(render);
     // controls.update();
     beavers.forEach(function(beaver, i) {
-        console.log("IIIIIIIIIIIIIIIIII", i);
         let nextX = beavers[i].nextStep.x;
         let nextZ = beavers[i].nextStep.z;
         if (nextX > beavers[i].position.x) {
@@ -184,10 +185,7 @@ function render() {
             beavers[i].setNodes();
         }
 
-        console.log('Bever current', beavers[i].currentStep);
-
         if (beavers[i].currentStep.x === beavers[i].end.x && beavers[i].currentStep.z === beavers[i].end.z) {
-            console.log('Delete monster');
             //beavers[i].die();
             //delete beavers[i];
             game.deleteMonster(i, true);

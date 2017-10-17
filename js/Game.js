@@ -15,7 +15,7 @@ class Game
         this.inWave = true;
         for(let i = 5 * this.wave; i >= 0; i--)
         {
-            this.spawnBeaver();
+            setTimeout(function(){ Game.spawnBeaver(); }, 10000);
         }
     }
 
@@ -25,7 +25,7 @@ class Game
         this.inWave = false;
     }
 
-    spawnBeaver()
+    static spawnBeaver()
     {
         console.log('Spawning Beaver!');
         let beaver = new Beaver('models/ghost.png', 'melee', 0.420);
