@@ -4,6 +4,7 @@ class Game
     {
         this.tower = new Tower(level, window.tower);
         this.wave = wave;
+        this.livingBeaver = 0;
         this.currency = 10;
         this.kills=0;
         this.inWave = false;
@@ -18,6 +19,7 @@ class Game
         for(let i = 5 * this.wave; i >= 0; i--)
         {
             setTimeout(function(){ Game.spawnBeaver(); }, 10000);
+            this.livingBeaver++;
         }
     }
 
@@ -60,6 +62,7 @@ class Game
             this.currency+=beavers[index].stats.currency;
             document.getElementById("currency").innerHTML="€"+this.currency+",-";
         }
+        this.livingBeaver--;
         scene.remove(beavers[index]);
         delete beavers[index];
     }
