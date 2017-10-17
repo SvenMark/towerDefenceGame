@@ -77,6 +77,7 @@ function setScene() {
         scene.add(newtree);
     }
 
+    let projectile = new Projectile();
     //Adds the ghost
     // let refObject = window.ghost;
     // let material = new THREE.MeshLambertMaterial();
