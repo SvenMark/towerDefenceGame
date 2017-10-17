@@ -9,8 +9,8 @@ function init() {
 
     fpsCounter();
     setCamera();
-    setControls();
     setScene();
+    setControls();
     startGame();
     // spawnBeaver();
     render();
@@ -56,6 +56,7 @@ function preLoader() {
 function startGame() {
     console.log('Game started!');
     game = new Game(1,1);
+    console.log(game.livingBeaver)
 }
 
 function setCamera() {
@@ -66,7 +67,6 @@ function setCamera() {
 function setControls() {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.maxPolarAngle = 0.49 * Math.PI; // Don't let the camera go below the ground
-
     document.addEventListener('keypress', onKeyPress);
 
     function onKeyPress()
@@ -156,7 +156,7 @@ function onWindowResize() {
 
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    render();
+    //render();
 }
 
 function fpsCounter() {
@@ -176,7 +176,7 @@ function fpsCounter() {
 function render() {
     requestAnimationFrame(render);
     // controls.update();
-
+    console.log(game);
     if(game.livingBeaver === 0 && game.inWave === true)
     {
         game.endWave();
