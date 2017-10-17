@@ -6,7 +6,6 @@ let graph = [];
 function init() {
     clock = new THREE.Clock();
     clockDelta = clock.getDelta();
-
     fpsCounter();
     setCamera();
     setScene();
