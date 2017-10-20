@@ -13,17 +13,17 @@ class Beaver extends NPC {
         this.size.y = tileSize * 2;
         this.size.z = tileSize;
         this.position = {};
-        this.position.x = 2;
+        this.position.x =  Math.floor((Math.random() * 20) + 1);
         this.position.y = 0;
-        this.position.z = 5;
+        this.position.z = 19;
         this.scale = scale;
 
         // Store movement for this monster
         this.currentStep = {};
         this.nextStep = {};
         this.end = {};
-        this.end.x = 19;
-        this.end.z = 19;
+        this.end.x = 10;
+        this.end.z = 0;
 
     }
 
@@ -60,8 +60,8 @@ class Beaver extends NPC {
         }
 
         if (this.end.x === undefined) {
-            this.end.x = 19;
-            this.end.z = 19;
+            this.end.x = 10;
+            this.end.z = 0;
         }
 
         // calculate next tile/step with a*
