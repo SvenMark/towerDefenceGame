@@ -33,7 +33,7 @@
 
     </head>
     <body onload="preLoader()">
-    <!--<div id="intro">
+    <div id="intro">
         <div class="fullscreen" id="welcomescreen">
             <div id="topbar">
                 <h3 id="pushdown">Welcome to:</h3>
@@ -57,18 +57,9 @@
                 <button id="instrplay" type="button">Play</button>
             </div>
         </div>
-    </div>-->
+    </div>
 
     <div id="gui">
-        <!-- Health bar
-        <p id="healthtxt">100%</p>
-        <progress id="health" value="100" max="100"></progress>
-        <button id="nextwave" onclick="tower.damageTower();" type="button">Next wave</button>
-        <div id="sidebar">
-            <h4>Health</h4>
-            <p id="healthtxt">100%</p>
-            <progress id="health" value="100" max="100"></progress>
-        </div>-->
         <div id="sidepanel">
             <div class="tile-progress tile">
                 <div class="tile-header">
@@ -82,13 +73,11 @@
                         <h6>Health:</h6>
                         <h6>Money:</h6>
                         <h6>Kills:</h6>
-                        <h6>Wave:</h6>
                     </div>
                     <div class="halfRight">
                         <h6 id="healthtxt">100%</h6>
                         <h6 id="currency">€10,-</h6>
                         <h6 id="kills">0</h6>
-                        <h6 id="wave">1</h6>
                     </div>
                     <button id="nextwave" onclick="game.startWave();" type="button">Start wave 1</button>
                 </div>
