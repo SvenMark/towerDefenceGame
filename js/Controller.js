@@ -2,6 +2,8 @@ let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textu
 let tiles = [];
 let beavers = [];
 let graph = [];
+let targetList = [];
+let projector, mouse = { x: 0, y: 0 };
 
 function init() {
     clock = new THREE.Clock();
@@ -35,6 +37,7 @@ function preLoader() {
         });
     });
 
+
     loader = new THREE.OBJLoader(manager);
     loader.load('models/ghost.obj', function (object) {
         object.traverse(function (child) {
@@ -50,6 +53,8 @@ function preLoader() {
         tree = object;
         init();
     });
+
+
 }
 
 function startGame() {
@@ -117,6 +122,9 @@ function setScene() {
             for (let j = 0; j < gridSize; j++) {
                 ground[i][j] = new Tile(j, i, flag);
                 flag = flag !== true;
+
+                //add to click targets
+                targetList.push(ground[i][j]);
             }
         }
         return ground;
@@ -140,7 +148,34 @@ function setScene() {
     renderer.setClearColor(0x000000);
     document.body.appendChild(renderer.domElement);
 
+    projector = new THREE.Projector();
     window.addEventListener('resize', onWindowResize(), false);
+    document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+}
+
+function onDocumentMouseDown( e ) {
+    e.preventDefault();
+    console.log("Click");
+    // update the mouse variable
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    // find intersections
+
+    // create a Ray with origin at the mouse position
+    //   and direction into the scene (camera direction)
+    let vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+    projector.unprojectVector( vector, camera );
+    let ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+
+    // create an array containing all objects in the scene with which the ray intersects
+    let intersects = ray.intersectObjects( targetList );
+
+    // if there is one (or more) intersections
+    if ( intersects.length > 0 )
+    {
+        console.log("Hit @ x=" + intersects[0].object.position.x + ", z=" + intersects[0].object.position.z);
+    }
+
 }
 
 function fire()
