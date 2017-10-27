@@ -1,7 +1,8 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, tree, projectile, ghost;
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, tree, projectile, ghost, intersects;
 let tiles = [];
 let beavers = [];
 let graph = [];
+//List of objects you can click
 let targetList = [];
 let projector, mouse = { x: 0, y: 0 };
 
@@ -154,28 +155,33 @@ function setScene() {
 }
 
 function onDocumentMouseDown( e ) {
-    e.preventDefault();
     console.log("Click");
-    // update the mouse variable
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    // find intersections
-
-    // create a Ray with origin at the mouse position
-    //   and direction into the scene (camera direction)
     let vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
     projector.unprojectVector( vector, camera );
     let ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
-
-    // create an array containing all objects in the scene with which the ray intersects
-    let intersects = ray.intersectObjects( targetList );
-
-    // if there is one (or more) intersections
+    intersects = ray.intersectObjects( targetList );
     if ( intersects.length > 0 )
     {
         console.log("Hit @ x=" + intersects[0].object.position.x + ", z=" + intersects[0].object.position.z);
+        if(intersects[0].occupied===0){
+            //Show tower stats + upgrade button
+        }
+        else{
+            //Show place tower button
+            document.getElementById("placetower").style.display = 'block';
+        }
     }
 
+}
+
+function placetower(){
+    console.log("tower placed");
+    intersects[0].occupied=0;
+    //Dit werkt niet. Fix nodig
+    console.log(intersects[0].occupied);
+    document.getElementById("placetower").style.display = 'none';
 }
 
 function fire()
