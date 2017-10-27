@@ -22,6 +22,6 @@ class Tile {
         plane.rotation.x = -Math.PI / 2;
         plane.position.set(x,0,z);
         scene.add(plane);
-        return plane;
+        this.object=plane;
     }
 }

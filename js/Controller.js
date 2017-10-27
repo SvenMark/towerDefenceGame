@@ -1,10 +1,11 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, tree, projectile, ghost, intersects;
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, tree, projectile, ghost, intersects, clickedobject, projector,I, mouse = { x: 0, y: 0 };
 let tiles = [];
 let beavers = [];
 let graph = [];
-//List of objects you can click
+//List of stuff you can click
 let targetList = [];
-let projector, mouse = { x: 0, y: 0 };
+//List of objects you can click
+let targetListObjects=[];
 
 function init() {
     clock = new THREE.Clock();
@@ -124,8 +125,10 @@ function setScene() {
                 ground[i][j] = new Tile(j, i, flag);
                 flag = flag !== true;
 
-                //add to click targets
+                //Add to click targets
                 targetList.push(ground[i][j]);
+                //Can only raycast on object lists, so I need another list for it
+                targetListObjects.push(ground[i][j].object);
             }
         }
         return ground;
@@ -155,18 +158,31 @@ function setScene() {
 }
 
 function onDocumentMouseDown( e ) {
+
+    //This works ONLY when the mouse is not above another tile while clicking the button.
+
     console.log("Click");
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
     let vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
     projector.unprojectVector( vector, camera );
     let ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
-    intersects = ray.intersectObjects( targetList );
+    intersects = ray.intersectObjects( targetListObjects );
     if ( intersects.length > 0 )
     {
-        console.log("Hit @ x=" + intersects[0].object.position.x + ", z=" + intersects[0].object.position.z);
-        if(intersects[0].occupied===0){
+        //Search for the target
+        for(let i = 0; i < targetList.length; i++){
+            if(targetList[i].object===intersects[0].object){
+                console.log("Match found");
+                clickedobject=targetList[i];
+                break;
+            }
+        }
+        console.log("Hit @ x=" + clickedobject.object.position.x + ", z=" + clickedobject.object.position.z);
+        console.log(clickedobject.occupied);
+        if(clickedobject.occupied===0){
             //Show tower stats + upgrade button
+            console.log("Upgrade");
         }
         else{
             //Show place tower button
@@ -178,9 +194,8 @@ function onDocumentMouseDown( e ) {
 
 function placetower(){
     console.log("tower placed");
-    intersects[0].occupied=0;
-    //Dit werkt niet. Fix nodig
-    console.log(intersects[0].occupied);
+    clickedobject.occupied=0;
+    console.log(clickedobject.occupied);
     document.getElementById("placetower").style.display = 'none';
 }
 
