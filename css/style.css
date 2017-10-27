@@ -120,4 +120,9 @@ h1{
 #upgradetower{
     display: none;
     pointer-events: all!important;
+    bottom: 20px;
+    position: fixed;
+    width: 20%;
+    margin-left: 40%;
+    background-color:grey;
 }

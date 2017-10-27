@@ -183,10 +183,14 @@ function onDocumentMouseDown( e ) {
         if(clickedobject.occupied===0){
             //Show tower stats + upgrade button
             console.log("Upgrade");
+            document.getElementById("upgradetower").style.display = 'block';
+            document.getElementById("placetower").style.display = 'none';
+
         }
         else{
             //Show place tower button
             document.getElementById("placetower").style.display = 'block';
+            document.getElementById("upgradetower").style.display = 'none';
         }
     }
 
