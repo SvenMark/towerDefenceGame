@@ -193,6 +193,10 @@ function onDocumentMouseDown( e ) {
 }
 
 function placetower(){
+    let cube = new THREE.Mesh( new THREE.CubeGeometry( 1, 1, 1 ), new THREE.MeshNormalMaterial() );
+    cube.position.set(clickedobject.object.position.x, 0.5, clickedobject.object.position.z);
+    scene.add(cube);
+
     console.log("tower placed");
     clickedobject.occupied=0;
     console.log(clickedobject.occupied);
