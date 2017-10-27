@@ -109,3 +109,15 @@ h1{
     margin-left: 10%;
     width: 90%;
 }
+#placetower{
+    bottom: 20px;
+    position: fixed;
+    width: 20%;
+    margin-left: 40%;
+    display: none;
+    pointer-events: all!important;
+}
+#upgradetower{
+    display: none;
+    pointer-events: all!important;
+}
