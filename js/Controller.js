@@ -6,7 +6,7 @@ let graph = [];
 let targetList = [];
 //List of objects you can click
 let targetListObjects=[];
-let towercount=0;
+let towers=[], towercount=0;
 
 function init() {
     clock = new THREE.Clock();
@@ -67,7 +67,7 @@ function startGame() {
 
 function setCamera() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.set(0, 8, 16);
+    camera.position.set(10, 20, 10);
 }
 
 function setControls() {
@@ -79,7 +79,37 @@ function setControls() {
     {
         if(event.keyCode === 32)
         {
-            fire();
+            //For every tower
+            for(let i=0; i<towers.length; i++){
+                //Only run when there are active beavers
+                if(beavers.length>0){
+                    let towerpos=new THREE.Vector3(towers[i].position.x,towers[i].position.y,towers[i].position.z);
+                    let closestdistance;
+                    let closestbeaverid;
+
+                    //Check distance from tower for every beaver
+                    for(let j=0; j<beavers.length; j++){
+                        let target = new THREE.Vector3(beavers[j].position.x,beavers[j].position.y,beavers[j].position.z);
+                        let distancetobeaver = towerpos.distanceTo(target);
+
+                        console.log("Tower #"+ i + " to beaver #"+ j + " = " + distancetobeaver);
+
+                        if(closestdistance===undefined){
+                            closestdistance=distancetobeaver;
+                            closestbeaverid=j;
+                        }
+                        else if(distancetobeaver<closestdistance){
+                            closestdistance=distancetobeaver;
+                            closestbeaverid=j;
+                        }
+                    }
+                    console.log("The closest beaver to Tower #"+i+" = Beaver #"+closestbeaverid);
+
+                    projectile = new Projectile(towers[i].position.x,towers[i].position.y,towers[i].position.z);
+                    projectile.fire(beavers[closestbeaverid]);
+
+                }
+            }
         }
     }
 }
@@ -94,8 +124,6 @@ function setScene() {
         newtree.position.set(i,0,19);
         scene.add(newtree);
     }
-
-    projectile = new Projectile();
 
     //Adds the ghost
     let refObject = window.ghost;
@@ -164,7 +192,7 @@ function onDocumentMouseDown( e ) {
     }
     else if(e.toElement.id==='upgradetowerbutton'){
         //If you click the upgradetower button
-        upgradetower();
+        upgradetower(clickedobject.connectedtower);
     }
     else{
         mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -198,7 +226,7 @@ function onDocumentMouseDown( e ) {
             }
         }
         else{
-            //Hide all in clicked on nothing
+            //Hide all if clicked on nothing
             document.getElementById("placetower").style.display = 'none';
             document.getElementById("upgradetower").style.display = 'none';
         }
@@ -212,8 +240,9 @@ function placetower(){
     cube.name=("Tower #"+towercount).toString();
     scene.add(cube);
 
-    //Connect tower to tile for easy access and value changes. Needs to be a tower class, though. For things as firespeed to be changed.
+    //Connect tower to tile for easy access and value changes. Needs to be a tower class, though. For things as firespeed and damage to be changed.
     clickedobject.connectedtower=cube;
+    towers[towercount]=cube;
 
     towercount++;
     console.log("Tower Placed");
@@ -222,13 +251,8 @@ function placetower(){
 }
 
 function upgradetower(tower){
-    console.log("Tower Upgraded");
+    console.log(tower.name +" Upgraded");
     document.getElementById("upgradetower").style.display = 'none';
-}
-
-function fire()
-{
-    projectile.fire(ghost);
 }
 
 function onWindowResize() {
