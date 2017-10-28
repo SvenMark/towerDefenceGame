@@ -1,4 +1,4 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, tree, projectile, ghost, intersects, clickedobject, projector,I, mouse = { x: 0, y: 0 };
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, tree, projectile, ghost, intersects, clickedobject, projector, mouse = { x: 0, y: 0 };
 let tiles = [];
 let beavers = [];
 let graph = [];
@@ -6,6 +6,7 @@ let graph = [];
 let targetList = [];
 //List of objects you can click
 let targetListObjects=[];
+let towercount=0;
 
 function init() {
     clock = new THREE.Clock();
@@ -40,6 +41,14 @@ function preLoader() {
     });
 
 
+
+    loader = new THREE.FBXLoader(manager);
+    loader.load('models/Tree.fbx', function (object) {
+        tree = object;
+        init();
+    });
+
+
     loader = new THREE.OBJLoader(manager);
     loader.load('models/ghost.obj', function (object) {
         object.traverse(function (child) {
@@ -49,14 +58,6 @@ function preLoader() {
         });
         window.ghost = object.children[0];
     });
-
-    loader = new THREE.FBXLoader(manager);
-    loader.load('models/Tree.fbx', function (object) {
-        tree = object;
-        init();
-    });
-
-
 }
 
 function startGame() {
@@ -143,7 +144,6 @@ function setScene() {
                 graph[i][j] = tiles[i][j].occupied;
             }
         }
-
         return new Graph(graph);
     }
 
@@ -158,53 +158,72 @@ function setScene() {
 }
 
 function onDocumentMouseDown( e ) {
+    if(e.toElement.id==='placetower'){
+        //If you click the placetower button
+        placetower();
+    }
+    else if(e.toElement.id==='upgradetowerbutton'){
+        //If you click the upgradetower button
+        upgradetower();
+    }
+    else{
+        mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+        let vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+        projector.unprojectVector( vector, camera );
+        let ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+        intersects = ray.intersectObjects( targetListObjects );
+        if ( intersects.length > 0 )
+        {
+            //Search for the object you clicked and name it clickedobject
+            for(let i = 0; i < targetList.length; i++){
+                if(targetList[i].object===intersects[0].object){
+                    clickedobject=targetList[i];
+                    break;
+                }
+            }
+            console.log("Hit @ x=" + clickedobject.object.position.x +", y=" + clickedobject.object.position.y + ", z=" + clickedobject.object.position.z);
+            if(clickedobject.occupied===0){
+                //Show tower stats + upgrade button
+                console.log("Tile is occupied by "+ clickedobject.connectedtower.name +", upgrade box triggered");
+                document.getElementById("upgradetower").style.display = 'block';
+                document.getElementById("placetower").style.display = 'none';
 
-    //This works ONLY when the mouse is not above another tile while clicking the button.
-
-    console.log("Click");
-    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    let vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
-    projector.unprojectVector( vector, camera );
-    let ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
-    intersects = ray.intersectObjects( targetListObjects );
-    if ( intersects.length > 0 )
-    {
-        //Search for the target
-        for(let i = 0; i < targetList.length; i++){
-            if(targetList[i].object===intersects[0].object){
-                console.log("Match found");
-                clickedobject=targetList[i];
-                break;
+            }
+            else{
+                //Show place tower button
+                console.log("Tile is not occupied, placetower box triggered");
+                document.getElementById("placetower").style.display = 'block';
+                document.getElementById("upgradetower").style.display = 'none';
             }
         }
-        console.log("Hit @ x=" + clickedobject.object.position.x + ", z=" + clickedobject.object.position.z);
-        console.log(clickedobject.occupied);
-        if(clickedobject.occupied===0){
-            //Show tower stats + upgrade button
-            console.log("Upgrade");
-            document.getElementById("upgradetower").style.display = 'block';
-            document.getElementById("placetower").style.display = 'none';
-
-        }
         else{
-            //Show place tower button
-            document.getElementById("placetower").style.display = 'block';
+            //Hide all in clicked on nothing
+            document.getElementById("placetower").style.display = 'none';
             document.getElementById("upgradetower").style.display = 'none';
         }
     }
-
 }
 
 function placetower(){
     let cube = new THREE.Mesh( new THREE.CubeGeometry( 1, 1, 1 ), new THREE.MeshNormalMaterial() );
     cube.position.set(clickedobject.object.position.x, 0.5, clickedobject.object.position.z);
+    //Tower name for debug reasons
+    cube.name=("Tower #"+towercount).toString();
     scene.add(cube);
 
-    console.log("tower placed");
+    //Connect tower to tile for easy access and value changes. Needs to be a tower class, though. For things as firespeed to be changed.
+    clickedobject.connectedtower=cube;
+
+    towercount++;
+    console.log("Tower Placed");
     clickedobject.occupied=0;
-    console.log(clickedobject.occupied);
     document.getElementById("placetower").style.display = 'none';
+}
+
+function upgradetower(tower){
+    console.log("Tower Upgraded");
+    document.getElementById("upgradetower").style.display = 'none';
 }
 
 function fire()

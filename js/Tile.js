@@ -1,3 +1,4 @@
+let connectedtower;
 class Tile {
     constructor(x,z,i) {
         this.x=x;

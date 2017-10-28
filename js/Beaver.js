@@ -69,7 +69,7 @@ class Beaver extends NPC {
         let end = graph.grid[this.end.x][this.end.z];
         let result = astar.search(graph, start, end);
         console.log(result);
-        if (result != '') {
+        if (result !== '') {
             this.nextStep.x = result[0].x;
             this.nextStep.z = result[0].y; //astar weet niet beter
         }
