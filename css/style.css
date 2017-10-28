@@ -110,6 +110,7 @@ h1{
     width: 90%;
 }
 #placetower{
+    color:black;
     bottom: 20px;
     position: fixed;
     width: 20%;
@@ -118,6 +119,12 @@ h1{
     pointer-events: all!important;
 }
 #upgradetower{
+    color:black;
     display: none;
     pointer-events: all!important;
+    bottom: 20px;
+    position: fixed;
+    width: 20%;
+    margin-left: 40%;
+    background-color:grey;
 }

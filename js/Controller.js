@@ -1,10 +1,12 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, tree, projectile, ghost, intersects;
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, tree, projectile, ghost, intersects, clickedobject, projector, mouse = { x: 0, y: 0 };
 let tiles = [];
 let beavers = [];
 let graph = [];
-//List of objects you can click
+//List of stuff you can click
 let targetList = [];
-let projector, mouse = { x: 0, y: 0 };
+//List of objects you can click
+let targetListObjects=[];
+let towers=[], towercount=0;
 
 function init() {
     clock = new THREE.Clock();
@@ -39,6 +41,14 @@ function preLoader() {
     });
 
 
+
+    loader = new THREE.FBXLoader(manager);
+    loader.load('models/Tree.fbx', function (object) {
+        tree = object;
+        init();
+    });
+
+
     loader = new THREE.OBJLoader(manager);
     loader.load('models/ghost.obj', function (object) {
         object.traverse(function (child) {
@@ -48,14 +58,6 @@ function preLoader() {
         });
         window.ghost = object.children[0];
     });
-
-    loader = new THREE.FBXLoader(manager);
-    loader.load('models/Tree.fbx', function (object) {
-        tree = object;
-        init();
-    });
-
-
 }
 
 function startGame() {
@@ -65,7 +67,7 @@ function startGame() {
 
 function setCamera() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.set(0, 8, 16);
+    camera.position.set(10, 20, 10);
 }
 
 function setControls() {
@@ -77,7 +79,37 @@ function setControls() {
     {
         if(event.keyCode === 32)
         {
-            fire();
+            //For every tower
+            for(let i=0; i<towers.length; i++){
+                //Only run when there are active beavers
+                if(beavers.length>0){
+                    let towerpos=new THREE.Vector3(towers[i].position.x,towers[i].position.y,towers[i].position.z);
+                    let closestdistance;
+                    let closestbeaverid;
+
+                    //Check distance from tower for every beaver
+                    for(let j=0; j<beavers.length; j++){
+                        let target = new THREE.Vector3(beavers[j].position.x,beavers[j].position.y,beavers[j].position.z);
+                        let distancetobeaver = towerpos.distanceTo(target);
+
+                        console.log("Tower #"+ i + " to beaver #"+ j + " = " + distancetobeaver);
+
+                        if(closestdistance===undefined){
+                            closestdistance=distancetobeaver;
+                            closestbeaverid=j;
+                        }
+                        else if(distancetobeaver<closestdistance){
+                            closestdistance=distancetobeaver;
+                            closestbeaverid=j;
+                        }
+                    }
+                    console.log("The closest beaver to Tower #"+i+" = Beaver #"+closestbeaverid);
+
+                    projectile = new Projectile(towers[i].position.x,towers[i].position.y,towers[i].position.z);
+                    projectile.fire(beavers[closestbeaverid]);
+
+                }
+            }
         }
     }
 }
@@ -92,8 +124,6 @@ function setScene() {
         newtree.position.set(i,0,19);
         scene.add(newtree);
     }
-
-    projectile = new Projectile();
 
     //Adds the ghost
     let refObject = window.ghost;
@@ -124,8 +154,10 @@ function setScene() {
                 ground[i][j] = new Tile(j, i, flag);
                 flag = flag !== true;
 
-                //add to click targets
+                //Add to click targets
                 targetList.push(ground[i][j]);
+                //Can only raycast on object lists, so I need another list for it
+                targetListObjects.push(ground[i][j].object);
             }
         }
         return ground;
@@ -140,7 +172,6 @@ function setScene() {
                 graph[i][j] = tiles[i][j].occupied;
             }
         }
-
         return new Graph(graph);
     }
 
@@ -155,38 +186,73 @@ function setScene() {
 }
 
 function onDocumentMouseDown( e ) {
-    console.log("Click");
-    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    let vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
-    projector.unprojectVector( vector, camera );
-    let ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
-    intersects = ray.intersectObjects( targetList );
-    if ( intersects.length > 0 )
-    {
-        console.log("Hit @ x=" + intersects[0].object.position.x + ", z=" + intersects[0].object.position.z);
-        if(intersects[0].occupied===0){
-            //Show tower stats + upgrade button
+    if(e.toElement.id==='placetower'){
+        //If you click the placetower button
+        placetower();
+    }
+    else if(e.toElement.id==='upgradetowerbutton'){
+        //If you click the upgradetower button
+        upgradetower(clickedobject.connectedtower);
+    }
+    else{
+        mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+        let vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+        projector.unprojectVector( vector, camera );
+        let ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+        intersects = ray.intersectObjects( targetListObjects );
+        if ( intersects.length > 0 )
+        {
+            //Search for the object you clicked and name it clickedobject
+            for(let i = 0; i < targetList.length; i++){
+                if(targetList[i].object===intersects[0].object){
+                    clickedobject=targetList[i];
+                    break;
+                }
+            }
+            console.log("Hit @ x=" + clickedobject.object.position.x +", y=" + clickedobject.object.position.y + ", z=" + clickedobject.object.position.z);
+            if(clickedobject.occupied===0){
+                //Show tower stats + upgrade button
+                console.log("Tile is occupied by "+ clickedobject.connectedtower.name +", upgrade box triggered");
+                document.getElementById("upgradetower").style.display = 'block';
+                document.getElementById("placetower").style.display = 'none';
+
+            }
+            else{
+                //Show place tower button
+                console.log("Tile is not occupied, placetower box triggered");
+                document.getElementById("placetower").style.display = 'block';
+                document.getElementById("upgradetower").style.display = 'none';
+            }
         }
         else{
-            //Show place tower button
-            document.getElementById("placetower").style.display = 'block';
+            //Hide all if clicked on nothing
+            document.getElementById("placetower").style.display = 'none';
+            document.getElementById("upgradetower").style.display = 'none';
         }
     }
-
 }
 
 function placetower(){
-    console.log("tower placed");
-    intersects[0].occupied=0;
-    //Dit werkt niet. Fix nodig
-    console.log(intersects[0].occupied);
+    let cube = new THREE.Mesh( new THREE.CubeGeometry( 1, 1, 1 ), new THREE.MeshNormalMaterial() );
+    cube.position.set(clickedobject.object.position.x, 0.5, clickedobject.object.position.z);
+    //Tower name for debug reasons
+    cube.name=("Tower #"+towercount).toString();
+    scene.add(cube);
+
+    //Connect tower to tile for easy access and value changes. Needs to be a tower class, though. For things as firespeed and damage to be changed.
+    clickedobject.connectedtower=cube;
+    towers[towercount]=cube;
+
+    towercount++;
+    console.log("Tower Placed");
+    clickedobject.occupied=0;
     document.getElementById("placetower").style.display = 'none';
 }
 
-function fire()
-{
-    projectile.fire(ghost);
+function upgradetower(tower){
+    console.log(tower.name +" Upgraded");
+    document.getElementById("upgradetower").style.display = 'none';
 }
 
 function onWindowResize() {
