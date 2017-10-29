@@ -162,7 +162,7 @@ function setScene() {
             ground[i] = []; // Initialize inner array
             flag = flag !== true;
             for (let j = 0; j < gridSize; j++) {
-                ground[i][j] = new Tile(j, i, flag);
+                ground[i][j] = new Tile(i, j, flag);
                 flag = flag !== true;
 
                 //Add to click targets
@@ -201,19 +201,30 @@ let indicator = new THREE.Mesh( new THREE.CubeGeometry( 1, 0.2, 1 ), new THREE.M
 function onDocumentMouseDown( e ) {
     //Clicked tile indicator cube
     if(e.toElement.id==='placetower'){
-        if(game.currency>=towerprice) {
+        clickedobject.occupied = 0;
+        graph = updateGraph(20);
+        console.log(isValidPath());
+        if(!isValidPath()) {
+            clickedobject.occupied = 1;
+            graph = updateGraph(20);
+            $("#error").fadeIn(300).delay(3000).fadeOut(300);
+            console.log("Geen plek");
+        }
+        else if(game.currency>=towerprice){
             //Make a new tower and place it
-            towers[towercount] = new Tower(towercount, window.tower.clone());
+            towers[towercount] = new Tower(1, window.tower.clone());
+
+            // update Graph for path finding
+            graph = updateGraph(20);
 
             //Link tower to clicked tile
             clickedobject.connectedtower = towers[towercount];
 
             //Hide the placetower button
             document.getElementById("placetower").style.display = 'none';
+            scene.remove(indicator);$("#success").fadeIn(300).delay(3000).fadeOut(300);
 
-            towercount++;
-            scene.remove(indicator);
-            $("#success").fadeIn(300).delay(3000).fadeOut(300);
+        towercount++;
         }
         else{
             document.getElementById("upgradetower").style.display = 'none';
@@ -274,6 +285,27 @@ function onDocumentMouseDown( e ) {
     }
 }
 
+function updateGraph(gridSize) {
+    graph = [];
+    for (let i = 0; i < gridSize; i++) {
+        graph[i] = [];
+        for (let j = 0; j < gridSize; j++) {
+            graph[i][j] = tiles[i][j].occupied;
+        }
+    }
+    return new Graph(graph);
+}
+
+function isValidPath() {
+    let start = graph.grid[0][0];
+    let end = graph.grid[10][0];
+    let result = astar.search(graph, start, end);
+    if (result == '') {
+        return false;
+    }
+    return true;
+}
+
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -310,19 +342,19 @@ function render() {
         let nextX = beavers[i].nextStep.x;
         let nextZ = beavers[i].nextStep.z;
         if (nextX > beavers[i].position.x) {
-            beavers[i].position.x += (beavers[i].stats.speed * clockDelta);
+            beavers[i].position.x += (beavers[i].stats.speed);
             // healthBars[i].position.x += beavers[i].stats.speed;
         }
         else if (nextX < beavers[i].position.x) {
-            beavers[i].position.x -= (beavers[i].stats.speed * clockDelta);
+            beavers[i].position.x -= (beavers[i].stats.speed);
             // healthBars[i].position.x -= beaver[i].stats.speed;
         }
         else if (nextZ > beavers[i].position.z) {
-            beavers[i].position.z += (beavers[i].stats.speed * clockDelta);
+            beavers[i].position.z += (beavers[i].stats.speed);
             // healthBars[i].position.z += beavers[i].stats.speed;
         }
         else if (nextZ < beavers[i].position.z) {
-            beavers[i].position.z -= (beavers[i].stats.speed * clockDelta);
+            beavers[i].position.z -= (beavers[i].stats.speed);
             // healthBars[i].position.z -= beavers[i].stats.speed;
         }
 
