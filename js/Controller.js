@@ -195,19 +195,28 @@ let indicator = new THREE.Mesh( new THREE.CubeGeometry( 1, 0.2, 1 ), new THREE.M
 function onDocumentMouseDown( e ) {
     //Clicked tile indicator cube
     if(e.toElement.id==='placetower'){
-        //Make a new tower and place it
-        towers[towercount]=new Tower(towercount, window.tower.clone());
-
-        // update Graph for path finding
+        clickedobject.occupied = 0;
         graph = updateGraph(20);
+        console.log(isValidPath());
+        if(!isValidPath()) {
+            clickedobject.occupied = 1;
+            graph = updateGraph(20);
+        }
+        else {
+            //Make a new tower and place it
+            towers[towercount] = new Tower(1, window.tower.clone());
 
-        //Link tower to clicked tile
-        clickedobject.connectedtower=towers[towercount];
+            // update Graph for path finding
+            graph = updateGraph(20);
 
-        //Hide the placetower button
-        document.getElementById("placetower").style.display = 'none';
+            //Link tower to clicked tile
+            clickedobject.connectedtower = towers[towercount];
 
-        towercount++;
+            //Hide the placetower button
+            document.getElementById("placetower").style.display = 'none';
+
+            towercount++;
+        }
         scene.remove(indicator);
     }
 
@@ -266,6 +275,16 @@ function updateGraph(gridSize) {
         }
     }
     return new Graph(graph);
+}
+
+function isValidPath() {
+    let start = graph.grid[0][0];
+    let end = graph.grid[10][0];
+    let result = astar.search(graph, start, end);
+    if (result == '') {
+        return false;
+    }
+    return true;
 }
 
 function onWindowResize() {
