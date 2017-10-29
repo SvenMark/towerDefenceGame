@@ -2,7 +2,7 @@ class Game
 {
     constructor(level, wave)
     {
-        this.tower = new Tower(level, window.tower);
+        this.castle = new Castle(level, window.castle);
         this.wave = wave;
         this.livingBeaver = 0;
         this.currency = 10;
@@ -56,7 +56,7 @@ class Game
         if (removeLife) {
             //removelife duh
             console.log('Leven -1');
-            this.tower.damageTower();
+            this.castle.damageCastle();
         }
         else {
             //kapoet add monezz
