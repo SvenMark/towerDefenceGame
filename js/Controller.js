@@ -198,6 +198,9 @@ function onDocumentMouseDown( e ) {
         //Make a new tower and place it
         towers[towercount]=new Tower(towercount, window.tower.clone());
 
+        // update Graph for path finding
+        graph = updateGraph(20);
+
         //Link tower to clicked tile
         clickedobject.connectedtower=towers[towercount];
 
@@ -252,6 +255,17 @@ function onDocumentMouseDown( e ) {
             scene.remove(indicator);
         }
     }
+}
+
+function updateGraph(gridSize) {
+    graph = [];
+    for (let i = 0; i < gridSize; i++) {
+        graph[i] = [];
+        for (let j = 0; j < gridSize; j++) {
+            graph[i][j] = tiles[i][j].occupied;
+        }
+    }
+    return new Graph(graph);
 }
 
 function onWindowResize() {
