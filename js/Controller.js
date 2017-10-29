@@ -36,7 +36,7 @@ function preLoader() {
         loader = new THREE.OBJLoader();
         loader.setMaterials( materials );
         loader.load( 'models/stmedardUobj.obj', function ( object ) {
-            window.tower = object.children[0];
+            window.castle = object.children[0];
         });
     });
 
@@ -45,7 +45,12 @@ function preLoader() {
     loader = new THREE.FBXLoader(manager);
     loader.load('models/Tree.fbx', function (object) {
         tree = object;
-        init();
+
+        loader = new THREE.FBXLoader(manager);
+        loader.load('models/tower.fbx', function (object) {
+           window.tower = object;
+            init();
+        });
     });
 
 
@@ -126,12 +131,12 @@ function setScene() {
     }
 
     //Adds the ghost
-    let refObject = window.ghost;
+/*    let refObject = window.ghost;
     let material = new THREE.MeshLambertMaterial();
     ghost = new THREE.Mesh(refObject.geometry, material);
     ghost.position.set(4,0,4);
     ghost.scale.multiplyScalar(0.3);
-    scene.add(ghost);
+    scene.add(ghost);*/
 
     // light
     let pointLight = new THREE.PointLight(0xffffff);
@@ -169,6 +174,7 @@ function setScene() {
         for (let i = 0; i < gridSize; i++) {
             graph[i] = [];
             for (let j = 0; j < gridSize; j++) {
+                //.occupied does not work
                 graph[i][j] = tiles[i][j].occupied;
             }
         }
@@ -191,9 +197,18 @@ function onDocumentMouseDown( e ) {
     //Clicked tile indicator cube
     if(e.toElement.id==='placetower'){
         //If you click the placetower button
-        placetower();
+        let newtower = new Tower(1, window.tower);
+        //newtower.placetower();
+        //Connect tower to tile for easy access and value changes. Needs to be a tower class, though. For things as firespeed and damage to be changed.
+        clickedobject.connectedtower=newtower;
+        towers[towercount]=newtower;
+        towercount++;
+        console.log("Tower Placed");
+        clickedobject.occupied=0;
+        document.getElementById("placetower").style.display = 'none';
         scene.remove(indicator);
     }
+
     else if(e.toElement.id==='upgradetowerbutton'){
         //If you click the upgradetower button
         upgradetower(clickedobject.connectedtower);
