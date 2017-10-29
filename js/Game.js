@@ -5,11 +5,13 @@ class Game
         this.castle = new Castle(level, window.castle);
         this.wave = wave;
         this.livingBeaver = 0;
-        this.currency = 10;
+        this.currency = starterscurrency;
         this.kills=0;
         this.inWave = false;
         this.knights = [];
         this.beavers = [];
+        //Update gui with correct currency
+        document.getElementById("currency").innerHTML="€"+this.currency+",-";
     }
 
     startWave()

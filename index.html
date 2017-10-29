@@ -61,6 +61,15 @@
     </div>-->
 
     <div id="gui">
+        <div id="error" class="alert alert-danger">
+            <strong>Error!</strong> Transaction failed, not enough money.
+        </div>
+        <div id="errornospace" class="alert alert-danger">
+            <strong>Error!</strong> Transaction failed, ghost path blocked.
+        </div>
+        <div id="success" class="alert alert-success">
+            <strong>Success!</strong> Transaction successful.
+        </div>
         <div id="sidepanel">
             <div class="tile-progress tile">
                 <div class="tile-header">
@@ -85,11 +94,8 @@
             </div>
         </div>
         <!--Place a tower on click of button-->
-        <button id="placetower">Place Tower</button>
-        <div id="upgradetower">
-            <button id="upgradetowerbutton">Upgrade Tower</button>
-            <p>stats here pl0x</p>
-        </div>
+            <button id="placetower" type="button" class="btn btn-info">Buy Tower<br>€10,-</button>
+            <button id="upgradetower" type="button" class="btn btn-info">Upgrade Tower<br>€5,-</button>
     </div>
     <script type="text/javascript" src="js/Animations.js"></script>
     </body>
