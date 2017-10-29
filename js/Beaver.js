@@ -13,7 +13,7 @@ class Beaver extends NPC {
         this.size.y = tileSize * 2;
         this.size.z = tileSize;
         this.position = {};
-        this.position.x =  Math.floor((Math.random() * 20) + 1);
+        this.position.x =  Math.floor((Math.random() * 19) + 1);
         this.position.y = 0;
         this.position.z = 19;
         this.scale = scale;
@@ -68,7 +68,7 @@ class Beaver extends NPC {
         let start = graph.grid[this.currentStep.x][this.currentStep.z];
         let end = graph.grid[this.end.x][this.end.z];
         let result = astar.search(graph, start, end);
-        if (result !== '') {
+        if (result != '') {
             this.nextStep.x = result[0].x;
             this.nextStep.z = result[0].y; //astar weet niet beter
         }

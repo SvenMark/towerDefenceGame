@@ -156,7 +156,7 @@ function setScene() {
             ground[i] = []; // Initialize inner array
             flag = flag !== true;
             for (let j = 0; j < gridSize; j++) {
-                ground[i][j] = new Tile(j, i, flag);
+                ground[i][j] = new Tile(i, j, flag);
                 flag = flag !== true;
 
                 //Add to click targets
@@ -290,19 +290,19 @@ function render() {
         let nextX = beavers[i].nextStep.x;
         let nextZ = beavers[i].nextStep.z;
         if (nextX > beavers[i].position.x) {
-            beavers[i].position.x += (beavers[i].stats.speed * clockDelta);
+            beavers[i].position.x += (beavers[i].stats.speed);
             // healthBars[i].position.x += beavers[i].stats.speed;
         }
         else if (nextX < beavers[i].position.x) {
-            beavers[i].position.x -= (beavers[i].stats.speed * clockDelta);
+            beavers[i].position.x -= (beavers[i].stats.speed);
             // healthBars[i].position.x -= beaver[i].stats.speed;
         }
         else if (nextZ > beavers[i].position.z) {
-            beavers[i].position.z += (beavers[i].stats.speed * clockDelta);
+            beavers[i].position.z += (beavers[i].stats.speed);
             // healthBars[i].position.z += beavers[i].stats.speed;
         }
         else if (nextZ < beavers[i].position.z) {
-            beavers[i].position.z -= (beavers[i].stats.speed * clockDelta);
+            beavers[i].position.z -= (beavers[i].stats.speed);
             // healthBars[i].position.z -= beavers[i].stats.speed;
         }
 
