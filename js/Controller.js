@@ -201,9 +201,11 @@ let indicator = new THREE.Mesh( new THREE.CubeGeometry( 1, 0.2, 1 ), new THREE.M
 function onDocumentMouseDown( e ) {
     //Clicked tile indicator cube
     if(e.toElement.id==='placetower'){
+        clickedobject.occupied = 0;
         graph = updateGraph(20);
         console.log("Path status: "+ isValidPath());
         if(!isValidPath()) {
+            clickedobject.occupied = 1;
             graph = updateGraph(20);
             $("#errornospace").fadeIn(300).delay(3000).fadeOut(300);
             console.log("Geen plek");
