@@ -88,40 +88,6 @@ function setControls() {
 
     function onKeyPress()
     {
-        if(event.keyCode === 32)
-        {
-            //For every tower
-            for(let i=0; i<towers.length; i++){
-                //Only run when there are active beavers
-                if(beavers.length>0){
-                    let towerpos=new THREE.Vector3(towers[i].object.position.x,towers[i].object.position.y,towers[i].object.position.z);
-                    let closestdistance;
-                    let closestbeaverid;
-
-                    //Check distance from tower for every beaver
-                    for(let j=0; j<beavers.length; j++){
-                        let target = new THREE.Vector3(beavers[j].position.x,beavers[j].position.y,beavers[j].position.z);
-                        let distancetobeaver = towerpos.distanceTo(target);
-
-                        console.log("Tower #"+ i + " to beaver #"+ j + " = " + distancetobeaver);
-
-                        if(closestdistance===undefined){
-                            closestdistance=distancetobeaver;
-                            closestbeaverid=j;
-                        }
-                        else if(distancetobeaver<closestdistance){
-                            closestdistance=distancetobeaver;
-                            closestbeaverid=j;
-                        }
-                    }
-                    console.log("The closest beaver to Tower #"+i+" = Beaver #"+closestbeaverid);
-
-                    projectile = new Projectile(towers[i].object.position.x,towers[i].object.position.y,towers[i].object.position.z);
-                    projectile.fire(beavers[closestbeaverid]);
-
-                }
-            }
-        }
     }
 }
 
@@ -329,9 +295,53 @@ function fpsCounter() {
     document.head.appendChild(script);
 }
 
+function targetEnemies() {
+    //For every tower
+    for(let i=0; i<towers.length; i++){
+        //Only run when there are active beavers
+        if(beavers.length>0)
+        {
+            let towerpos=new THREE.Vector3(towers[i].object.position.x,towers[i].object.position.y,towers[i].object.position.z);
+            let closestdistance;
+            let closestbeaverid;
+
+            //Check distance from tower for every beaver
+            for(let j=0; j<beavers.length; j++){
+                if(beavers[j] !== undefined){
+                    let target = new THREE.Vector3(beavers[j].position.x,beavers[j].position.y,beavers[j].position.z);
+                    let distancetobeaver = towerpos.distanceTo(target);
+
+                    console.log("Tower #"+ i + " to beaver #"+ j + " = " + distancetobeaver);
+
+                    if(closestdistance === undefined){
+                        closestdistance = distancetobeaver;
+                        closestbeaverid = j;
+                    }
+                    else if(distancetobeaver < closestdistance){
+                        closestdistance = distancetobeaver;
+                        closestbeaverid = j;
+                    }
+                }
+            }
+            console.log("The closest beaver to Tower #"+i+" = Beaver #"+closestbeaverid);
+
+            projectile = new Projectile(towers[i].object.position.x,towers[i].object.position.y,towers[i].object.position.z);
+            if(beavers[closestbeaverid] !== undefined)
+            {
+                projectile.fire(beavers[closestbeaverid]);
+            }
+        }
+    }
+}
+
 function render() {
     requestAnimationFrame(render);
     clockDelta = clock.getDelta() * 120;
+
+    if(game.inWave === true)
+    {
+        targetEnemies();
+    }
 
     if(game.livingBeaver === 0 && game.inWave === true)
     {
