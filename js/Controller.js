@@ -36,7 +36,7 @@ function preLoader() {
         loader = new THREE.OBJLoader();
         loader.setMaterials( materials );
         loader.load( 'models/stmedardUobj.obj', function ( object ) {
-            window.tower = object.children[0];
+            window.castle = object.children[0];
         });
     });
 
@@ -45,7 +45,12 @@ function preLoader() {
     loader = new THREE.FBXLoader(manager);
     loader.load('models/Tree.fbx', function (object) {
         tree = object;
-        init();
+
+        loader = new THREE.FBXLoader(manager);
+        loader.load('models/tower.fbx', function (object) {
+           window.tower = object;
+            init();
+        });
     });
 
 
@@ -83,7 +88,7 @@ function setControls() {
             for(let i=0; i<towers.length; i++){
                 //Only run when there are active beavers
                 if(beavers.length>0){
-                    let towerpos=new THREE.Vector3(towers[i].position.x,towers[i].position.y,towers[i].position.z);
+                    let towerpos=new THREE.Vector3(towers[i].object.position.x,towers[i].object.position.y,towers[i].object.position.z);
                     let closestdistance;
                     let closestbeaverid;
 
@@ -105,7 +110,7 @@ function setControls() {
                     }
                     console.log("The closest beaver to Tower #"+i+" = Beaver #"+closestbeaverid);
 
-                    projectile = new Projectile(towers[i].position.x,towers[i].position.y,towers[i].position.z);
+                    projectile = new Projectile(towers[i].object.position.x,towers[i].object.position.y,towers[i].object.position.z);
                     projectile.fire(beavers[closestbeaverid]);
 
                 }
@@ -126,12 +131,12 @@ function setScene() {
     }
 
     //Adds the ghost
-    let refObject = window.ghost;
+/*    let refObject = window.ghost;
     let material = new THREE.MeshLambertMaterial();
     ghost = new THREE.Mesh(refObject.geometry, material);
     ghost.position.set(4,0,4);
     ghost.scale.multiplyScalar(0.3);
-    scene.add(ghost);
+    scene.add(ghost);*/
 
     // light
     let pointLight = new THREE.PointLight(0xffffff);
@@ -190,13 +195,22 @@ let indicator = new THREE.Mesh( new THREE.CubeGeometry( 1, 0.2, 1 ), new THREE.M
 function onDocumentMouseDown( e ) {
     //Clicked tile indicator cube
     if(e.toElement.id==='placetower'){
-        //If you click the placetower button
-        placetower();
+        //Make a new tower and place it
+        towers[towercount]=new Tower(towercount, window.tower.clone());
+
+        //Link tower to clicked tile
+        clickedobject.connectedtower=towers[towercount];
+
+        //Hide the placetower button
+        document.getElementById("placetower").style.display = 'none';
+
+        towercount++;
         scene.remove(indicator);
     }
+
     else if(e.toElement.id==='upgradetowerbutton'){
         //If you click the upgradetower button
-        upgradetower(clickedobject.connectedtower);
+        clickedobject.connectedtower.upgradetower();
     }
     else{
         mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -214,7 +228,6 @@ function onDocumentMouseDown( e ) {
                     break;
                 }
             }
-            console.log("Hit @ x=" + clickedobject.object.position.x +", y=" + clickedobject.object.position.y + ", z=" + clickedobject.object.position.z);
             if(clickedobject.occupied===0){
                 //Show tower stats + upgrade button
                 console.log("Tile is occupied by "+ clickedobject.connectedtower.name +", upgrade box triggered");
@@ -239,43 +252,6 @@ function onDocumentMouseDown( e ) {
             scene.remove(indicator);
         }
     }
-}
-
-function placetower(){
-    let cube = new THREE.Mesh( new THREE.CubeGeometry( 1, 1, 1 ), new THREE.MeshNormalMaterial() );
-    cube.position.set(clickedobject.object.position.x, 0.5, clickedobject.object.position.z);
-    //Tower name for debug reasons
-    cube.name=("Tower #"+towercount).toString();
-    scene.add(cube);
-
-    //Connect tower to tile for easy access and value changes. Needs to be a tower class, though. For things as firespeed and damage to be changed.
-    clickedobject.connectedtower=cube;
-    towers[towercount]=cube;
-
-    towercount++;
-    console.log("Tower Placed");
-    clickedobject.occupied=0;
-    console.log(graph);
-    console.log(tiles);
-    graph = updateGraph();
-    console.log('New Graph', graph);
-    document.getElementById("placetower").style.display = 'none';
-}
-
-function updateGraph() {
-    graph = [];
-    for (let i = 0; i < 20; i++) {
-        graph[i] = [];
-        for (let j = 0; j < 20; j++) {
-            graph[i][j] = tiles[i][j].occupied;
-        }
-    }
-    return new Graph(graph);
-}
-
-function upgradetower(tower){
-    console.log(tower.name +" Upgraded");
-    document.getElementById("upgradetower").style.display = 'none';
 }
 
 function onWindowResize() {
