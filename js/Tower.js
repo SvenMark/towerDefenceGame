@@ -5,38 +5,28 @@ class Tower
         this.object = object;
         this.stats = {};
         this.stats.level = level;
-        this.stats.hp = 100;
 
-        let tower = this.object;
-        //let cube = new THREE.Mesh( new THREE.CubeGeometry( 1, 1, 1 ), new THREE.MeshNormalMaterial() );
-        tower.position.set(clickedobject.object.position.x, 0, clickedobject.object.position.z);
-        tower.scale.multiplyScalar(0.4);
+        //Set tower position and scale
+        this.object.position.set(clickedobject.object.position.x, 0, clickedobject.object.position.z);
+        this.object.scale.multiplyScalar(0.4);
+
         //Tower name for debug reasons
-        tower.name=("Tower #"+towercount).toString();
-        scene.add(tower);
+        this.name=("Tower #"+towercount).toString();
 
-        clickedobject.connectedtower=tower;
-        towers[towercount]=tower;
-        towercount++;
-        console.log("Tower Placed");
+        //Add the tower to the scene
+        scene.add(this.object);
+        console.log("Tower #"+ towercount +" Placed");
+
+        //Tell the tile it is now occupied
         clickedobject.occupied=0;
-        document.getElementById("placetower").style.display = 'none';
     }
 
-    placetower()
-    {
-        let tower = this.object;
-        //let cube = new THREE.Mesh( new THREE.CubeGeometry( 1, 1, 1 ), new THREE.MeshNormalMaterial() );
-        tower.position.set(clickedobject.object.position.x, 0, clickedobject.object.position.z);
-        tower.scale.multiplyScalar(0.4);
-        //Tower name for debug reasons
-        tower.name=("Tower #"+towercount).toString();
-        scene.add(tower);
-    }
 
     upgradetower()
     {
-        console.log(tower.name +" Upgraded");
+        this.stats.level++;
+        console.log(this.name +" Upgraded to level "+this.stats.level);
         document.getElementById("upgradetower").style.display = 'none';
+        scene.remove(indicator);
     }
 }
