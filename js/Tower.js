@@ -17,6 +17,11 @@ class Tower
         scene.add(this.object);
         console.log("Tower #"+ towercount +" Placed");
 
+        //Remove money
+        game.currency=game.currency-towerprice;
+        document.getElementById("currency").innerHTML="€"+game.currency+",-";
+
+
         //Tell the tile it is now occupied
         clickedobject.occupied=0;
     }
@@ -24,6 +29,11 @@ class Tower
 
     upgradetower()
     {
+        //Remove money
+        game.currency=game.currency-upgradeprice;
+        document.getElementById("currency").innerHTML="€"+game.currency+",-";
+
+
         this.stats.level++;
         console.log(this.name +" Upgraded to level "+this.stats.level);
         document.getElementById("upgradetower").style.display = 'none';

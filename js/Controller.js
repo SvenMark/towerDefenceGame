@@ -8,6 +8,12 @@ let targetList = [];
 let targetListObjects=[];
 let towers=[], towercount=0;
 
+//Tower costs:
+let towerprice = 10;
+let upgradeprice = 5;
+let starterscurrency = 15;
+
+
 function init() {
     clock = new THREE.Clock();
 
@@ -195,22 +201,36 @@ let indicator = new THREE.Mesh( new THREE.CubeGeometry( 1, 0.2, 1 ), new THREE.M
 function onDocumentMouseDown( e ) {
     //Clicked tile indicator cube
     if(e.toElement.id==='placetower'){
-        //Make a new tower and place it
-        towers[towercount]=new Tower(towercount, window.tower.clone());
+        if(game.currency>=towerprice) {
+            //Make a new tower and place it
+            towers[towercount] = new Tower(towercount, window.tower.clone());
 
-        //Link tower to clicked tile
-        clickedobject.connectedtower=towers[towercount];
+            //Link tower to clicked tile
+            clickedobject.connectedtower = towers[towercount];
 
-        //Hide the placetower button
-        document.getElementById("placetower").style.display = 'none';
+            //Hide the placetower button
+            document.getElementById("placetower").style.display = 'none';
 
-        towercount++;
-        scene.remove(indicator);
+            towercount++;
+            scene.remove(indicator);
+            $("#success").fadeIn(300).delay(3000).fadeOut(300);
+        }
+        else{
+            document.getElementById("upgradetower").style.display = 'none';
+            $("#error").fadeIn(300).delay(3000).fadeOut(300);
+        }
     }
 
-    else if(e.toElement.id==='upgradetowerbutton'){
+    else if(e.toElement.id==='upgradetower'){
         //If you click the upgradetower button
-        clickedobject.connectedtower.upgradetower();
+        if(game.currency>=upgradeprice){
+            clickedobject.connectedtower.upgradetower();
+            $("#success").fadeIn(300).delay(3000).fadeOut(300);
+        }
+        else{
+            document.getElementById("upgradetower").style.display = 'none';
+            $("#error").fadeIn(300).delay(3000).fadeOut(300);
+        }
     }
     else{
         mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -231,14 +251,14 @@ function onDocumentMouseDown( e ) {
             if(clickedobject.occupied===0){
                 //Show tower stats + upgrade button
                 console.log("Tile is occupied by "+ clickedobject.connectedtower.name +", upgrade box triggered");
-                document.getElementById("upgradetower").style.display = 'block';
+                document.getElementById("upgradetower").style.display = 'inline-block';
                 document.getElementById("placetower").style.display = 'none';
 
             }
             else{
                 //Show place tower button
                 console.log("Tile is not occupied, placetower box triggered");
-                document.getElementById("placetower").style.display = 'block';
+                document.getElementById("placetower").style.display = 'inline-block';
                 document.getElementById("upgradetower").style.display = 'none';
             }
             scene.remove(indicator);

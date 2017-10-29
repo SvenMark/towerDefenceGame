@@ -102,6 +102,7 @@ h1{
     height:100vh;
     position: absolute;
     pointer-events: none;
+    text-align: center;
 }
 
 #nextwave{
@@ -110,21 +111,49 @@ h1{
     width: 90%;
 }
 #placetower{
-    color:black;
     bottom: 20px;
     position: fixed;
-    width: 20%;
-    margin-left: 40%;
     display: none;
     pointer-events: all!important;
+    width: 85px;
+    height: 85px;
+    font-size: 13px;
+    line-height: 1.33;
+    border-radius: 50px;
+    border:1px solid black;
+    padding: 3px 0 0;
+    background-color: limegreen;
+}
+#placetower:hover{
+    background-color: grey;
 }
 #upgradetower{
-    color:black;
-    display: none;
-    pointer-events: all!important;
     bottom: 20px;
     position: fixed;
-    width: 20%;
-    margin-left: 40%;
-    background-color:grey;
+    display: none;
+    pointer-events: all!important;
+    width: 85px;
+    height: 85px;
+    font-size: 13px;
+    line-height: 1.33;
+    border-radius: 50px;
+    border:1px solid black;
+    padding: 3px 0 0;
+    background-color: orange;
+}
+.container{
+    width:100vw;
+}
+.alert{
+    margin-top: 10px!important;
+    width:40vw;
+    position: absolute;
+    margin-left: 30vw;
+
+}
+#error{
+    display: none;
+}
+#success{
+    display: none;
 }

@@ -31,3 +31,4 @@ $( "#buttonright" ).click(function() {
 $( "#instrplay" ).click(function() {
     $('#instructions').slideUp(1000);
 });
+
