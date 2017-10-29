@@ -3,6 +3,7 @@ class Game
     constructor(level, wave)
     {
         this.castle = new Castle(level, window.castle);
+        this.terrain = new Terrain();
         this.wave = wave;
         this.livingBeaver = 0;
         this.currency = starterscurrency;

@@ -1,4 +1,4 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, tree, projectile, ghost, intersects, clickedobject, projector, mouse = { x: 0, y: 0 };
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, projectile, intersects, clickedobject, projector, mouse = { x: 0, y: 0 };
 let tiles = [];
 let beavers = [];
 let graph = [];
@@ -43,22 +43,14 @@ function preLoader() {
         loader.setMaterials( materials );
         loader.load( 'models/stmedardUobj.obj', function ( object ) {
             window.castle = object.children[0];
-        });
-    });
-
-
-
-    loader = new THREE.FBXLoader(manager);
-    loader.load('models/Tree.fbx', function (object) {
-        tree = object;
-
-        loader = new THREE.FBXLoader(manager);
-        loader.load('models/tower.fbx', function (object) {
-           window.tower = object;
             init();
         });
     });
 
+    loader = new THREE.FBXLoader(manager);
+    loader.load('models/tower.fbx', function (object) {
+        window.tower = object;
+    });
 
     loader = new THREE.OBJLoader(manager);
     loader.load('models/ghost.obj', function (object) {
@@ -93,22 +85,6 @@ function setControls() {
 
 function setScene() {
     scene = new THREE.Scene();
-
-    //Adds the tree
-    for(let i = 0; i < 20; i++)
-    {
-        let newtree = tree.clone();
-        newtree.position.set(i,0,19);
-        scene.add(newtree);
-    }
-
-    //Adds the ghost
-/*    let refObject = window.ghost;
-    let material = new THREE.MeshLambertMaterial();
-    ghost = new THREE.Mesh(refObject.geometry, material);
-    ghost.position.set(4,0,4);
-    ghost.scale.multiplyScalar(0.3);
-    scene.add(ghost);*/
 
     // light
     let pointLight = new THREE.PointLight(0xffffff);
