@@ -11,7 +11,7 @@ let towers=[], towercount=0;
 //Tower costs:
 let towerprice = 10;
 let upgradeprice = 5;
-let starterscurrency = 15;
+let starterscurrency = 999999;
 
 
 function init() {
@@ -201,13 +201,11 @@ let indicator = new THREE.Mesh( new THREE.CubeGeometry( 1, 0.2, 1 ), new THREE.M
 function onDocumentMouseDown( e ) {
     //Clicked tile indicator cube
     if(e.toElement.id==='placetower'){
-        clickedobject.occupied = 0;
         graph = updateGraph(20);
-        console.log(isValidPath());
+        console.log("Path status: "+ isValidPath());
         if(!isValidPath()) {
-            clickedobject.occupied = 1;
             graph = updateGraph(20);
-            $("#error").fadeIn(300).delay(3000).fadeOut(300);
+            $("#errornospace").fadeIn(300).delay(3000).fadeOut(300);
             console.log("Geen plek");
         }
         else if(game.currency>=towerprice){
@@ -224,7 +222,7 @@ function onDocumentMouseDown( e ) {
             document.getElementById("placetower").style.display = 'none';
             scene.remove(indicator);$("#success").fadeIn(300).delay(3000).fadeOut(300);
 
-        towercount++;
+            towercount++;
         }
         else{
             document.getElementById("upgradetower").style.display = 'none';
