@@ -185,10 +185,14 @@ function setScene() {
     document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 }
 
+let indicator = new THREE.Mesh( new THREE.CubeGeometry( 1, 0.2, 1 ), new THREE.MeshBasicMaterial({color:0x33cc33, transparent:true, opacity:0.4, side: THREE.DoubleSide}) );
+
 function onDocumentMouseDown( e ) {
+    //Clicked tile indicator cube
     if(e.toElement.id==='placetower'){
         //If you click the placetower button
         placetower();
+        scene.remove(indicator);
     }
     else if(e.toElement.id==='upgradetowerbutton'){
         //If you click the upgradetower button
@@ -224,11 +228,15 @@ function onDocumentMouseDown( e ) {
                 document.getElementById("placetower").style.display = 'block';
                 document.getElementById("upgradetower").style.display = 'none';
             }
+            scene.remove(indicator);
+            indicator.position.set(clickedobject.object.position.x, 0.1, clickedobject.object.position.z);
+            scene.add(indicator)
         }
         else{
             //Hide all if clicked on nothing
             document.getElementById("placetower").style.display = 'none';
             document.getElementById("upgradetower").style.display = 'none';
+            scene.remove(indicator);
         }
     }
 }
