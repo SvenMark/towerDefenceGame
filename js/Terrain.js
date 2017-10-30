@@ -40,11 +40,12 @@ class Terrain
             });
             scene.add(terrainScene);
 
-/*            // Get the geometry of the terrain across which you want to scatter meshes
-            let mesh = this.buildTree();
+            // Get the geometry of the terrain across which you want to scatter meshes
+            let mesh = buildTree();
             let geo = terrainScene.children[0].geometry;
             //Add trees
-            let trees = THREE.Terrain.ScatterMeshes(geo, {
+            let trees = THREE.Terrain.ScatterMeshes
+            (geo, {
                 mesh: mesh,
                 w: 127,
                 h: 127,
@@ -52,50 +53,49 @@ class Terrain
                 randomness: Math.random,
             });
             //Add the trees to the terrain
-            terrainScene.add(trees);*/
+            terrainScene.add(trees);
 
             //Add the terrain to the scene
             terrainScene.scale.multiplyScalar(0.1);
             terrainScene.position.y = -20;
+
+            function buildTree() {
+                let material = [
+                    new THREE.MeshLambertMaterial({ color: 0x3d2817 }), // brown
+                    new THREE.MeshLambertMaterial({ color: 0x2d4c1e }), // green
+                ];
+
+                let c0 = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 12, 6, 1, true));
+                c0.position.y = 6;
+                let c1 = new THREE.Mesh(new THREE.CylinderGeometry(0, 10, 14, 8));
+                c1.position.y = 18;
+                let c2 = new THREE.Mesh(new THREE.CylinderGeometry(0, 9, 13, 8));
+                c2.position.y = 25;
+                let c3 = new THREE.Mesh(new THREE.CylinderGeometry(0, 8, 12, 8));
+                c3.position.y = 32;
+
+                let g = new THREE.Geometry();
+                c0.updateMatrix();
+                c1.updateMatrix();
+                c2.updateMatrix();
+                c3.updateMatrix();
+                g.merge(c0.geometry, c0.matrix);
+                g.merge(c1.geometry, c1.matrix);
+                g.merge(c2.geometry, c2.matrix);
+                g.merge(c3.geometry, c3.matrix);
+
+                let b = c0.geometry.faces.length;
+                for (let i = 0, l = g.faces.length; i < l; i++) {
+                    g.faces[i].materialIndex = i < b ? 0 : 1;
+                }
+
+                let m = new THREE.Mesh(g, material);
+
+                m.scale.x = m.scale.z = 5;
+                m.scale.y = 1.25;
+                return m;
+            }
         }
-    }
-
-    buildTree()
-    {
-        let material = [
-            new THREE.MeshLambertMaterial({ color: 0x3d2817 }), // brown
-            new THREE.MeshLambertMaterial({ color: 0x2d4c1e }), // green
-        ];
-
-        let c0 = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 12, 6, 1, true));
-        c0.position.y = 6;
-        let c1 = new THREE.Mesh(new THREE.CylinderGeometry(0, 10, 14, 8));
-        c1.position.y = 18;
-        let c2 = new THREE.Mesh(new THREE.CylinderGeometry(0, 9, 13, 8));
-        c2.position.y = 25;
-        let c3 = new THREE.Mesh(new THREE.CylinderGeometry(0, 8, 12, 8));
-        c3.position.y = 32;
-
-        let g = new THREE.Geometry();
-        c0.updateMatrix();
-        c1.updateMatrix();
-        c2.updateMatrix();
-        c3.updateMatrix();
-        g.merge(c0.geometry, c0.matrix);
-        g.merge(c1.geometry, c1.matrix);
-        g.merge(c2.geometry, c2.matrix);
-        g.merge(c3.geometry, c3.matrix);
-
-        let b = c0.geometry.faces.length;
-        for (let i = 0, l = g.faces.length; i < l; i++) {
-            g.faces[i].materialIndex = i < b ? 0 : 1;
-        }
-
-        let m = new THREE.Mesh(g, material);
-
-        m.scale.x = m.scale.z = 5;
-        m.scale.y = 1.25;
-        return m;
     }
 }
 

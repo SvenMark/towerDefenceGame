@@ -28,32 +28,23 @@ function init() {
 
 function preLoader() {
     manager = new THREE.LoadingManager();
+
     textureGhost = new THREE.Texture();
     loader = new THREE.ImageLoader(manager);
-    loader.load('models/ghost.png', function (image) {
+    loader.load('models/slimer/slimer.png', function (image) {
         textureGhost.image = image;
         textureGhost.needsUpdate = true;
     });
+    console.log(textureGhost);
 
     loader = new THREE.MTLLoader();
-    loader.load( 'models/stmedardUobj.mtl', function( materials ) {
+    loader.load( 'models/Building/Ghostbusters Building.mtl', function( materials ) {
         materials.preload();
 
         loader = new THREE.OBJLoader();
         loader.setMaterials( materials );
-        loader.load( 'models/stmedardUobj.obj', function ( object ) {
+        loader.load( 'models/Building/Ghostbusters Building.obj', function ( object ) {
             window.castle = object.children[0];
-        });
-    });
-
-    loader = new THREE.MTLLoader();
-    loader.load( 'models/Imperial/imperial.mtl', function( materials ) {
-        materials.preload();
-
-        loader = new THREE.OBJLoader();
-        loader.setMaterials( materials );
-        loader.load( 'models/Imperial/imperial.obj', function ( object ) {
-            window.imperial = object.children[0];
             init();
         });
     });
@@ -63,12 +54,12 @@ function preLoader() {
         window.tower = object.children[0];
     });
 
-
     loader = new THREE.OBJLoader(manager);
-    loader.load('models/ghost.obj', function (object) {
+    loader.load('models/slimer/slimer.obj', function (object) {
         object.traverse(function (child) {
             if (child instanceof THREE.Mesh) {
-                child.material.map = textureGhost;
+                //child.material.map = textureGhost;
+                child.material = new THREE.MeshPhongMaterial({color: 0x1be215});
             }
         });
         window.ghost = object.children[0];
@@ -94,10 +85,6 @@ function setControls() {
 
 function setScene() {
     scene = new THREE.Scene();
-
-    var imperial = window.imperial;
-    imperial.scale.multiplyScalar(100);
-    scene.add(imperial);
 
     // light
     let pointLight = new THREE.PointLight(0xffffff);
@@ -349,8 +336,6 @@ function render() {
         }
     }
 
-
-
     if(game.livingBeaver === 0 && game.inWave === true)
     {
         game.endWave();
@@ -360,18 +345,22 @@ function render() {
         let nextX = beavers[i].nextStep.x;
         let nextZ = beavers[i].nextStep.z;
         if (nextX > beavers[i].position.x) {
+            beavers[i].rotation.y=-90*Math.PI / 180;
             beavers[i].position.x += (beavers[i].stats.speed);
             // healthBars[i].position.x += beavers[i].stats.speed;
         }
         else if (nextX < beavers[i].position.x) {
+            beavers[i].rotation.y=90*Math.PI / 180;
             beavers[i].position.x -= (beavers[i].stats.speed);
             // healthBars[i].position.x -= beaver[i].stats.speed;
         }
         else if (nextZ > beavers[i].position.z) {
+            beavers[i].rotation.y=0;
             beavers[i].position.z += (beavers[i].stats.speed);
             // healthBars[i].position.z += beavers[i].stats.speed;
         }
         else if (nextZ < beavers[i].position.z) {
+            beavers[i].rotation.y=0;
             beavers[i].position.z -= (beavers[i].stats.speed);
             // healthBars[i].position.z -= beavers[i].stats.speed;
         }
@@ -384,7 +373,7 @@ function render() {
 
         if(beavers[i].stats.hp <= 0)
         {
-            game.deleteMonster(i, false)
+            game.deleteMonster(i, false);
             return;
         }
 

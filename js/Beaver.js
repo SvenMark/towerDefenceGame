@@ -10,7 +10,7 @@ class Beaver extends NPC {
         this.size = {};
         this.position = {};
         this.position.x = Math.floor((Math.random() * 19) + 1);
-        this.position.y = 0;
+        this.position.y = 0.5;
         this.position.z = 19;
         this.scale = scale;
 
@@ -33,7 +33,7 @@ class Beaver extends NPC {
         let refObject = window.ghost;
         this.object = new THREE.Mesh(refObject.geometry, material);
 
-        this.object.rotation.y=-90*Math.PI / 180;
+        //this.object.rotation.y=-90*Math.PI / 180;
         this.object.position.set(this.position.x, this.position.y, this.position.z);
         this.object.scale.x = this.scale;
         this.object.scale.y = this.scale;
