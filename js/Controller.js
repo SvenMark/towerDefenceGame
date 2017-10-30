@@ -204,14 +204,14 @@ function onDocumentMouseDown( e ) {
             if(clickedobject.occupied===0){
                 //Show tower stats + upgrade button
                 console.log("Tile is occupied by "+ clickedobject.connectedtower.name +", upgrade box triggered");
-                document.getElementById("upgradetowerdiv").style.display = 'inline-block';
+                document.getElementById("upgradetowerdiv").style.display = 'block';
                 document.getElementById("placetowerdiv").style.display = 'none';
 
             }
             else{
                 //Show place tower button
                 console.log("Tile is not occupied, placetower box triggered");
-                document.getElementById("placetowerdiv").style.display = 'inline-block';
+                document.getElementById("placetowerdiv").style.display = 'block';
                 document.getElementById("upgradetowerdiv").style.display = 'none';
             }
             scene.remove(indicator);

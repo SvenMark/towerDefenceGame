@@ -116,11 +116,12 @@ h1{
     width: 90%;
 }
 #placetowerdiv{
-    width: 30vw;
+    width: 20vw;
     height:85px;
     display: none;
     bottom: 20px;
-    position: fixed;
+    position: absolute;
+    margin-left: 40vw;
 }
 #placetower{
     pointer-events: all!important;
@@ -153,11 +154,12 @@ h1{
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 #upgradetowerdiv{
-    width: 30vw;
+    width: 20vw;
     height:85px;
     display: none;
     bottom: 20px;
-    position: fixed;
+    position: absolute;
+    margin-left: 40vw;
 }
 
 #upgradetower{
