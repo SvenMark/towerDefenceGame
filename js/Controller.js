@@ -178,7 +178,7 @@ function onDocumentMouseDown( e ) {
         if(!isValidPath()) {
             clickedobject.occupied = 1;
             graph = updateGraph(20);
-            $("#errornospace").fadeIn(300).delay(3000).fadeOut(300);
+            $("#errornospace").fadeIn(300).delay(1000).fadeOut(300);
             console.log("Geen plek");
         }
         else if(game.currency>=towerprice){
@@ -194,13 +194,14 @@ function onDocumentMouseDown( e ) {
             //Hide the placetower button
             placehide();
             scene.remove(indicator);
-            $("#success").fadeIn(300).delay(3000).fadeOut(300);
+            $("#success").fadeIn(300).delay(1000).fadeOut(300);
 
             towercount++;
         }
         else{
+            clickedobject.occupied = 1;
             upgradehide();
-            $("#error").fadeIn(300).delay(3000).fadeOut(300);
+            $("#error").fadeIn(300).delay(1000).fadeOut(300);
         }
     }
 
@@ -211,7 +212,7 @@ function onDocumentMouseDown( e ) {
         }
         else{
             upgradehide();
-            $("#error").fadeIn(300).delay(3000).fadeOut(300);
+            $("#error").fadeIn(300).delay(1000).fadeOut(300);
         }
     }
     else{
@@ -232,14 +233,12 @@ function onDocumentMouseDown( e ) {
             }
             if(clickedobject.occupied===0){
                 //Show tower stats + upgrade button
-                console.log("Tile is occupied by "+ clickedobject.connectedtower.name +", upgrade box triggered");
                 upgradeshow();
                 placehide();
 
             }
             else{
                 //Show place tower button
-                console.log("Tile is not occupied, placetower box triggered");
                 placeshow();
                 upgradehide();
             }

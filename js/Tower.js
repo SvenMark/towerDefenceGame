@@ -50,14 +50,14 @@ class Tower
 
             this.stats.level++;
             this.stats.speed=this.stats.speed-4;
-            this.stats.damage++;
+            this.stats.damage=this.stats.damage+0.5;
 
             this.updatecolor();
             console.log(this.name +" Upgraded to level "+this.stats.level);
-            $("#success").fadeIn(300).delay(3000).fadeOut(300);
+            $("#success").fadeIn(300).delay(1000).fadeOut(300);
         }
         else{
-            $("#errorhighlvl").fadeIn(300).delay(3000).fadeOut(300);
+            $("#errorhighlvl").fadeIn(300).delay(1000).fadeOut(300);
         }
         upgradehide();
         scene.remove(indicator);
