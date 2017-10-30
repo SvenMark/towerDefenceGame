@@ -2,10 +2,6 @@ class Terrain
 {
     constructor()
     {
-
-        let heightmapImage = new Image();
-        heightmapImage.src = 'images/heightmap.png';
-
         let material = THREE.Terrain.generateBlendedMaterial([
             // The first texture is the base; other textures are blended in on top.
             {texture: THREE.ImageUtils.loadTexture('images/sand1.jpg')},
@@ -18,75 +14,88 @@ class Terrain
             {texture: THREE.ImageUtils.loadTexture('images/stone1.jpg'), glsl: 'slope > 0.7853981633974483 ? 0.2 : 1.0 - smoothstep(0.47123889803846897, 0.7853981633974483, slope) + 0.2'}
         ]);
 
-        // Generate a terrain
-        let xS = 55, yS = 55;
-        let terrainScene = THREE.Terrain({
-            easing: THREE.Terrain.InEaseOut,
-            frequency: 2.5,
-            heightmap: THREE.Terrain.PerlinLayers,
-            material: material,
-            maxHeight: 20,
-            minHeight: -20,
-            steps: 1,
-            useBufferGeometry: false,
-            xSegments: xS,
-            xSize: 512,
-            ySegments: yS,
-            ySize: 512,
-        });
-        // Assuming you already have your global scene, add the terrain to it
-        scene.add(terrainScene);
+        //Source our heightmap
+        let heightmap = new Image();
+        heightmap.src = 'images/heightmap.png';
 
-        // Optional:
-        // Get the geometry of the terrain across which you want to scatter meshes
-        let mesh = this.buildTree();
-        let geo = terrainScene.children[0].geometry;
-        // Add randomly distributed foliage
-        let decoScene = THREE.Terrain.ScatterMeshes(geo, {
-            mesh: mesh,
-            w: xS,
-            h: yS,
-            spread: 0.02,
-            randomness: Math.random,
-        });
-        terrainScene.add(decoScene);
-    }
+        //Load the heightmap, and when its loaded create the terrain
+        heightmap.onload = function() {create()};
 
-    buildTree() {
-        let material = [
-            new THREE.MeshLambertMaterial({ color: 0x3d2817 }), // brown
-            new THREE.MeshLambertMaterial({ color: 0x2d4c1e }), // green
-        ];
+        //Generate a terrain according to our heightmap
+        function create()
+        {
+            let terrain = THREE.Terrain({
+                easing: THREE.Terrain.InEaseOut,
+                frequency: 2.5,
+                heightmap: heightmap,
+                material: material,
+                maxHeight: 20,
+                minHeight: -20,
+                steps: 1,
+                useBufferGeometry: false,
+                xSegments: 55,
+                xSize: 512,
+                ySegments: 55,
+                ySize: 512,
+            });
 
-        let c0 = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 12, 6, 1, true));
-        c0.position.y = 6;
-        let c1 = new THREE.Mesh(new THREE.CylinderGeometry(0, 10, 14, 8));
-        c1.position.y = 18;
-        let c2 = new THREE.Mesh(new THREE.CylinderGeometry(0, 9, 13, 8));
-        c2.position.y = 25;
-        let c3 = new THREE.Mesh(new THREE.CylinderGeometry(0, 8, 12, 8));
-        c3.position.y = 32;
+            // Get the geometry of the terrain across which you want to scatter meshes
+            let mesh = buildTree();
+            let geo = terrain.children[0].geometry;
+            //Add trees
+            let trees = THREE.Terrain.ScatterMeshes(geo, {
+                mesh: mesh,
+                w: 55,
+                h: 55,
+                spread: 0.02,
+                randomness: Math.random,
+            });
+            //Add the trees to the terrain
+            terrain.add(trees);
 
-        let g = new THREE.Geometry();
-        c0.updateMatrix();
-        c1.updateMatrix();
-        c2.updateMatrix();
-        c3.updateMatrix();
-        g.merge(c0.geometry, c0.matrix);
-        g.merge(c1.geometry, c1.matrix);
-        g.merge(c2.geometry, c2.matrix);
-        g.merge(c3.geometry, c3.matrix);
+            //Add the terrain to the scene
+            scene.add(terrain);
 
-        let b = c0.geometry.faces.length;
-        for (let i = 0, l = g.faces.length; i < l; i++) {
-            g.faces[i].materialIndex = i < b ? 0 : 1;
+            function buildTree()
+            {
+                let material = [
+                    new THREE.MeshLambertMaterial({ color: 0x3d2817 }), // brown
+                    new THREE.MeshLambertMaterial({ color: 0x2d4c1e }), // green
+                ];
+
+                let c0 = new THREE.Mesh(new THREE.CylinderGeometry(2, 2, 12, 6, 1, true));
+                c0.position.y = 6;
+                let c1 = new THREE.Mesh(new THREE.CylinderGeometry(0, 10, 14, 8));
+                c1.position.y = 18;
+                let c2 = new THREE.Mesh(new THREE.CylinderGeometry(0, 9, 13, 8));
+                c2.position.y = 25;
+                let c3 = new THREE.Mesh(new THREE.CylinderGeometry(0, 8, 12, 8));
+                c3.position.y = 32;
+
+                let g = new THREE.Geometry();
+                c0.updateMatrix();
+                c1.updateMatrix();
+                c2.updateMatrix();
+                c3.updateMatrix();
+                g.merge(c0.geometry, c0.matrix);
+                g.merge(c1.geometry, c1.matrix);
+                g.merge(c2.geometry, c2.matrix);
+                g.merge(c3.geometry, c3.matrix);
+
+                let b = c0.geometry.faces.length;
+                for (let i = 0, l = g.faces.length; i < l; i++) {
+                    g.faces[i].materialIndex = i < b ? 0 : 1;
+                }
+
+                let m = new THREE.Mesh(g, material);
+
+                m.scale.x = m.scale.z = 5;
+                m.scale.y = 1.25;
+                return m;
+            }
+
         }
 
-        let m = new THREE.Mesh(g, material);
-
-        m.scale.x = m.scale.z = 5;
-        m.scale.y = 1.25;
-        return m;
     }
 }
 
