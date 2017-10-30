@@ -239,7 +239,7 @@ function updateGraph(gridSize) {
 }
 
 function isValidPath() {
-    let start = graph.grid[0][0];
+    let start = graph.grid[19][19];
     let end = graph.grid[10][0];
     let result = astar.search(graph, start, end);
     if (result == '') {
