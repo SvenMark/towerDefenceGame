@@ -23,6 +23,7 @@ class Tower
         //this.updatecolor();
 
         console.log("Tower #"+ towercount +" Placed");
+        console.log("Towerposx " + this.object.position.x + " Towerposz " + this.object.position.z );
 
         //Remove money
         game.currency=game.currency-towerprice;
