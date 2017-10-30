@@ -95,7 +95,8 @@ function setControls() {
 function setScene() {
     scene = new THREE.Scene();
 
-    let imperial = window.imperial;
+    var imperial = window.imperial;
+    imperial.scale.multiplyScalar(100);
     scene.add(imperial);
 
     // light
