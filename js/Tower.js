@@ -38,6 +38,22 @@ class Tower
     {
         let projectile = new Projectile(x,z);
         projectile.fire(beaver);
+
+        let material = new THREE.LineBasicMaterial({
+            color: 0xff6347
+        });
+
+        let geometry = new THREE.Geometry();
+        geometry.vertices.push(
+            new THREE.Vector3( x, 2, z ),
+            new THREE.Vector3( beaver.position.x, beaver.position.y, beaver.position.z-1 )
+        );
+
+        let laser = new THREE.Line( geometry, material );
+        scene.add( laser );
+        setTimeout(function (){
+            scene.remove(laser)
+        }, 250);
     }
 
     upgradetower()
