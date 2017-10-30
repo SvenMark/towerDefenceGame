@@ -242,7 +242,7 @@ function isValidPath() {
     let start = graph.grid[0][0];
     let end = graph.grid[10][0];
     let result = astar.search(graph, start, end);
-    if (result === '') {
+    if (result == '') {
         return false;
     }
     return true;
