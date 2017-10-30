@@ -141,6 +141,10 @@ h1{
     padding: 3px 0 0;
     background-color: orange;
 }
+#upgradetower:hover{
+    background-color: grey;
+}
+
 .container{
     width:100vw;
 }
