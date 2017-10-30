@@ -47,10 +47,11 @@ function preLoader() {
         });
     });
 
-    loader = new THREE.FBXLoader(manager);
-    loader.load('models/tower.fbx', function (object) {
-        window.tower = object;
+    loader = new THREE.OBJLoader(manager);
+    loader.load('models/tower.obj', function (object) {
+        window.tower = object.children[0];
     });
+
 
     loader = new THREE.OBJLoader(manager);
     loader.load('models/ghost.obj', function (object) {
@@ -76,11 +77,6 @@ function setCamera() {
 function setControls() {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.maxPolarAngle = 0.49 * Math.PI; // Don't let the camera go below the ground
-    document.addEventListener('keypress', onKeyPress);
-
-    function onKeyPress()
-    {
-    }
 }
 
 function setScene() {
@@ -170,7 +166,7 @@ function onDocumentMouseDown( e ) {
         }
         else if(game.currency>=towerprice){
             //Make a new tower and place it
-            towers[towercount] = new Tower(1, window.tower.clone());
+            towers[towercount] = new Tower(1);
 
             // update Graph for path finding
             graph = updateGraph(20);
@@ -194,7 +190,6 @@ function onDocumentMouseDown( e ) {
         //If you click the upgradetower button
         if(game.currency>=upgradeprice){
             clickedobject.connectedtower.upgradetower();
-            $("#success").fadeIn(300).delay(3000).fadeOut(300);
         }
         else{
             upgradehide();
