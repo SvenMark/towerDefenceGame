@@ -166,7 +166,7 @@ function setScene() {
     document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 }
 
-let indicator = new THREE.Mesh( new THREE.CubeGeometry( 1, 0.2, 1 ), new THREE.MeshBasicMaterial({color:0xff6347, transparent:true, opacity:0.4, side: THREE.DoubleSide}) );
+let indicator = new THREE.Mesh( new THREE.CubeGeometry( 10, 2, 10 ), new THREE.MeshBasicMaterial({color:0xff6347, transparent:true, opacity:0.4, side: THREE.DoubleSide}) );
 
 function onDocumentMouseDown( e ) {
     //Clicked tile indicator cube
@@ -192,7 +192,8 @@ function onDocumentMouseDown( e ) {
 
             //Hide the placetower button
             placehide();
-            scene.remove(indicator);$("#success").fadeIn(300).delay(3000).fadeOut(300);
+            scene.remove(indicator);
+            $("#success").fadeIn(300).delay(3000).fadeOut(300);
 
             towercount++;
         }
@@ -242,7 +243,7 @@ function onDocumentMouseDown( e ) {
                 upgradehide();
             }
             scene.remove(indicator);
-            indicator.position.set(clickedobject.object.position.x, 0.1, clickedobject.object.position.z);
+            indicator.position.set(clickedobject.object.position.x, -18, clickedobject.object.position.z);
             scene.add(indicator)
         }
         else{
