@@ -15,6 +15,7 @@ class Tower
 
         //Add the tower to the scene
         scene.add(this.object);
+        this.updatecolor();
         console.log("Tower #"+ towercount +" Placed");
 
         //Remove money
@@ -34,14 +35,38 @@ class Tower
 
     upgradetower()
     {
-        //Remove money
-        game.currency=game.currency-upgradeprice;
-        document.getElementById("currency").innerHTML="€"+game.currency+",-";
+        if(this.stats.level<3){
+            //Remove money
+            game.currency=game.currency-upgradeprice;
+            document.getElementById("currency").innerHTML="€"+game.currency+",-";
 
+            this.stats.level++;
+            this.updatecolor();
 
-        this.stats.level++;
-        console.log(this.name +" Upgraded to level "+this.stats.level);
+            console.log(this.name +" Upgraded to level "+this.stats.level);
+            $("#success").fadeIn(300).delay(3000).fadeOut(300);
+        }
+        else{
+            $("#errorhighlvl").fadeIn(300).delay(3000).fadeOut(300);
+        }
         upgradehide();
         scene.remove(indicator);
+    }
+    updatecolor(){
+        switch(this.stats.level){
+            case 1:
+                this.object.material.color.setHex(0xff9933);
+                break;
+            case 2:
+                this.object.material.color.setHex(0xff6347);
+                break;
+            case 3:
+                this.object.material.color.setHex(0xFFD700);
+                break;
+            default:
+                alert("Invalid lvl occured");
+                break;
+        }
+
     }
 }
