@@ -52,6 +52,7 @@ class Tower
         upgradehide();
         scene.remove(indicator);
     }
+
     updatecolor(){
         switch(this.stats.level){
             case 1:
