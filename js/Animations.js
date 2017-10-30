@@ -34,7 +34,7 @@ $( "#instrplay" ).click(function() {
 
 function placeshow(){
     $('#placetowerdiv').fadeIn(300);
-    $('#placetowertxt').delay(300).animate({"width":"90%"}, 600);
+    $('#placetowertxt').delay(300).animate({"width":"92%"}, 600);
     $('#placetowertxtp').delay(300).fadeIn(500);
 }
 function placehide(){
@@ -44,7 +44,7 @@ function placehide(){
 }
 function upgradeshow(){
     $('#upgradetowerdiv').fadeIn(300);
-    $('#upgradetowertxt').delay(300).animate({"width":"90%"}, 600);
+    $('#upgradetowertxt').delay(300).animate({"width":"92%"}, 600);
     $('#upgradetowertxtp').delay(300).fadeIn(500);
 }
 function upgradehide(){

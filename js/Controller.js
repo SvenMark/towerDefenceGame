@@ -11,8 +11,8 @@ let towers=[], towercount=0;
 //Tower costs:
 let towerprice = 10;
 let upgradeprice = 5;
-let starterscurrency = 50;
 
+let starterscurrency = 50;
 
 function init() {
     clock = new THREE.Clock();
