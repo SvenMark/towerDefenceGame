@@ -13,7 +13,7 @@ class Tile {
             colorTile=0x8cb769;
         }
 
-        let planeGeometry = new THREE.PlaneGeometry(10, 10, 10, 10);
+        let planeGeometry = new THREE.PlaneGeometry(1, 1, 10, 10);
         let planeMaterial = new THREE.MeshBasicMaterial({
             color: colorTile,
             transparent: true,
@@ -21,7 +21,7 @@ class Tile {
         });
         let plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.rotation.x = -Math.PI / 2;
-        plane.position.set(-490 + (x * 10),-19,-850 + (z * 10));
+        plane.position.set(x,0,z);
         console.log(plane.position);
         scene.add(plane);
         this.object=plane;
