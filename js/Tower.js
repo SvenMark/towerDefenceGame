@@ -9,6 +9,7 @@ class Tower
         this.stats = {};
         this.stats.level = level;
         this.stats.speed = 10;
+        this.stats.damage = 3;
         this.lastshot = Date.now();
 
         //Set tower position and scale
@@ -34,26 +35,10 @@ class Tower
         clickedobject.occupied=0;
     }
 
-    shoot(beaver, x, z)
+    shoot(beaver)
     {
-        let projectile = new Projectile(x,z);
+        let projectile = new Projectile(this.object.position.x,this.object.position.z,this.stats.damage);
         projectile.fire(beaver);
-
-        let material = new THREE.LineBasicMaterial({
-            color: 0xff6347
-        });
-
-        let geometry = new THREE.Geometry();
-        geometry.vertices.push(
-            new THREE.Vector3( x, 2, z ),
-            new THREE.Vector3( beaver.position.x, beaver.position.y, beaver.position.z-1 )
-        );
-
-        let laser = new THREE.Line( geometry, material );
-        scene.add( laser );
-        setTimeout(function (){
-            scene.remove(laser)
-        }, 250);
     }
 
     upgradetower()
@@ -64,6 +49,9 @@ class Tower
             document.getElementById("currency").innerHTML="€"+game.currency+",-";
 
             this.stats.level++;
+            this.stats.speed=this.stats.speed-4;
+            this.stats.damage++;
+
             this.updatecolor();
             console.log(this.name +" Upgraded to level "+this.stats.level);
             $("#success").fadeIn(300).delay(3000).fadeOut(300);

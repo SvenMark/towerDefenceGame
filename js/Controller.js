@@ -337,7 +337,7 @@ function render() {
 
                 if(closestdistance < 4 && ((Date.now() - towers[i].lastshot) / 100 > towers[i].stats.speed))
                 {
-                    towers[i].shoot(closestbeaver, towers[i].object.position.x, towers[i].object.position.z);
+                    towers[i].shoot(closestbeaver);
                     console.log(Date.now() - towers[i].lastshot);
                     towers[i].lastshot = Date.now();
                 }
