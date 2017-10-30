@@ -6,8 +6,8 @@ class Terrain
             // The first texture is the base; other textures are blended in on top.
             {texture: THREE.ImageUtils.loadTexture('images/sand1.jpg')},
             // Start blending in at height -80; opaque between -35 and 20; blend out by 50
-            {texture: THREE.ImageUtils.loadTexture('images/grass1.jpg'), levels: [-80, -35, 20, 50]},
-            {texture: THREE.ImageUtils.loadTexture('images/stone1.jpg'), levels: [20, 50, 60, 85]},
+            {texture: THREE.ImageUtils.loadTexture('images/grass1.jpg'), levels: [-80, -35, 60, 80]},
+            {texture: THREE.ImageUtils.loadTexture('images/stone1.jpg'), levels: [40, 70, 80, 105]},
             // How quickly this texture is blended in depends on its x-position.
             {texture: THREE.ImageUtils.loadTexture('images/snow1.jpg'),  glsl: '1.0 - smoothstep(65.0 + smoothstep(-256.0, 256.0, vPosition.x) * 10.0, 80.0, vPosition.z)'},
             // Use this texture if the slope is between 27 and 45 degrees
@@ -25,19 +25,27 @@ class Terrain
         function create()
         {
             let terrain = THREE.Terrain({
-                easing: THREE.Terrain.InEaseOut,
+                easing: THREE.Terrain.Linear,
                 frequency: 2.5,
                 heightmap: heightmap,
                 material: material,
-                maxHeight: 20,
+                maxHeight: 170,
                 minHeight: -20,
-                steps: 1,
+                steps: 8,
                 useBufferGeometry: false,
-                xSegments: 55,
-                xSize: 512,
-                ySegments: 55,
-                ySize: 512,
+                xSegments: 127,
+                xSize: 3072,
+                ySegments: 127,
+                ySize: 3072,
             });
+
+/*            let water = new THREE.Mesh(
+                new THREE.PlaneBufferGeometry(16384+1024, 16384+1024, 16, 16),
+                new THREE.MeshLambertMaterial({color: 0x006ba0, transparent: true, opacity: 0.6})
+            );
+            water.position.y = 8;
+            water.rotation.x = -0.5 * Math.PI;
+            scene.add(water);*/
 
             // Get the geometry of the terrain across which you want to scatter meshes
             let mesh = buildTree();
@@ -45,8 +53,8 @@ class Terrain
             //Add trees
             let trees = THREE.Terrain.ScatterMeshes(geo, {
                 mesh: mesh,
-                w: 55,
-                h: 55,
+                w: 127,
+                h: 127,
                 spread: 0.02,
                 randomness: Math.random,
             });

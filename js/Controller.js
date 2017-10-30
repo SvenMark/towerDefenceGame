@@ -43,6 +43,17 @@ function preLoader() {
         loader.setMaterials( materials );
         loader.load( 'models/stmedardUobj.obj', function ( object ) {
             window.castle = object.children[0];
+        });
+    });
+
+    loader = new THREE.MTLLoader();
+    loader.load( 'models/Imperial/imperial.mtl', function( materials ) {
+        materials.preload();
+
+        loader = new THREE.OBJLoader();
+        loader.setMaterials( materials );
+        loader.load( 'models/Imperial/imperial.obj', function ( object ) {
+            window.imperial = object.children[0];
             init();
         });
     });
@@ -71,20 +82,25 @@ function startGame() {
 
 function setCamera() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.set(10, 20, 10);
+    camera.position.set(-500, 100, -900);
+    //IEMAND FIX ZODAT IE NAAR TOREN KIJKT???
+    camera.rotation.x = -Math.PI / 2;
 }
 
 function setControls() {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.maxPolarAngle = 0.49 * Math.PI; // Don't let the camera go below the ground
+    //controls.maxPolarAngle = 0.49 * Math.PI; // Don't let the camera go below the ground
 }
 
 function setScene() {
     scene = new THREE.Scene();
 
+    let imperial = window.imperial;
+    scene.add(imperial);
+
     // light
     let pointLight = new THREE.PointLight(0xffffff);
-    pointLight.position.set(0, 250, 0);
+    pointLight.position.set(-400, 250, -600);
     scene.add(pointLight);
     let ambientLight = new THREE.AmbientLight(0x404040); // soft white light
     scene.add(ambientLight);
