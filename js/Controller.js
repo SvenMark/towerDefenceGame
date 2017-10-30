@@ -181,6 +181,9 @@ function onDocumentMouseDown( e ) {
             $("#errornospace").fadeIn(300).delay(1000).fadeOut(300);
             console.log("Geen plek");
         }
+        else if (clickedobject.object.position.z === 19) {
+            console.log('fuck the all of ya\'s');
+        }
         else if(game.currency>=towerprice){
             //Make a new tower and place it
             towers[towercount] = new Tower(1);
