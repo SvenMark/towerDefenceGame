@@ -4,7 +4,7 @@ class Beaver extends NPC {
         super(texture, division, scale);
         this.object = undefined;
         this.stats = {};
-        this.stats.hp = 6;
+        this.stats.hp = 6 * game.wave;
         this.stats.speed = 0.125;
         this.stats.currency = 1;
         this.size = {};

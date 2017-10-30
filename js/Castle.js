@@ -15,10 +15,14 @@ class Castle
 
     damageCastle()
     {
-        this.stats.hp--;
+        this.stats.hp -= 10;
         document.getElementById("healthtxt").innerHTML=this.stats.hp+"%";
         document.getElementById("healthbar").style.width = this.stats.hp+"%";
-        //If health 0, explode
+
+        if (this.stats.hp === 0) {
+            alert('You Lose!');
+            location.reload();
+        }
     }
 }
 
