@@ -163,13 +163,13 @@ function onDocumentMouseDown( e ) {
             clickedobject.connectedtower = towers[towercount];
 
             //Hide the placetower button
-            document.getElementById("placetower").style.display = 'none';
+            document.getElementById("placetowerdiv").style.display = 'none';
             scene.remove(indicator);$("#success").fadeIn(300).delay(3000).fadeOut(300);
 
             towercount++;
         }
         else{
-            document.getElementById("upgradetower").style.display = 'none';
+            document.getElementById("upgradetowerdiv").style.display = 'none';
             $("#error").fadeIn(300).delay(3000).fadeOut(300);
         }
     }
@@ -181,7 +181,7 @@ function onDocumentMouseDown( e ) {
             $("#success").fadeIn(300).delay(3000).fadeOut(300);
         }
         else{
-            document.getElementById("upgradetower").style.display = 'none';
+            document.getElementById("upgradetowerdiv").style.display = 'none';
             $("#error").fadeIn(300).delay(3000).fadeOut(300);
         }
     }
@@ -204,15 +204,15 @@ function onDocumentMouseDown( e ) {
             if(clickedobject.occupied===0){
                 //Show tower stats + upgrade button
                 console.log("Tile is occupied by "+ clickedobject.connectedtower.name +", upgrade box triggered");
-                document.getElementById("upgradetower").style.display = 'inline-block';
-                document.getElementById("placetower").style.display = 'none';
+                document.getElementById("upgradetowerdiv").style.display = 'block';
+                document.getElementById("placetowerdiv").style.display = 'none';
 
             }
             else{
                 //Show place tower button
                 console.log("Tile is not occupied, placetower box triggered");
-                document.getElementById("placetower").style.display = 'inline-block';
-                document.getElementById("upgradetower").style.display = 'none';
+                document.getElementById("placetowerdiv").style.display = 'block';
+                document.getElementById("upgradetowerdiv").style.display = 'none';
             }
             scene.remove(indicator);
             indicator.position.set(clickedobject.object.position.x, 0.1, clickedobject.object.position.z);
@@ -220,8 +220,8 @@ function onDocumentMouseDown( e ) {
         }
         else{
             //Hide all if clicked on nothing
-            document.getElementById("placetower").style.display = 'none';
-            document.getElementById("upgradetower").style.display = 'none';
+            document.getElementById("placetowerdiv").style.display = 'none';
+            document.getElementById("upgradetowerdiv").style.display = 'none';
             scene.remove(indicator);
         }
     }
@@ -242,7 +242,7 @@ function isValidPath() {
     let start = graph.grid[0][0];
     let end = graph.grid[10][0];
     let result = astar.search(graph, start, end);
-    if (result == '') {
+    if (result === '') {
         return false;
     }
     return true;
