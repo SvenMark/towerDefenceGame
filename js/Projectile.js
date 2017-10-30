@@ -1,6 +1,6 @@
 class Projectile
 {
-    constructor(x,y,z)
+    constructor(x,z)
     {
         this.direction = new THREE.Vector3(0, 0, 0);
         let geometry = new THREE.SphereGeometry( 0.1, 32, 32 );
@@ -13,13 +13,15 @@ class Projectile
         scene.add( sphere );
     }
 
-    fire(target)
+    fire(beaver)
     {
-        console.log("FIRE");
-        this.direction.x = target.position.x;
+        console.log(beaver);
+        beaver.getHit();
+        this.direction.x = beaver.position.x;
         this.direction.y = 3;
-        this.direction.z = target.position.z;
+        this.direction.z = beaver.position.z;
     }
+
     updatelocation()
     {
 

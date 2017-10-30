@@ -1,11 +1,10 @@
+//Beaver == Spook
 class Beaver extends NPC {
     constructor(texture, division, scale) {
         super(texture, division, scale);
         this.object = undefined;
         this.stats = {};
-        this.stats.hp = 15;
-        this.stats.hp = 15;
-        this.stats.hp_100 = 15;
+        this.stats.hp = 6;
         this.stats.speed = 0.125;
         this.stats.currency = 1;
         this.size = {};
@@ -47,6 +46,11 @@ class Beaver extends NPC {
         this.currentStep.z = this.object.position.z;
         this.setNodes();
     };
+
+    getHit()
+    {
+        this.stats.hp = this.stats.hp - 3;
+    }
 
     remove()
     {
