@@ -208,6 +208,9 @@ h1{
 #errornospace{
     display: none;
 }
+#errorhighlvl{
+    display: none;
+}
 #success{
     display: none;
 }
