@@ -33,7 +33,7 @@ class Beaver extends NPC {
         let refObject = window.ghost;
         this.object = new THREE.Mesh(refObject.geometry, material);
 
-
+        this.object.rotation.y=-90*Math.PI / 180;
         this.object.position.set(this.position.x, this.position.y, this.position.z);
         this.object.scale.x = this.scale;
         this.object.scale.y = this.scale;
