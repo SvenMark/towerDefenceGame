@@ -8,8 +8,8 @@ class Castle
         this.stats.hp = 100;
 
         let castle  = this.object;
-        castle.scale.multiplyScalar(0.2);
-        castle.position.set(10,0,-4.5);
+        castle.scale.multiplyScalar(1.8);
+        castle.position.set(-400,-20,-900);
         scene.add(castle);
     }
 
