@@ -26,6 +26,11 @@ class Tower
         clickedobject.occupied=0;
     }
 
+    shoot(beaver, x, z)
+    {
+        let projectile = new Projectile(x,z);
+        projectile.fire(beaver);
+    }
 
     upgradetower()
     {

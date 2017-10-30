@@ -1,4 +1,4 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, projectile, intersects, clickedobject, projector, mouse = { x: 0, y: 0 };
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, intersects, clickedobject, projector, mouse = { x: 0, y: 0 };
 let tiles = [];
 let beavers = [];
 let graph = [];
@@ -11,7 +11,7 @@ let towers=[], towercount=0;
 //Tower costs:
 let towerprice = 10;
 let upgradeprice = 5;
-let starterscurrency = 999999;
+let starterscurrency = 50;
 
 
 function init() {
@@ -271,53 +271,50 @@ function fpsCounter() {
     document.head.appendChild(script);
 }
 
-function targetEnemies() {
-    //For every tower
-    for(let i=0; i<towers.length; i++){
-        //Only run when there are active beavers
-        if(beavers.length>0)
-        {
-            let towerpos=new THREE.Vector3(towers[i].object.position.x,towers[i].object.position.y,towers[i].object.position.z);
-            let closestdistance;
-            let closestbeaverid;
-
-            //Check distance from tower for every beaver
-            for(let j=0; j<beavers.length; j++){
-                if(beavers[j] !== undefined){
-                    let target = new THREE.Vector3(beavers[j].position.x,beavers[j].position.y,beavers[j].position.z);
-                    let distancetobeaver = towerpos.distanceTo(target);
-
-                    console.log("Tower #"+ i + " to beaver #"+ j + " = " + distancetobeaver);
-
-                    if(closestdistance === undefined){
-                        closestdistance = distancetobeaver;
-                        closestbeaverid = j;
-                    }
-                    else if(distancetobeaver < closestdistance){
-                        closestdistance = distancetobeaver;
-                        closestbeaverid = j;
-                    }
-                }
-            }
-            console.log("The closest beaver to Tower #"+i+" = Beaver #"+closestbeaverid);
-
-            projectile = new Projectile(towers[i].object.position.x,towers[i].object.position.y,towers[i].object.position.z);
-            if(beavers[closestbeaverid] !== undefined)
-            {
-                projectile.fire(beavers[closestbeaverid]);
-            }
-        }
-    }
-}
-
 function render() {
     requestAnimationFrame(render);
     clockDelta = clock.getDelta() * 120;
 
+    //When game is in a wave check if beavers are close to towers, if so shoot.
     if(game.inWave === true)
     {
-        targetEnemies();
+        for(let i=0; i < towers.length; i++)
+        {
+            //Only run when there are active beavers
+            if(beavers.length > 0)
+            {
+                let towerpos=new THREE.Vector3(towers[i].object.position.x,towers[i].object.position.y,towers[i].object.position.z);
+                let closestdistance = 4;
+                let closestbeaver;
+
+                //Check distance from tower for every beaver
+                for(let j=0; j<beavers.length; j++)
+                {
+                    if(beavers[j] !== undefined)
+                    {
+                        let target = new THREE.Vector3(beavers[j].position.x,beavers[j].position.y,beavers[j].position.z);
+                        let distancetobeaver = towerpos.distanceTo(target);
+
+                        //console.log("Tower #"+ i + " to beaver #"+ j + " = " + distancetobeaver);
+
+                        if(distancetobeaver < closestdistance)
+                        {
+                            closestdistance = distancetobeaver;
+                            closestbeaver = beavers[j];
+                        }
+                    }
+                }
+                //console.log("The closest beaver to Tower #"+i+" = Beaver #"+closestbeaverid + "afstand" + closestdistance);
+
+                if(closestdistance < 4)
+                {
+                    towers[i].shoot(closestbeaver, towers[i].object.position.x, towers[i].object.position.z);
+                }
+            }
+        }
     }
+
+
 
     if(game.livingBeaver === 0 && game.inWave === true)
     {
@@ -325,6 +322,11 @@ function render() {
     }
 
     beavers.forEach(function(beaver, i) {
+
+        if(beavers[i].stats.hp <= 0)
+        {
+            game.deleteMonster(i, false)
+        }
         let nextX = beavers[i].nextStep.x;
         let nextZ = beavers[i].nextStep.z;
         if (nextX > beavers[i].position.x) {
