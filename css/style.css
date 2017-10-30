@@ -216,6 +216,9 @@ h1{
 #errorhighlvl{
     display: none;
 }
+#errorbeaverspawn{
+    display: none;
+}
 #success{
     display: none;
 }
