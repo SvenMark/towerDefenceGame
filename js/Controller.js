@@ -82,7 +82,7 @@ function startGame() {
 
 function setCamera() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.set(-500, 100, -900);
+    camera.position.set(10,20,10);
     //IEMAND FIX ZODAT IE NAAR TOREN KIJKT???
     camera.rotation.x = -Math.PI / 2;
 }
@@ -101,7 +101,7 @@ function setScene() {
 
     // light
     let pointLight = new THREE.PointLight(0xffffff);
-    pointLight.position.set(-400, 250, -600);
+    pointLight.position.set(0,250,0);
     scene.add(pointLight);
     let ambientLight = new THREE.AmbientLight(0x404040); // soft white light
     scene.add(ambientLight);
@@ -167,7 +167,7 @@ function setScene() {
     document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 }
 
-let indicator = new THREE.Mesh( new THREE.CubeGeometry( 10, 2, 10 ), new THREE.MeshBasicMaterial({color:0xff6347, transparent:true, opacity:0.4, side: THREE.DoubleSide}) );
+let indicator = new THREE.Mesh( new THREE.CubeGeometry( 1, 0.2, 1 ), new THREE.MeshBasicMaterial({color:0xff6347, transparent:true, opacity:0.4, side: THREE.DoubleSide}) );
 
 function onDocumentMouseDown( e ) {
     //Clicked tile indicator cube
@@ -244,7 +244,7 @@ function onDocumentMouseDown( e ) {
                 upgradehide();
             }
             scene.remove(indicator);
-            indicator.position.set(clickedobject.object.position.x, -18, clickedobject.object.position.z);
+            indicator.position.set(clickedobject.object.position.x, 0, clickedobject.object.position.z);
             scene.add(indicator)
         }
         else{
