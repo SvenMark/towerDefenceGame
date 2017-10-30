@@ -32,3 +32,23 @@ $( "#instrplay" ).click(function() {
     $('#instructions').slideUp(1000);
 });
 
+function placeshow(){
+    $('#placetowerdiv').fadeIn(300);
+    $('#placetowertxt').delay(300).animate({"width":"90%"}, 600);
+    $('#placetowertxtp').delay(300).fadeIn(500);
+}
+function placehide(){
+    $('#placetowertxt').animate({"width":"0%"}, 600);
+    $('#placetowerdiv').delay(300).fadeOut(300);
+    $('#placetowertxtp').fadeOut(500);
+}
+function upgradeshow(){
+    $('#upgradetowerdiv').fadeIn(300);
+    $('#upgradetowertxt').delay(300).animate({"width":"90%"}, 600);
+    $('#upgradetowertxtp').delay(300).fadeIn(500);
+}
+function upgradehide(){
+    $('#upgradetowertxt').animate({"width":"0%"}, 600);
+    $('#upgradetowerdiv').delay(300).fadeOut(300);
+    $('#upgradetowertxtp').fadeOut(500);
+}
