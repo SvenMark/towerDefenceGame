@@ -1,10 +1,15 @@
 class Tower
 {
-    constructor(level, object)
+    constructor(level)
     {
-        this.object = object;
+        this.material = new THREE.MeshLambertMaterial( {
+            color: 0xFFD700
+        });
+        this.object = new THREE.Mesh(window.tower.geometry, this.material);
         this.stats = {};
         this.stats.level = level;
+        this.stats.speed = 10;
+        this.lastshot = Date.now();
 
         //Set tower position and scale
         this.object.position.set(clickedobject.object.position.x, -20, clickedobject.object.position.z);
@@ -15,6 +20,8 @@ class Tower
 
         //Add the tower to the scene
         scene.add(this.object);
+        //this.updatecolor();
+
         console.log("Tower #"+ towercount +" Placed");
 
         //Remove money
@@ -34,14 +41,38 @@ class Tower
 
     upgradetower()
     {
-        //Remove money
-        game.currency=game.currency-upgradeprice;
-        document.getElementById("currency").innerHTML="€"+game.currency+",-";
+        if(this.stats.level<3){
+            //Remove money
+            game.currency=game.currency-upgradeprice;
+            document.getElementById("currency").innerHTML="€"+game.currency+",-";
 
-
-        this.stats.level++;
-        console.log(this.name +" Upgraded to level "+this.stats.level);
+            this.stats.level++;
+            this.updatecolor();
+            console.log(this.name +" Upgraded to level "+this.stats.level);
+            $("#success").fadeIn(300).delay(3000).fadeOut(300);
+        }
+        else{
+            $("#errorhighlvl").fadeIn(300).delay(3000).fadeOut(300);
+        }
         upgradehide();
         scene.remove(indicator);
+    }
+
+    updatecolor(){
+        switch(this.stats.level){
+            case 1:
+                this.object.material.color.setHex(0xFFD700);
+                break;
+            case 2:
+                this.object.material.color.setHex(0xff9933);
+                break;
+            case 3:
+                this.object.material.color.setHex(0xff6347);
+                break;
+            default:
+                alert("Invalid lvl occured");
+                break;
+        }
+
     }
 }

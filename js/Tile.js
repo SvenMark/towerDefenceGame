@@ -7,17 +7,17 @@ class Tile {
 
         let colorTile;
         if(i%2===0){
-            colorTile=0x000000;
+            colorTile=0x7fb740;
         }
         else{
-            colorTile=0xFFFFFF;
+            colorTile=0x8cb769;
         }
 
         let planeGeometry = new THREE.PlaneGeometry(10, 10, 10, 10);
         let planeMaterial = new THREE.MeshBasicMaterial({
-            //map: THREE.ImageUtils.loadTexture('images/soil.jpg'),
             color: colorTile,
-            //side: THREE.DoubleSide
+            transparent: true,
+            opacity: 0.7
         });
         let plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.rotation.x = -Math.PI / 2;

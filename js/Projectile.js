@@ -15,7 +15,6 @@ class Projectile
 
     fire(beaver)
     {
-        console.log(beaver);
         beaver.stats.hp = beaver.stats.hp - 3;
         this.direction.x = beaver.position.x;
         this.direction.y = 3;

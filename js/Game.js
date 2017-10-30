@@ -51,6 +51,7 @@ class Game
         beaverObject.end = beaver.end;
         //console.log(beaverObject.currentStep);
         //console.log(beaverObject.nextStep);
+        console.log(beaverObject);
         beavers.push(beaverObject);
         scene.add(beaverObject);
     }

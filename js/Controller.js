@@ -58,10 +58,11 @@ function preLoader() {
         });
     });
 
-    loader = new THREE.FBXLoader(manager);
-    loader.load('models/tower.fbx', function (object) {
-        window.tower = object;
+    loader = new THREE.OBJLoader(manager);
+    loader.load('models/tower.obj', function (object) {
+        window.tower = object.children[0];
     });
+
 
     loader = new THREE.OBJLoader(manager);
     loader.load('models/ghost.obj', function (object) {
@@ -89,11 +90,6 @@ function setCamera() {
 function setControls() {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     //controls.maxPolarAngle = 0.49 * Math.PI; // Don't let the camera go below the ground
-    document.addEventListener('keypress', onKeyPress);
-
-    function onKeyPress()
-    {
-    }
 }
 
 function setScene() {
@@ -144,6 +140,22 @@ function setScene() {
         return new Graph(graph);
     }
 
+    //Build a skybox
+    let imagePrefix = "images/skybox-";
+    let directions  = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
+    let imageSuffix = ".png";
+    let skyGeometry = new THREE.CubeGeometry( 5000, 5000, 5000 );
+
+    let materialArray = [];
+    for (let i = 0; i < 6; i++)
+        materialArray.push( new THREE.MeshBasicMaterial({
+            map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ),
+            side: THREE.BackSide
+        }));
+    let skyMaterial = new THREE.MeshFaceMaterial( materialArray );
+    let skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
+    scene.add( skyBox );
+
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000);
@@ -154,7 +166,7 @@ function setScene() {
     document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 }
 
-let indicator = new THREE.Mesh( new THREE.CubeGeometry( 1, 0.2, 1 ), new THREE.MeshBasicMaterial({color:0x33cc33, transparent:true, opacity:0.4, side: THREE.DoubleSide}) );
+let indicator = new THREE.Mesh( new THREE.CubeGeometry( 1, 0.2, 1 ), new THREE.MeshBasicMaterial({color:0xff6347, transparent:true, opacity:0.4, side: THREE.DoubleSide}) );
 
 function onDocumentMouseDown( e ) {
     //Clicked tile indicator cube
@@ -170,7 +182,7 @@ function onDocumentMouseDown( e ) {
         }
         else if(game.currency>=towerprice){
             //Make a new tower and place it
-            towers[towercount] = new Tower(1, window.tower.clone());
+            towers[towercount] = new Tower(1);
 
             // update Graph for path finding
             graph = updateGraph(20);
@@ -194,7 +206,6 @@ function onDocumentMouseDown( e ) {
         //If you click the upgradetower button
         if(game.currency>=upgradeprice){
             clickedobject.connectedtower.upgradetower();
-            $("#success").fadeIn(300).delay(3000).fadeOut(300);
         }
         else{
             upgradehide();
@@ -255,7 +266,7 @@ function updateGraph(gridSize) {
 }
 
 function isValidPath() {
-    let start = graph.grid[0][0];
+    let start = graph.grid[19][19];
     let end = graph.grid[10][0];
     let result = astar.search(graph, start, end);
     if (result == '') {
@@ -322,9 +333,11 @@ function render() {
                 }
                 //console.log("The closest beaver to Tower #"+i+" = Beaver #"+closestbeaverid + "afstand" + closestdistance);
 
-                if(closestdistance < 4)
+                if(closestdistance < 4 && ((Date.now() - towers[i].lastshot) / 100 > towers[i].stats.speed))
                 {
                     towers[i].shoot(closestbeaver, towers[i].object.position.x, towers[i].object.position.z);
+                    console.log(Date.now() - towers[i].lastshot);
+                    towers[i].lastshot = Date.now();
                 }
             }
         }
@@ -363,15 +376,17 @@ function render() {
             beavers[i].setNodes();
         }
 
+        if(beavers[i].stats.hp <= 0)
+        {
+            game.deleteMonster(i, false)
+            return;
+        }
+
         if (beavers[i].currentStep.x === beavers[i].end.x && beavers[i].currentStep.z === beavers[i].end.z) {
             //beavers[i].die();
             //delete beavers[i];
             game.deleteMonster(i, true);
-        }
-
-        if(beavers[i].stats.hp <= 0)
-        {
-            game.deleteMonster(i, false)
+            return;
         }
     });
     renderer.setClearColor(0xBDCEB6);
