@@ -1,24 +1,31 @@
 class Projectile
 {
-    constructor(x,z)
+    constructor(x,z,damage)
     {
-        this.direction = new THREE.Vector3(0, 0, 0);
-        let geometry = new THREE.SphereGeometry( 0.1, 32, 32 );
-        let material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-        let sphere = new THREE.Mesh( geometry, material );
-        this.object=sphere;
-        sphere.position.x = x;
-        sphere.position.y = 3; //3 So you can actually see the projectile for debug reasons.
-        sphere.position.z = z;
-        scene.add( sphere );
+        this.x=x;
+        this.z=z;
+        this.damage=damage;
     }
 
     fire(beaver)
     {
-        beaver.stats.hp = beaver.stats.hp - 3;
-        this.direction.x = beaver.position.x;
-        this.direction.y = 3;
-        this.direction.z = beaver.position.z;
+        beaver.stats.hp = beaver.stats.hp - this.damage;
+
+        let material = new THREE.LineBasicMaterial({
+            color: 0xff6347
+        });
+        let geometry = new THREE.Geometry();
+        geometry.vertices.push(
+            new THREE.Vector3( this.x, 2, this.z ),
+            new THREE.Vector3( beaver.position.x, beaver.position.y, beaver.position.z-1 )
+        );
+
+        let laser = new THREE.Line( geometry, material );
+        scene.add( laser );
+        setTimeout(function (){
+            scene.remove(laser)
+        }, 250);
+
     }
 
     updatelocation()
