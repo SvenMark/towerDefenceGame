@@ -22,7 +22,6 @@ class Tile {
         let plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.rotation.x = -Math.PI / 2;
         plane.position.set(x,0,z);
-        console.log(plane.position);
         scene.add(plane);
         this.object=plane;
     }
