@@ -8,9 +8,6 @@ class Beaver extends NPC {
         this.stats.speed = 0.125;
         this.stats.currency = 1;
         this.size = {};
-        this.size.x = tileSize;
-        this.size.y = tileSize * 2;
-        this.size.z = tileSize;
         this.position = {};
         this.position.x = Math.floor((Math.random() * 19) + 1);
         this.position.y = 0;
@@ -31,7 +28,6 @@ class Beaver extends NPC {
         let material = new THREE.MeshLambertMaterial({
             map: texture
         });
-        let geometry = new THREE.SphereGeometry(this.size.x, this.size.y, this.size.z);
 
         // should reference obj
         let refObject = window.ghost;
