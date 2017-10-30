@@ -47,11 +47,6 @@ class Beaver extends NPC {
         this.setNodes();
     };
 
-    getHit()
-    {
-        this.stats.hp = this.stats.hp - 3;
-    }
-
     remove()
     {
         scene.remove(this);

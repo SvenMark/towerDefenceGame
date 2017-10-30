@@ -322,11 +322,6 @@ function render() {
     }
 
     beavers.forEach(function(beaver, i) {
-
-        if(beavers[i].stats.hp <= 0)
-        {
-            game.deleteMonster(i, false)
-        }
         let nextX = beavers[i].nextStep.x;
         let nextZ = beavers[i].nextStep.z;
         if (nextX > beavers[i].position.x) {
@@ -356,6 +351,11 @@ function render() {
             //beavers[i].die();
             //delete beavers[i];
             game.deleteMonster(i, true);
+        }
+
+        if(beavers[i].stats.hp <= 0)
+        {
+            game.deleteMonster(i, false)
         }
     });
     renderer.setClearColor(0xBDCEB6);
