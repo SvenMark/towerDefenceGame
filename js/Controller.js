@@ -322,9 +322,11 @@ function render() {
                 }
                 //console.log("The closest beaver to Tower #"+i+" = Beaver #"+closestbeaverid + "afstand" + closestdistance);
 
-                if(closestdistance < 4)
+                if(closestdistance < 4 && ((Date.now() - towers[i].lastshot) / 100 > towers[i].stats.speed))
                 {
                     towers[i].shoot(closestbeaver, towers[i].object.position.x, towers[i].object.position.z);
+                    console.log(Date.now() - towers[i].lastshot);
+                    towers[i].lastshot = Date.now();
                 }
             }
         }
@@ -363,15 +365,17 @@ function render() {
             beavers[i].setNodes();
         }
 
+        if(beavers[i].stats.hp <= 0)
+        {
+            game.deleteMonster(i, false)
+            return;
+        }
+
         if (beavers[i].currentStep.x === beavers[i].end.x && beavers[i].currentStep.z === beavers[i].end.z) {
             //beavers[i].die();
             //delete beavers[i];
             game.deleteMonster(i, true);
-        }
-
-        if(beavers[i].stats.hp <= 0)
-        {
-            game.deleteMonster(i, false)
+            return;
         }
     });
     renderer.setClearColor(0xBDCEB6);

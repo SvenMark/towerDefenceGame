@@ -5,6 +5,8 @@ class Tower
         this.object = object;
         this.stats = {};
         this.stats.level = level;
+        this.stats.speed = 10;
+        this.lastshot = Date.now();
 
         //Set tower position and scale
         this.object.position.set(clickedobject.object.position.x, 0, clickedobject.object.position.z);
