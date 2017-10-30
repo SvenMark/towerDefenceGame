@@ -1,8 +1,11 @@
 class Tower
 {
-    constructor(level, object)
+    constructor(level)
     {
-        this.object = object;
+        this.material = new THREE.MeshLambertMaterial( {
+            color: 0xFFD700
+        });
+        this.object = new THREE.Mesh(window.tower.geometry, this.material);
         this.stats = {};
         this.stats.level = level;
 
@@ -15,7 +18,8 @@ class Tower
 
         //Add the tower to the scene
         scene.add(this.object);
-        this.updatecolor();
+        //this.updatecolor();
+
         console.log("Tower #"+ towercount +" Placed");
 
         //Remove money
@@ -42,7 +46,6 @@ class Tower
 
             this.stats.level++;
             this.updatecolor();
-
             console.log(this.name +" Upgraded to level "+this.stats.level);
             $("#success").fadeIn(300).delay(3000).fadeOut(300);
         }
@@ -56,13 +59,13 @@ class Tower
     updatecolor(){
         switch(this.stats.level){
             case 1:
-                this.object.material.color.setHex(0xff9933);
+                this.object.material.color.setHex(0xFFD700);
                 break;
             case 2:
-                this.object.material.color.setHex(0xff6347);
+                this.object.material.color.setHex(0xff9933);
                 break;
             case 3:
-                this.object.material.color.setHex(0xFFD700);
+                this.object.material.color.setHex(0xff6347);
                 break;
             default:
                 alert("Invalid lvl occured");

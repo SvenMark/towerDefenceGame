@@ -166,7 +166,7 @@ function onDocumentMouseDown( e ) {
         }
         else if(game.currency>=towerprice){
             //Make a new tower and place it
-            towers[towercount] = new Tower(1, window.tower.clone());
+            towers[towercount] = new Tower(1);
 
             // update Graph for path finding
             graph = updateGraph(20);
