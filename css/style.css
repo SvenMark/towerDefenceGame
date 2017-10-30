@@ -13,44 +13,23 @@ canvas {
 .fullscreen{
     width:100vw;
     height:100vh;
-    background-color:whitesmoke;
-    text-align: center;
 }
-#topbar{
-    width:100vw;
-    height:35vh;
-    background-color:dodgerblue;
-    color:white;
-    position:absolute;
-    top:-440px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+#first, #second{
+    background-color: black;
 }
-#midbar{
-    width:100vw;
-    height:100vh;
-    background-color: whitesmoke;
-    padding-top:35vh;
+#blackwall{
+    background-color: black;
 }
-#bottombar{
-    width:100vw;
-    height:10vh;
-    background-color: dodgerblue;
-    position:absolute;
-    top:120vh;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+#audio{
+    visibility: hidden;
 }
-#bottombar h3{
-    margin-top:2%;
-    color:white;
+#second{
+    display: none;
 }
-
-#pushdown{
-    margin-top:10vh;
-}
-h1{
-    margin:0;
-    padding:0;
-    font-size:80px;
+#gif{
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
 }
 
 #left50{
@@ -58,46 +37,12 @@ h1{
     height:100%;
     float:left;
     margin: 0;
-  }
+}
 #right50{
     width:50vw;
     height:100%;
     float:right;
 }
-#buttonleft{
-    width: 50%;
-    height:30%;
-    float:right;
-    margin-right:8%;
-    margin-top:12%;
-}
-#buttonright{
-    width: 50%;
-    height:30%;
-    float:left;
-    margin-left:8%;
-    margin-top:12%;
-}
-#instrplay{
-    width: 30%;
-    height:20vh;
-    margin-top:12%;
-}
-.menubutton{
-    border:none;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    background-color: white;
-}
-.menubutton:hover{
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-#instructions{
-    background-color: lightskyblue;
-    color:white;
-    padding-top:10%;
-}
-
 #gui{
     width: 100vw;
     height:100vh;

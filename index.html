@@ -3,11 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <title>Ghostbusters</title>
+        <link rel="icon" href="images/favicon.ico">
         <script type="text/javascript" src="library/js/jquery-3.2.1.min.js"></script>
 
         <!--Stylesheets-->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/play.css">
         <link rel="stylesheet" type="text/css" href="css/sidepanel.css">
 
         <!--External JS libraries-->
@@ -35,32 +37,20 @@
 
     </head>
     <body onload="preLoader()">
-    <!--<div id="intro">
-        <div class="fullscreen" id="welcomescreen">
-            <div id="topbar">
-                <h3 id="pushdown">Welcome to:</h3>
-                <h1>Third Valley Tower Defense</h1>
-            </div>
-            <div id="midbar">
-                <div id="left50">
-                    <button class="menubutton" id="buttonleft" type="button">Play</button>
-                </div>
-                <div id="right50">
-                    <button class="menubutton" id="buttonright" type="button">Instructions</button>
-                </div>
-                <div id="bottombar">
-                    <h3>By: Sven Mark Hofstra, Rendall Schijven and Kevin Snijder</h3>
-                </div>
-            </div>
+    <div id="blackwall" class="fullscreen">
+        <div id="first" class="fullscreen">
+            <a id="play" class="play-button" onclick="firsttosecond()">
+                <span></span>
+            </a>
         </div>
-        <div class="fullscreen" id="instructions">
-            <div id="instructioncontent">
-                <h1>Instructions</h1>
-                <button id="instrplay" type="button">Play</button>
-            </div>
+        <div id="second" class="fullscreen">
+            <img id="gif" src="images/beaverlogo.gif"/>
+            <audio id="audio" controls loop>
+                <source src="Ghostbusters-Song.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag.
+            </audio>
         </div>
-    </div>-->
-
+    </div>
     <div id="gui">
         <div id="error" class="alert alert-danger">
             <strong>Error!</strong> Transaction failed, not enough money.

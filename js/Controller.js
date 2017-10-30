@@ -17,7 +17,7 @@ let starterscurrency = 50;
 function init() {
     clock = new THREE.Clock();
 
-    fpsCounter();
+    //fpsCounter();
     setCamera();
     setScene();
     setControls();
