@@ -128,6 +128,22 @@ function setScene() {
         return new Graph(graph);
     }
 
+    //Build a skybox
+    let imagePrefix = "images/skybox-";
+    let directions  = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
+    let imageSuffix = ".png";
+    let skyGeometry = new THREE.CubeGeometry( 5000, 5000, 5000 );
+
+    let materialArray = [];
+    for (let i = 0; i < 6; i++)
+        materialArray.push( new THREE.MeshBasicMaterial({
+            map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ),
+            side: THREE.BackSide
+        }));
+    let skyMaterial = new THREE.MeshFaceMaterial( materialArray );
+    let skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
+    scene.add( skyBox );
+
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000);
