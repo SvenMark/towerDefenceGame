@@ -48,7 +48,6 @@ class Terrain
             h: yS,
             spread: 0.02,
             randomness: Math.random,
-            scale: 0.5,
         });
         terrainScene.add(decoScene);
     }

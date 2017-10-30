@@ -56,14 +56,16 @@ class Game
     }
 
     deleteMonster(index, removeLife) {
-        if (removeLife) {
-            //removelife duh
-            console.log('Leven -1');
+        //Beaver hits castle
+        if (removeLife)
+        {
+            console.log('Castle HP -1');
             this.castle.damageCastle();
         }
-        else {
-            //kapoet add monezz
-            console.log('Dood door turret');
+        //Tower/castle kills beaver
+        else
+        {
+            console.log('Death by turret');
             this.kills++;
             document.getElementById("kills").innerHTML=this.kills.toString();
             this.currency+=beavers[index].stats.currency;
