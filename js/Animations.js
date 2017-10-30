@@ -1,4 +1,4 @@
-$(document).ready(function() {
+/*$(document).ready(function() {
     $('#instructioncontent').hide();
     $('#topbar').animate({
         top: '0px'
@@ -30,7 +30,8 @@ $( "#buttonright" ).click(function() {
 });
 $( "#instrplay" ).click(function() {
     $('#instructions').slideUp(1000);
-});
+});*/
+
 
 function placeshow(){
     $('#placetowerdiv').fadeIn(300);
@@ -51,4 +52,12 @@ function upgradehide(){
     $('#upgradetowertxt').animate({"width":"0%"}, 600);
     $('#upgradetowerdiv').delay(300).fadeOut(300);
     $('#upgradetowertxtp').fadeOut(500);
+}
+
+function firsttosecond(){
+    $('#first').fadeOut(400);
+    $('#second').delay(500).fadeIn(10000);
+    $('#audio').trigger("play").animate({volume: 0.0}, 1).delay(50).animate({volume: 0.1}, 20000);
+    $('#blackwall').delay(12000).slideUp(3000);
+    $('#gif').delay(10000).fadeOut(3000);
 }

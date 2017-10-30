@@ -8,6 +8,7 @@
         <!--Stylesheets-->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/play.css">
         <link rel="stylesheet" type="text/css" href="css/sidepanel.css">
 
         <!--External JS libraries-->
@@ -60,7 +61,20 @@
             </div>
         </div>
     </div>-->
-
+    <div id="blackwall" class="fullscreen">
+        <div id="first" class="fullscreen">
+            <a id="play" class="play-button" onclick="firsttosecond()">
+                <span></span>
+            </a>
+        </div>
+        <div id="second" class="fullscreen">
+            <img id="gif" src="images/beaverlogo.gif"/>
+            <audio id="audio" controls loop>
+                <source src="Ghostbusters-Song.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag.
+            </audio>
+        </div>
+    </div>
     <div id="gui">
         <div id="error" class="alert alert-danger">
             <strong>Error!</strong> Transaction failed, not enough money.
