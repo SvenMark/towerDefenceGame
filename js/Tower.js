@@ -41,7 +41,7 @@ class Tower
 
         this.stats.level++;
         console.log(this.name +" Upgraded to level "+this.stats.level);
-        document.getElementById("upgradetowerdiv").style.display = 'none';
+        upgradehide();
         scene.remove(indicator);
     }
 }

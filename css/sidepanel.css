@@ -48,8 +48,9 @@
 }
 
 .tile-progress.tile {
-    background-color: #00b29e;
+    background-color: grey;
     color: #fff;
+    opacity: 0.9;
 }
 #sidepanel{
     width:12%;
