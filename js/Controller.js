@@ -182,7 +182,9 @@ function onDocumentMouseDown( e ) {
             console.log("Geen plek");
         }
         else if (clickedobject.object.position.z === 19) {
-            console.log('fuck the all of ya\'s');
+            clickedobject.occupied = 1;
+            $("#errorbeaverspawn").fadeIn(300).delay(1000).fadeOut(300);
+
         }
         else if(game.currency>=towerprice){
             //Make a new tower and place it
