@@ -7,8 +7,8 @@ class Tower
         this.stats.level = level;
 
         //Set tower position and scale
-        this.object.position.set(clickedobject.object.position.x, 0, clickedobject.object.position.z);
-        this.object.scale.multiplyScalar(0.4);
+        this.object.position.set(clickedobject.object.position.x, -20, clickedobject.object.position.z);
+        this.object.scale.multiplyScalar(5);
 
         //Tower name for debug reasons
         this.name=("Tower #"+towercount).toString();
