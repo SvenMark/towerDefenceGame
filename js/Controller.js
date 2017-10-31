@@ -27,7 +27,7 @@ function init() {
 }
 
 function preLoader() {
-    manager = new THREE.LoadingManager();
+    manager = new THREE.LoadingManager(init);
 
     textureGhost = new THREE.Texture();
     loader = new THREE.ImageLoader(manager);
@@ -45,7 +45,17 @@ function preLoader() {
         loader.setMaterials( materials );
         loader.load( 'models/Building/Ghostbusters Building.obj', function ( object ) {
             window.castle = object.children[0];
-            init();
+        });
+    });
+
+    loader = new THREE.MTLLoader();
+    loader.load( 'models/City/city.mtl', function( materials ) {
+        materials.preload();
+
+        loader = new THREE.OBJLoader();
+        loader.setMaterials( materials );
+        loader.load( 'models/City/city.obj', function ( object ) {
+            window.city = object.children[0];
         });
     });
 
@@ -58,8 +68,8 @@ function preLoader() {
     loader.load('models/slimer/slimer.obj', function (object) {
         object.traverse(function (child) {
             if (child instanceof THREE.Mesh) {
-                //child.material.map = textureGhost;
-                child.material = new THREE.MeshPhongMaterial({color: 0x1be215});
+                child.material.map = textureGhost;
+                //child.material = new THREE.MeshPhongMaterial({color: 0x1be215});
             }
         });
         window.ghost = object.children[0];
@@ -86,8 +96,16 @@ function setControls() {
 function setScene() {
     scene = new THREE.Scene();
 
+    let city = window.city;
+    city.scale.multiplyScalar(0.1);
+    city.position.y = -4.2;
+    city.position.x = -2;
+    city.position.z = -117;
+    city.rotation.y=-180*Math.PI / 180;
+    scene.add(city);
+
     // light
-    let pointLight = new THREE.PointLight(0xffffff);
+    let pointLight = new THREE.PointLight(0xffffff, 0.001);
     pointLight.position.set(0,250,0);
     scene.add(pointLight);
     let ambientLight = new THREE.AmbientLight(0x404040); // soft white light

@@ -7,10 +7,10 @@ class Tile {
 
         let colorTile;
         if(i%2===0){
-            colorTile=0x7fb740;
+            colorTile=0xC0C0C0;
         }
         else{
-            colorTile=0x8cb769;
+            colorTile=0x808080;
         }
 
         let planeGeometry = new THREE.PlaneGeometry(1, 1, 10, 10);

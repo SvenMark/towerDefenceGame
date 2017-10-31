@@ -38,7 +38,7 @@ class Terrain
                 ySegments: 127,
                 ySize: 3072,
             });
-            scene.add(terrainScene);
+            //scene.add(terrainScene);
 
             // Get the geometry of the terrain across which you want to scatter meshes
             let mesh = buildTree();
