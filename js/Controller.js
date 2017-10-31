@@ -99,7 +99,7 @@ function startGame() {
 
 function setCamera() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.set(10,20,10);
+    camera.position.set(10,20,30);
     //IEMAND FIX ZODAT IE NAAR TOREN KIJKT???
     camera.rotation.x = -Math.PI / 2;
 }
@@ -107,7 +107,8 @@ function setCamera() {
 function setControls() {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.maxPolarAngle = 0.39 * Math.PI; // Don't let the camera go below the ground
-
+    controls.maxDistance = 40;
+    controls.minDistance = 10;
 }
 
 function setScene() {
