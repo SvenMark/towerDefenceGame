@@ -16,9 +16,6 @@ class Tower
         this.object.position.set(clickedobject.object.position.x, 0, clickedobject.object.position.z);
         this.object.scale.multiplyScalar(0.4);
 
-        //Tower name for debug reasons
-        this.name=("Tower #"+towercount).toString();
-
         //Add the tower to the scene
         scene.add(this.object);
         //this.updatecolor();
@@ -30,17 +27,18 @@ class Tower
         game.currency=game.currency-towerprice;
         document.getElementById("currency").innerHTML="$"+game.currency+",-";
 
-
         //Tell the tile it is now occupied
         clickedobject.occupied=0;
     }
 
+    //If this function is called fire at the beaver
     shoot(beaver)
     {
         let projectile = new Projectile(this.object.position.x,this.object.position.z,this.stats.damage);
         projectile.fire(beaver);
     }
 
+    //Upgrade the tower level, speed and damage
     upgradetower()
     {
         if(this.stats.level<3){
@@ -53,7 +51,6 @@ class Tower
             this.stats.damage=this.stats.damage+0.5;
 
             this.updatecolor();
-            console.log(this.name +" Upgraded to level "+this.stats.level);
             $("#success").fadeIn(300).delay(1000).fadeOut(300);
         }
         else{
@@ -63,6 +60,7 @@ class Tower
         scene.remove(indicator);
     }
 
+    //Update the color based on level
     updatecolor(){
         switch(this.stats.level){
             case 1:

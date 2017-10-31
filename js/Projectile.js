@@ -28,9 +28,4 @@ class Projectile
         }, 250);
 
     }
-
-    updatelocation()
-    {
-
-    }
 }

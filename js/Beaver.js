@@ -17,7 +17,6 @@ class Beaver extends NPC {
         else {
             this.stats.currency = 1;
         }
-        this.size = {};
         this.position = {};
         this.position.x = Math.floor((Math.random() * 19) + 1);
         this.position.y = 0.5;
@@ -75,8 +74,6 @@ class Beaver extends NPC {
             this.nextStep.x = result[0].x;
             this.nextStep.z = result[0].y; //astar weet niet beter
         }
-
-
     }
 
     getObject() {

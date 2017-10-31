@@ -1,7 +1,9 @@
-let renderer, camera, controls, scene, clock, clockDelta, ground, manager, textureGhost, loader, game, intersects, clickedobject, projector, mouse = { x: 0, y: 0 };
+let renderer, camera, controls, scene, clock, clockDelta, ground, manager, loader, game, intersects, clickedobject, projector, mouse = { x: 0, y: 0 };
 let tiles = [];
 let beavers = [];
 let graph = [];
+//Create the indicator tile
+let indicator = new THREE.Mesh( new THREE.CubeGeometry( 1, 0.2, 1 ), new THREE.MeshBasicMaterial({color:0xff6347, transparent:true, opacity:0.4, side: THREE.DoubleSide}) );
 //List of stuff you can click
 let targetList = [];
 //List of objects you can click
@@ -25,6 +27,7 @@ function init() {
     render();
 }
 
+//This function loads all objects used in the scene
 function preLoader() {
     manager = new THREE.LoadingManager(init);
 
@@ -61,6 +64,7 @@ function preLoader() {
     });
 }
 
+//Creates a new entity of game
 function startGame() {
     console.log('Game started!');
     game = new Game(1,1);
@@ -69,7 +73,6 @@ function startGame() {
 function setCamera() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
     camera.position.set(10,20,30);
-    //IEMAND FIX ZODAT IE NAAR TOREN KIJKT???
     camera.rotation.x = -Math.PI / 2;
 }
 
@@ -83,6 +86,7 @@ function setControls() {
 function setScene() {
     scene = new THREE.Scene();
 
+    //Adds the city to the scene
     let city = window.city;
     city.scale.multiplyScalar(0.1);
     city.position.y = -4.2;
@@ -91,7 +95,7 @@ function setScene() {
     city.rotation.y=-180*Math.PI / 180;
     scene.add(city);
 
-    // light
+    //Adds the light to the scene
     let pointLight = new THREE.PointLight(0xffffff, 0.4, 0, 2);
     pointLight.position.set(0,800,0);
     scene.add(pointLight);
@@ -159,8 +163,7 @@ function setScene() {
     document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 }
 
-let indicator = new THREE.Mesh( new THREE.CubeGeometry( 1, 0.2, 1 ), new THREE.MeshBasicMaterial({color:0xff6347, transparent:true, opacity:0.4, side: THREE.DoubleSide}) );
-
+//Check if a tile is clicked, if so check if you can place a tower or upgrade
 function onDocumentMouseDown( e ) {
     //Clicked tile indicator cube
     if(e.toElement.id==='placetower'){
@@ -252,6 +255,7 @@ function onDocumentMouseDown( e ) {
     }
 }
 
+//Update the grid
 function updateGraph(gridSize) {
     graph = [];
     for (let i = 0; i < gridSize; i++) {
@@ -263,6 +267,7 @@ function updateGraph(gridSize) {
     return new Graph(graph);
 }
 
+//Check if a path is viable
 function isValidPath() {
     let start = graph.grid[19][19];
     let end = graph.grid[10][0];
@@ -282,6 +287,7 @@ function onWindowResize() {
     //render();
 }
 
+//Fpscounter for debugging purposes
 function fpsCounter() {
     let script = document.createElement('script');
     script.onload = function () {
@@ -308,6 +314,7 @@ function render() {
             //Only run when there are active beavers
             if(beavers.length > 0)
             {
+                //Calculate the tower position
                 let towerpos=new THREE.Vector3(towers[i].object.position.x,towers[i].object.position.y,towers[i].object.position.z);
                 let closestdistance = 4;
                 let closestbeaver;
@@ -320,8 +327,7 @@ function render() {
                         let target = new THREE.Vector3(beavers[j].position.x,beavers[j].position.y,beavers[j].position.z);
                         let distancetobeaver = towerpos.distanceTo(target);
 
-                        //console.log("Tower #"+ i + " to beaver #"+ j + " = " + distancetobeaver);
-
+                        //Check which beaver is closest
                         if(distancetobeaver < closestdistance)
                         {
                             closestdistance = distancetobeaver;
@@ -329,8 +335,8 @@ function render() {
                         }
                     }
                 }
-                //console.log("The closest beaver to Tower #"+i+" = Beaver #"+closestbeaverid + "afstand" + closestdistance);
 
+                //Check if beaver is close enough for shot
                 if(closestdistance < 4 && ((Date.now() - towers[i].lastshot) / 100 > towers[i].stats.speed))
                 {
                     towers[i].shoot(closestbeaver);
@@ -341,11 +347,13 @@ function render() {
         }
     }
 
+    //If all beavers are dead, end the wave.
     if(game.livingBeaver === 0 && game.inWave === true)
     {
         game.endWave();
     }
 
+    //Loop for pathfinding and direction beaver is facing
     beavers.forEach(function(beaver, i) {
         let nextX = beavers[i].nextStep.x;
         let nextZ = beavers[i].nextStep.z;

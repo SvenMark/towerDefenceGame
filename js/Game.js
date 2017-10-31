@@ -3,14 +3,13 @@ class Game
     constructor(level, wave)
     {
         this.castle = new Castle(level, window.castle);
-        this.terrain = new Terrain();
         this.wave = wave;
         this.livingBeaver = 0;
         this.currency = starterscurrency;
         this.kills=0;
         this.inWave = false;
-        this.knights = [];
         this.beavers = [];
+
         //Update gui with correct currency
         document.getElementById("currency").innerHTML="$"+this.currency+",-";
     }
@@ -23,7 +22,6 @@ class Game
 
         for(let i = 3 * this.wave; i >= 0; i--)
         {
-            //setInterval(function(){ Game.spawnBeaver(); }, 1000);
             setTimeout(function(){ Game.spawnBeaver(); }, j * 500);
             this.livingBeaver++;
             j++;
@@ -50,8 +48,6 @@ class Game
         beaverObject.setNodes = beaver.setNodes;
         beaverObject.stats = beaver.stats;
         beaverObject.end = beaver.end;
-        //console.log(beaverObject.currentStep);
-        //console.log(beaverObject.nextStep);
         console.log(beaverObject);
         beavers.push(beaverObject);
         scene.add(beaverObject);
