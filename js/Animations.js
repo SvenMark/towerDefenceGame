@@ -44,6 +44,7 @@ function pewpew(){
         //$("#laser").currentTime=0;
         //$('#laser').trigger("play").animate({volume: 0.2}, 1);
         laser=new Audio("audio/laser.mp3");
+        laser.volume=0.1;
         laser.play();
     }
 }
