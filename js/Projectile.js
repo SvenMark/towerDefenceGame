@@ -12,7 +12,7 @@ class Projectile
         beaver.stats.hp = beaver.stats.hp - this.damage;
 
         let material = new THREE.LineBasicMaterial({
-            color: 0xff6347
+            texture: THREE.ImageUtils.loadTexture('images/laser.jpg')
         });
         let geometry = new THREE.Geometry();
         geometry.vertices.push(
