@@ -20,7 +20,7 @@ canvas {
 #blackwall{
     background-color: black;
 }
-#audio{
+#audio, #laser{
     visibility: hidden;
 }
 #second{
