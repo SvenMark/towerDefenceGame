@@ -9,7 +9,7 @@ class Tower
         this.stats = {};
         this.stats.level = level;
         this.stats.speed = 10;
-        this.stats.damage = 3;
+        this.stats.damage = 2;
         this.lastshot = Date.now();
 
         //Set tower position and scale
