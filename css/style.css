@@ -206,7 +206,9 @@ canvas {
 .imgbox h2{
     width: 100vw;
 }
-
+.imgbox h2{
+    margin-bottom: 20px;
+}
 .green {
     color: green;
 }
