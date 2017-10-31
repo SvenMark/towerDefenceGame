@@ -29,13 +29,29 @@ function init() {
 function preLoader() {
     manager = new THREE.LoadingManager(init);
 
-    textureGhost = new THREE.Texture();
+/*    textureGhost = new THREE.Texture();
     loader = new THREE.ImageLoader(manager);
     loader.load('models/slimer/slimer.png', function (image) {
         textureGhost.image = image;
         textureGhost.needsUpdate = true;
     });
-    console.log(textureGhost);
+    console.log(textureGhost);*/
+
+/*    loader = new THREE.MTLLoader();
+    loader.load( 'models/slimer2/slimer.mtl', function( materials ) {
+        materials.preload();
+
+        loader = new THREE.OBJLoader(manager);
+        loader.load('models/slimer/slimer.obj', function (object) {
+            object.traverse(function (child) {
+                if (child instanceof THREE.Mesh) {
+                    //child.material.map = textureGhost;
+                    //child.material = new THREE.MeshPhongMaterial({color: 0x1be215});
+                }
+            });
+            window.ghost = object.children[0];
+        });
+    });*/
 
     loader = new THREE.MTLLoader();
     loader.load( 'models/Building/Ghostbusters Building.mtl', function( materials ) {
@@ -67,10 +83,10 @@ function preLoader() {
     loader = new THREE.OBJLoader(manager);
     loader.load('models/slimer/slimer.obj', function (object) {
         object.traverse(function (child) {
-            if (child instanceof THREE.Mesh) {
-                child.material.map = textureGhost;
-                //child.material = new THREE.MeshPhongMaterial({color: 0x1be215});
-            }
+/*            if (child instanceof THREE.Mesh) {
+                child.material.ambient.setHex(0x2B8E3C);
+                child.material.color.setHex(0x2B8E3C);
+            }*/
         });
         window.ghost = object.children[0];
     });

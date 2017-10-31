@@ -21,6 +21,7 @@ class Castle
 
         if (this.stats.hp === 0) {
             gameover();
+            document.getElementById("killnumber").innerHTML=game.kills.toString();
         }
     }
 }

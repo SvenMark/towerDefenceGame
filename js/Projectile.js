@@ -9,10 +9,11 @@ class Projectile
 
     fire(beaver)
     {
+        $('#laser').trigger("play");
         beaver.stats.hp = beaver.stats.hp - this.damage;
 
         let material = new THREE.LineBasicMaterial({
-            texture: THREE.ImageUtils.loadTexture('images/laser.jpg')
+            color: 0x85AEFD
         });
         let geometry = new THREE.Geometry();
         geometry.vertices.push(
