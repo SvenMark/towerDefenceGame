@@ -22,36 +22,11 @@ function init() {
     setScene();
     setControls();
     startGame();
-    // spawnBeaver();
     render();
 }
 
 function preLoader() {
     manager = new THREE.LoadingManager(init);
-
-/*    textureGhost = new THREE.Texture();
-    loader = new THREE.ImageLoader(manager);
-    loader.load('models/slimer/slimer.png', function (image) {
-        textureGhost.image = image;
-        textureGhost.needsUpdate = true;
-    });
-    console.log(textureGhost);*/
-
-/*    loader = new THREE.MTLLoader();
-    loader.load( 'models/slimer2/slimer.mtl', function( materials ) {
-        materials.preload();
-
-        loader = new THREE.OBJLoader(manager);
-        loader.load('models/slimer/slimer.obj', function (object) {
-            object.traverse(function (child) {
-                if (child instanceof THREE.Mesh) {
-                    //child.material.map = textureGhost;
-                    //child.material = new THREE.MeshPhongMaterial({color: 0x1be215});
-                }
-            });
-            window.ghost = object.children[0];
-        });
-    });*/
 
     loader = new THREE.MTLLoader();
     loader.load( 'models/Building/Ghostbusters Building.mtl', function( materials ) {
@@ -76,18 +51,12 @@ function preLoader() {
     });
 
     loader = new THREE.OBJLoader(manager);
-    loader.load('models/tower.obj', function (object) {
+    loader.load('models/Towers/tower.obj', function (object) {
         window.tower = object.children[0];
     });
 
     loader = new THREE.OBJLoader(manager);
     loader.load('models/slimer/slimer.obj', function (object) {
-        object.traverse(function (child) {
-/*            if (child instanceof THREE.Mesh) {
-                child.material.ambient.setHex(0x2B8E3C);
-                child.material.color.setHex(0x2B8E3C);
-            }*/
-        });
         window.ghost = object.children[0];
     });
 }
@@ -123,8 +92,8 @@ function setScene() {
     scene.add(city);
 
     // light
-    let pointLight = new THREE.PointLight(0xffffff, 0.3);
-    pointLight.position.set(0,250,0);
+    let pointLight = new THREE.PointLight(0xffffff, 0.4, 0, 2);
+    pointLight.position.set(0,800,0);
     scene.add(pointLight);
     let ambientLight = new THREE.AmbientLight(0x404040); // soft white light
     scene.add(ambientLight);

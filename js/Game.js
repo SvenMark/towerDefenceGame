@@ -41,7 +41,7 @@ class Game
     static spawnBeaver()
     {
         console.log('Spawning Beaver!');
-        let beaver = new Beaver('models/ghost.png', 'melee', 1);
+        let beaver = new Beaver('models/slimer/slimer.png', 'melee', 1);
         beaver.create();
         let beaverObject = beaver.getObject();
         beaverObject.currentStep = beaver.currentStep;
