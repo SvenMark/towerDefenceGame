@@ -9,7 +9,7 @@ class Projectile
 
     fire(beaver)
     {
-        $('#laser').trigger("play");
+        pewpew();
         beaver.stats.hp = beaver.stats.hp - this.damage;
 
         let material = new THREE.LineBasicMaterial({
