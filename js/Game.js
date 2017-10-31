@@ -21,7 +21,7 @@ class Game
         this.inWave = true;
         let j = 1;
 
-        for(let i = 5 * this.wave; i >= 0; i--)
+        for(let i = 3 * this.wave; i >= 0; i--)
         {
             //setInterval(function(){ Game.spawnBeaver(); }, 1000);
             setTimeout(function(){ Game.spawnBeaver(); }, j * 500);

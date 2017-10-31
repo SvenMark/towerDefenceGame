@@ -4,9 +4,19 @@ class Beaver extends NPC {
         super(texture, division, scale);
         this.object = undefined;
         this.stats = {};
-        this.stats.hp = 6 * game.wave;
+        if(game.wave < 7) {
+            this.stats.hp = 6 * (game.wave * 0.8);
+        }
+        else {
+            this.stats.hp = 10 * game.wave;
+        }
         this.stats.speed = 0.125;
-        this.stats.currency = 2;
+        if(game.wave < 3) {
+            this.stats.currency = 5;
+        }
+        else {
+            this.stats.currency = 1;
+        }
         this.size = {};
         this.position = {};
         this.position.x = Math.floor((Math.random() * 19) + 1);

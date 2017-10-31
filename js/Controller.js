@@ -12,7 +12,7 @@ let towers=[], towercount=0;
 let towerprice = 10;
 let upgradeprice = 5;
 
-let starterscurrency = 50;
+let starterscurrency = 20;
 
 function init() {
     clock = new THREE.Clock();
@@ -90,7 +90,8 @@ function setCamera() {
 
 function setControls() {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
-    //controls.maxPolarAngle = 0.49 * Math.PI; // Don't let the camera go below the ground
+    controls.maxPolarAngle = 0.39 * Math.PI; // Don't let the camera go below the ground
+
 }
 
 function setScene() {

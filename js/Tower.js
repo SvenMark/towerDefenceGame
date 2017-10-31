@@ -8,8 +8,8 @@ class Tower
         this.object = new THREE.Mesh(window.tower.geometry, this.material);
         this.stats = {};
         this.stats.level = level;
-        this.stats.speed = 10;
-        this.stats.damage = 2;
+        this.stats.speed = 6;
+        this.stats.damage = 3;
         this.lastshot = Date.now();
 
         //Set tower position and scale
@@ -49,7 +49,7 @@ class Tower
             document.getElementById("currency").innerHTML="$"+game.currency+",-";
 
             this.stats.level++;
-            this.stats.speed=this.stats.speed-4;
+            this.stats.speed=this.stats.speed-2;
             this.stats.damage=this.stats.damage+0.5;
 
             this.updatecolor();
