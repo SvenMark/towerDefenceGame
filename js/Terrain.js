@@ -1,3 +1,4 @@
+//This used to be the scene untill we found the city object
 class Terrain
 {
     constructor()
