@@ -150,23 +150,9 @@ audio{
     width:40vw;
     position: absolute;
     margin-left: 30vw;
+    display: none;
+}
 
-}
-#error{
-    display: none;
-}
-#errornospace{
-    display: none;
-}
-#errorhighlvl{
-    display: none;
-}
-#errorbeaverspawn{
-    display: none;
-}
-#success{
-    display: none;
-}
 #tutorial{
     position: relative;
     pointer-events: all!important;
@@ -203,10 +189,8 @@ audio{
 .imgbox img{
     display: inline-block;
 }
-.imgbox h2{
+.imgbox h2 {
     width: 100vw;
-}
-.imgbox h2{
     margin-bottom: 20px;
 }
 .green {

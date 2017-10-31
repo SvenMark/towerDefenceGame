@@ -48,3 +48,7 @@ function pewpew(){
         laser.play();
     }
 }
+function busters(){
+    let busters=new Audio("audio/ghostbusters.mpeg");
+    busters.play();
+}

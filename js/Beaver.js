@@ -8,7 +8,7 @@ class Beaver extends NPC {
             this.stats.hp = 6 * (game.wave * 0.8);
         }
         else {
-            this.stats.hp = 10 * game.wave;
+            this.stats.hp = 6 * (game.wave*1.2);
         }
         this.stats.speed = 0.125;
         if(game.wave < 3) {
