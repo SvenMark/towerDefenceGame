@@ -167,3 +167,24 @@ canvas {
 #success{
     display: none;
 }
+#tutorial{
+    position: relative;
+    pointer-events: all!important;
+    color:white;
+    background-color:rgba(192,192,192,0.7);
+    padding-top: 1vh;  }
+#close{
+    float:right;
+    width: 100px;
+    height: 100px;
+}
+
+.card{
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    width:30vw;
+    margin-left: 35vw;
+    margin-bottom: 1vh;
+    padding:0;
+    color:dimgrey;
+}
+
