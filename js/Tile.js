@@ -17,7 +17,7 @@ class Tile {
         let planeMaterial = new THREE.MeshBasicMaterial({
             color: colorTile,
             transparent: true,
-            opacity: 0.7
+            opacity: 0.5
         });
         let plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.rotation.x = -Math.PI / 2;

@@ -13,6 +13,7 @@ class Beaver extends NPC {
         this.position.y = 0.5;
         this.position.z = 19;
         this.scale = scale;
+        this.object.material.color.setHex(0x2B8E3C);
 
         // Store movement for this monster
         this.currentStep = {};
@@ -20,7 +21,6 @@ class Beaver extends NPC {
         this.end = {};
         this.end.x = 10;
         this.end.z = 0;
-
     }
 
     create() {
