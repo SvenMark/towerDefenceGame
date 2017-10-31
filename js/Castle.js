@@ -15,7 +15,7 @@ class Castle
 
     damageCastle()
     {
-        this.stats.hp -= 10;
+        this.stats.hp -= 5;
         document.getElementById("healthtxt").innerHTML=this.stats.hp+"%";
         document.getElementById("healthbar").style.width = this.stats.hp+"%";
 

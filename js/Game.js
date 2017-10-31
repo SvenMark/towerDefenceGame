@@ -36,6 +36,7 @@ class Game
         this.wave++;
         document.getElementById("nextwave").innerHTML="Start wave "+this.wave.toString();
         this.inWave = false;
+        busters();
     }
 
     static spawnBeaver()
