@@ -33,16 +33,15 @@ class Beaver extends NPC {
     }
 
     create() {
-        //let texture = new THREE.ImageUtils.loadTexture(this.texture);
-        let material = new THREE.MeshLambertMaterial({
-            //map: texture
+        let texture = new THREE.ImageUtils.loadTexture(this.texture);
+        let material = new THREE.MeshPhongMaterial({
+            map: texture
         });
 
         // should reference obj
         let refObject = window.ghost;
         this.object = new THREE.Mesh(refObject.geometry, material);
 
-        //this.object.rotation.y=-90*Math.PI / 180;
         this.object.position.set(this.position.x, this.position.y, this.position.z);
         this.object.scale.x = this.scale;
         this.object.scale.y = this.scale;
@@ -84,4 +83,3 @@ class Beaver extends NPC {
         return this.object;
     }
 }
-
