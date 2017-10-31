@@ -187,6 +187,25 @@ canvas {
     padding:0;
     color:dimgrey;
 }
+#gameover{
+    display: none;
+    color: lightgrey;
+    background-color:#1d1d1d;
+    width: 100vw;
+    height:100vh;
+    z-index:20;
+    text-align:center;
+}
+.imgbox{
+    width:100vw;
+    text-align: center;
+}
+.imgbox img{
+    display: inline-block;
+}
+.imgbox h2{
+    width: 100vw;
+}
 
 .green {
     color: green;

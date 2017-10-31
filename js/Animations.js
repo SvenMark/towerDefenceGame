@@ -30,3 +30,7 @@ function firsttosecond(){
 function removehelp() {
     $('#tutorial').fadeOut(300);
 }
+function gameover(){
+    $('#gameover').fadeIn(300);
+    setTimeout(function(){ location.reload(); }, 10000);
+}

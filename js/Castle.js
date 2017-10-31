@@ -20,8 +20,7 @@ class Castle
         document.getElementById("healthbar").style.width = this.stats.hp+"%";
 
         if (this.stats.hp === 0) {
-            alert('You Lose!');
-            location.reload();
+            gameover();
         }
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Ghostbusters</title>
+        <title>GhostBeavers</title>
         <link rel="icon" href="images/favicon.ico">
         <script type="text/javascript" src="library/js/jquery-3.2.1.min.js"></script>
 
@@ -34,8 +34,12 @@
         <script type="text/javascript" src="js/Game.js"></script>
         <script type="text/javascript" src="js/GUI.js"></script>
         <script type="text/javascript" src="js/Controller.js"></script>
-
     </head>
+    <div id="gameover">
+        <div class="imgbox"><img id="gameovertxt" src="images/gameover.png"/></div>
+        <div class="imgbox"><h2>Kills</h2><h3>test</h3><h5>Reload in 10 seconds</h5></div>
+        <div class="imgbox"><img id="gameoverghost" src="images/hahaha.gif"/></div>
+    </div>
     <body>
     <div id="blackwall" class="fullscreen">
         <div id="first" class="fullscreen">
@@ -78,7 +82,6 @@
                 <h4 class="yellow"><i>Tier 2 tower</i> = Yellow</h4>
                 <h4 class="red"><i>Tier 3 tower</i> = Red</h4>
                 <h4><b>Don't Die</b></h4>
-
             </div>
             <div class="card">
                 <h2>Enjoy!</h2>
@@ -108,7 +111,6 @@
                 </div>
             </div>
         </div>
-        <!--Place a tower on click of button-->
         <div id="placetowerdiv">
             <button id="placetower" type="button" class="btn btn-info">+</button>
             <div id="placetowertxt">
