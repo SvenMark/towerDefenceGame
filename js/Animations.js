@@ -32,5 +32,12 @@ function removehelp() {
 }
 function gameover(){
     $('#gameover').fadeIn(300);
+    $('#audio').trigger("pause");
+    $('#gameoveraudio').trigger("play").animate({volume: 0.3}, 1);
     setTimeout(function(){ location.reload(); }, 10000);
+}
+function pewpew(){
+    //$("#laser").currentTime=0;
+    //$('#laser').trigger("play").animate({volume: 0.2}, 1);
+    let sound = new Audio("audio/laser.mp3"); sound.play();
 }

@@ -13,7 +13,7 @@ class Beaver extends NPC {
         this.position.y = 0.5;
         this.position.z = 19;
         this.scale = scale;
-        this.object.material.color.setHex(0x2B8E3C);
+        //this.object.material.color.setHex(0x2B8E3C);
 
         // Store movement for this monster
         this.currentStep = {};
@@ -24,9 +24,10 @@ class Beaver extends NPC {
     }
 
     create() {
-        let texture = new THREE.ImageUtils.loadTexture(this.texture);
+        //let texture = new THREE.ImageUtils.loadTexture(this.texture);
         let material = new THREE.MeshLambertMaterial({
-            map: texture
+            //map: texture
+            color: 0x2B8E3C
         });
 
         // should reference obj
