@@ -1,3 +1,5 @@
+let laser;
+let stop=0;
 function placeshow(){
     $('#placetowerdiv').fadeIn(300);
     $('#placetowertxt').delay(300).animate({"width":"92%"}, 600);
@@ -31,13 +33,17 @@ function removehelp() {
     $('#tutorial').fadeOut(300);
 }
 function gameover(){
-    $('#gameover').fadeIn(300);
-    $('#audio').trigger("pause");
+    stop=1;
+    $('#gameover').fadeIn(1000);
+    $('#audio').delay(300).trigger("pause");
     $('#gameoveraudio').trigger("play").animate({volume: 0.3}, 1);
     setTimeout(function(){ location.reload(); }, 10000);
 }
 function pewpew(){
-    //$("#laser").currentTime=0;
-    //$('#laser').trigger("play").animate({volume: 0.2}, 1);
-    let sound = new Audio("audio/laser.mp3"); sound.play();
+    if(stop===0){
+        //$("#laser").currentTime=0;
+        //$('#laser').trigger("play").animate({volume: 0.2}, 1);
+        laser=new Audio("audio/laser.mp3");
+        laser.play();
+    }
 }
