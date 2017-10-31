@@ -100,12 +100,12 @@ function setScene() {
     city.scale.multiplyScalar(0.1);
     city.position.y = -4.2;
     city.position.x = -2;
-    city.position.z = -117;
+    city.position.z = -116.5;
     city.rotation.y=-180*Math.PI / 180;
     scene.add(city);
 
     // light
-    let pointLight = new THREE.PointLight(0xffffff, 0.001);
+    let pointLight = new THREE.PointLight(0xffffff, 0.3);
     pointLight.position.set(0,250,0);
     scene.add(pointLight);
     let ambientLight = new THREE.AmbientLight(0x404040); // soft white light

@@ -3,13 +3,13 @@ class Tower
     constructor(level)
     {
         this.material = new THREE.MeshLambertMaterial( {
-            color: 0xFFD700
+            color: 0x00FF00
         });
         this.object = new THREE.Mesh(window.tower.geometry, this.material);
         this.stats = {};
         this.stats.level = level;
         this.stats.speed = 10;
-        this.stats.damage = 3;
+        this.stats.damage = 2;
         this.lastshot = Date.now();
 
         //Set tower position and scale
@@ -28,7 +28,7 @@ class Tower
 
         //Remove money
         game.currency=game.currency-towerprice;
-        document.getElementById("currency").innerHTML="€"+game.currency+",-";
+        document.getElementById("currency").innerHTML="$"+game.currency+",-";
 
 
         //Tell the tile it is now occupied
@@ -46,7 +46,7 @@ class Tower
         if(this.stats.level<3){
             //Remove money
             game.currency=game.currency-upgradeprice;
-            document.getElementById("currency").innerHTML="€"+game.currency+",-";
+            document.getElementById("currency").innerHTML="$"+game.currency+",-";
 
             this.stats.level++;
             this.stats.speed=this.stats.speed-4;
@@ -66,7 +66,7 @@ class Tower
     updatecolor(){
         switch(this.stats.level){
             case 1:
-                this.object.material.color.setHex(0xFFD700);
+                this.object.material.color.setHex(0x00FF00);
                 break;
             case 2:
                 this.object.material.color.setHex(0xff9933);

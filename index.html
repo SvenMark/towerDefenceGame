@@ -40,7 +40,7 @@
         <div class="imgbox"><h2>Kills</h2><h3>test</h3><h5>Reload in 10 seconds</h5></div>
         <div class="imgbox"><img id="gameoverghost" src="images/hahaha.gif"/></div>
     </div>
-    <body onload="preLoader()">
+    <body>
     <div id="blackwall" class="fullscreen">
         <div id="first" class="fullscreen">
             <a id="play" class="play-button" onclick="firsttosecond()">
@@ -78,6 +78,9 @@
                 <h2>It's really easy!</h2>
                 <h4><i>Click</i> on a tile to place or upgrade a tower</h4>
                 <h4><i>Click</i> next wave to start the wave</h4>
+                <h4 class="green"><i>Tier 1 tower</i> = Green</h4>
+                <h4 class="yellow"><i>Tier 2 tower</i> = Yellow</h4>
+                <h4 class="red"><i>Tier 3 tower</i> = Red</h4>
                 <h4><b>Don't Die</b></h4>
             </div>
             <div class="card">
@@ -101,7 +104,7 @@
                     </div>
                     <div class="halfRight">
                         <h6 id="healthtxt">100%</h6>
-                        <h6 id="currency">€10,-</h6>
+                        <h6 id="currency">$10,-</h6>
                         <h6 id="kills">0</h6>
                     </div>
                     <button id="nextwave" onclick="game.startWave();" type="button">Start wave 1</button>
@@ -111,13 +114,13 @@
         <div id="placetowerdiv">
             <button id="placetower" type="button" class="btn btn-info">+</button>
             <div id="placetowertxt">
-                <p id="placetowertxtp">Purchase Tower<br>€10,-</p>
+                <p id="placetowertxtp">Purchase Tower<br>$10,-</p>
             </div>
         </div>
         <div id="upgradetowerdiv">
             <button id="upgradetower" type="button" class="btn btn-info">+</button>
             <div id="upgradetowertxt">
-                <p id="upgradetowertxtp">Upgrade Tower<br>€5,-<br><i>ReloadTime--, FireSpeed++</i></p>
+                <p id="upgradetowertxtp">Upgrade Tower<br>$5,-<br><i>ReloadTime--, FireSpeed++</i></p>
             </div>
         </div>
     </div>

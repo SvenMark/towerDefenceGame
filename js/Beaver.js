@@ -6,7 +6,7 @@ class Beaver extends NPC {
         this.stats = {};
         this.stats.hp = 6 * game.wave;
         this.stats.speed = 0.125;
-        this.stats.currency = 1;
+        this.stats.currency = 2;
         this.size = {};
         this.position = {};
         this.position.x = Math.floor((Math.random() * 19) + 1);

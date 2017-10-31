@@ -12,7 +12,7 @@ class Game
         this.knights = [];
         this.beavers = [];
         //Update gui with correct currency
-        document.getElementById("currency").innerHTML="€"+this.currency+",-";
+        document.getElementById("currency").innerHTML="$"+this.currency+",-";
     }
 
     startWave()
@@ -70,7 +70,7 @@ class Game
             this.kills++;
             document.getElementById("kills").innerHTML=this.kills.toString();
             this.currency+=beavers[index].stats.currency;
-            document.getElementById("currency").innerHTML="€"+this.currency+",-";
+            document.getElementById("currency").innerHTML="$"+this.currency+",-";
         }
         this.livingBeaver--;
         scene.remove(beavers[index]);

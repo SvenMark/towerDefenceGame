@@ -9,7 +9,7 @@ class Castle
 
         let castle  = this.object;
         castle.scale.multiplyScalar(0.1);
-        castle.position.set(9.5,0,-4.5);
+        castle.position.set(10,0,-6);
         scene.add(castle);
     }
 

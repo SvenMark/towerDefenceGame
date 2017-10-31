@@ -20,6 +20,7 @@ function upgradehide(){
 }
 
 function firsttosecond(){
+    preLoader();
     $('#first').fadeOut(400);
     $('#second').delay(500).fadeIn(10000);
     $('#audio').trigger("play").animate({volume: 0.0}, 1).delay(50).animate({volume: 0.1}, 20000);

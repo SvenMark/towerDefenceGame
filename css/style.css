@@ -206,3 +206,16 @@ canvas {
 .imgbox h2{
     width: 100vw;
 }
+
+.green {
+    color: green;
+}
+
+.yellow {
+    color: orange;
+}
+
+.red {
+    color: red;
+}
+
