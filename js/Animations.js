@@ -26,3 +26,6 @@ function firsttosecond(){
     $('#blackwall').delay(12000).slideUp(3000);
     $('#gif').delay(10000).fadeOut(3000);
 }
+function removehelp() {
+    $('#tutorial').fadeOut(300);
+}
